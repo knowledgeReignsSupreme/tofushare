@@ -82,6 +82,11 @@ const recipeSchema = mongoose.Schema(
       type: Number,
       required: false,
     },
+    isApproved: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   { timestamps: true }
 );
