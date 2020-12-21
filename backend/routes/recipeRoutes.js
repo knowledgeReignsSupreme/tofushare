@@ -37,6 +37,7 @@ router.post(
     const theRecipe = new Recipe({
       title: req.body.title,
       description: req.body.description,
+      category: req.body.category,
       author: req.body.author,
       ingredients: req.body.ingredients,
       instructions: req.body.instructions,
@@ -46,6 +47,8 @@ router.post(
       remarks: req.body.remarks,
       tags: req.body.tags,
       difficulty: req.body.difficulty,
+      dishesAmmount: req.body.dishesAmmount,
+      website: req.body.website,
     });
     const recipeSave = await theRecipe.save();
 

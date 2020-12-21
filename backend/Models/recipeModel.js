@@ -36,6 +36,10 @@ const recipeSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,
@@ -61,7 +65,7 @@ const recipeSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    totalTime: {
+    cookingTime: {
       type: Number,
       required: true,
     },
@@ -76,6 +80,10 @@ const recipeSchema = mongoose.Schema(
     remarks: {
       type: Array,
       required: false,
+    },
+    dishesAmmount: {
+      type: Number,
+      required: true,
     },
     comments: [commentSchema],
     rating: {
