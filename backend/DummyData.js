@@ -3,6 +3,7 @@ const recipes = [
     title: 'קינואה יאמי',
     description: 'הקינואה הכי טובה שתאכלו, יותר טובה משל סבתא',
     author: 'יוסי מולה',
+    category: 'מאכלים',
     ingredients: [
       { name: 'בצל', ammount: 1 },
       { name: 'שן שום', ammount: 1 },
@@ -10,6 +11,7 @@ const recipes = [
       { name: 'כף שמן זית', ammount: 1 },
       { name: 'כפית מלח', ammount: 0.5 },
     ],
+    website: 'www.google.com',
     instructions: [
       'שוטפים חלילה את הקינואה עד שמתקבלים מים צלולים',
       'מטגנים בסיר עם שמן למשך 2 דקות',
@@ -21,18 +23,21 @@ const recipes = [
       'https://imaot.co.il/images/Uploads/RecipeImages/5524492022019.jpg',
     ],
     prepTime: 15,
-    totalTime: 25,
+    cookingTime: 20,
     difficulty: 'קל',
     tags: ['פצצת חלבון', 'קל להכנה'],
     remarks: 'שימו לב לא לפתוח את הסיר בזמן הבישול',
     comments: [],
     rating: 0,
+    dishesAmmount: 2,
   },
 
   {
     title: 'קורנפלקס של חתיכים',
     description: 'עזבו אליפויות, יופי זה הדיבור היום',
     author: 'אלי אברהמי',
+    category: 'מאכלים',
+    website: 'www.google.com',
     ingredients: [
       { name: 'כפית מלח', ammount: 0.5 },
       { name: 'כפית סוכר', ammount: 2 },
@@ -50,7 +55,7 @@ const recipes = [
       'https://www.kosher.com/resized/article_view/s/h/shutterstock_1021375678banner.jpg',
     ],
     prepTime: 1,
-    totalTime: 3,
+    cookingTime: 3,
     difficulty: 'קל',
     tags: ['קל להכנה', 'מעולה לעצלנים'],
     remarks: 'אחלה מנה. אפשרי עם קורנפלקס של אלופים או קורנפלקס של חתיכים',
@@ -66,11 +71,14 @@ const recipes = [
       },
     ],
     rating: 0,
+    dishesAmmount: 5,
   },
+
   {
     title: 'פאי בשר טבעוני',
     description: 'פאי עם בשר, רק שהבשר הוא לא באמת בשר',
     author: 'דוד אורן',
+    category: 'מאכלים',
     ingredients: [
       { name: 'בצל גדול קצוץ דק', ammount: 1 },
       { name: 'גרם טופו קשה חתוך בינוני', ammount: 300 },
@@ -91,7 +99,7 @@ const recipes = [
       'https://tivoneat.co.il/wp-content/uploads/2020/11/%D7%A4%D7%90%D7%99-%D7%91%D7%A8%D7%99%D7%98%D7%990-copy.jpg',
     ],
     prepTime: 25,
-    totalTime: 90,
+    cookingTime: 20,
     difficulty: 'קשה',
     tags: ['טעים ומשביע', 'מתכון מתקדם'],
     remarks: 'הבצל צריך להיוות ענק',
@@ -104,11 +112,15 @@ const recipes = [
       },
     ],
     rating: 0,
+    dishesAmmount: 3,
   },
   {
     description: "איזו מילה מגניבה זו מג'דרה, תודו",
     title: 'מג׳דרה עדשים שחורות',
     author: 'דוד אורן',
+    category: 'מאכלים',
+    website: 'www.google.com',
+
     ingredients: [
       { name: 'כוס אורז בסמטי קלאסי', ammount: 1.25 },
       { name: 'בצל גדול חתוך לרצועות דקות', ammount: 1 },
@@ -130,12 +142,13 @@ const recipes = [
       'https://images1.ynet.co.il/xnet//PicServer2/pic/102015/659452/1_7.jpg',
     ],
     prepTime: 10,
-    totalTime: 40,
+    cookingTime: 30,
     difficulty: 'בינוני',
     tags: ['טעים ומשביע', 'פצצת חלבון'],
     remarks: "מג'דרה זו מילה מגניבה רצח",
     comments: [],
     rating: 0,
+    dishesAmmount: 2,
   },
 ];
 

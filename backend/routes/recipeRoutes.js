@@ -4,33 +4,17 @@ const Recipe = require('../Models/recipeModel');
 const User = require('../Models/userModel');
 const asyncHandler = require('express-async-handler');
 const bodyParser = require('body-parser');
+const {
+  getRecipes,
+  getRecipeById,
+} = require('../controllers/recipeController');
 
 const app = express();
-// Fetch all recipes //GET // PUBLIC
-router.get(
-  '/',
-  asyncHandler(async (req, res) => {
-    const recipes = await Recipe.find({});
-    res.send(recipes);
-  })
-);
 
-// Fetch single recipes //GET // PUBLIC
-router.get(
-  '/:id',
-  asyncHandler(async (req, res) => {
-    const recipe = await Recipe.findById(req.params.id);
+router.route('/').get(getRecipes);
+router.route('/:id').get(getRecipeById);
 
-    if (recipe) {
-      res.json(recipe);
-    } else {
-      res.status(404).json({ message: 'Recipe not found.' });
-    }
-  })
-);
-router.use(bodyParser.json());
-
-//!* POSTING TO THE USER COLLECTION. USE THIS TO POST TO THE RECIPE COLLECTION
+//*! POSTING TO THE USER COLLECTION. USE THIS TO POST TO THE RECIPE COLLECTION
 router.post(
   '/',
   asyncHandler(async (req, res) => {
