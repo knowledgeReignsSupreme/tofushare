@@ -5,8 +5,12 @@ const Recipe = require('../Models/recipeModel');
 // *route GET /api/recipes
 // *access Public
 const getRecipes = asyncHandler(async (req, res) => {
-  const recipes = await Recipe.find({});
-  res.send(recipes);
+  try {
+    const recipes = await Recipe.find({});
+    res.send(recipes);
+  } catch (error) {
+    res.status(400).send({ message: 'נא לרענן את הדף' });
+  }
 });
 
 // *desc Fetch single recipe
@@ -18,7 +22,7 @@ const getRecipeById = asyncHandler(async (req, res) => {
   if (recipe) {
     res.json(recipe);
   } else {
-    res.status(404).json({ message: 'Recipe not found.' });
+    res.status(404).send({ message: '404 מתכון לא נמצא' });
   }
 });
 

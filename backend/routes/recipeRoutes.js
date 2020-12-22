@@ -27,7 +27,7 @@ router.post(
       instructions: req.body.instructions,
       images: req.body.images,
       prepTime: req.body.prepTime,
-      totalTime: req.body.totalTime,
+      cookingTime: req.body.cookingTime,
       remarks: req.body.remarks,
       tags: req.body.tags,
       difficulty: req.body.difficulty,
