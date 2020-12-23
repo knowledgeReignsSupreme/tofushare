@@ -33,6 +33,7 @@ router.post(
       difficulty: req.body.difficulty,
       dishesAmmount: req.body.dishesAmmount,
       website: req.body.website,
+      createdBy: req.body.createdBy,
     });
     const recipeSave = await theRecipe.save();
 

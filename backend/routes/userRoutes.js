@@ -4,16 +4,14 @@ const {
   authUser,
   getUserProfile,
   registerUser,
-  updateUserProfile,
+  updateUserSavedRecipes,
+  updateUserLiked,
 } = require('../controllers/userController');
 const protect = require('../middleware/authMiddleware');
 const app = express();
 
 router.route('/').post(registerUser);
 router.post('/login', authUser);
-router
-  .route('/profile')
-  .get(protect, getUserProfile)
-  .put(protect, updateUserProfile);
-
+router.route('/profile').get(protect, getUserProfile);
+router.route('/liked/:id').put(protect, updateUserSavedRecipes);
 module.exports = router;

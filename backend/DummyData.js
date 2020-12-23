@@ -30,6 +30,7 @@ const recipes = [
     comments: [],
     rating: 0,
     dishesAmmount: 2,
+    createdBy: '',
   },
 
   {
@@ -72,6 +73,7 @@ const recipes = [
     ],
     rating: 0,
     dishesAmmount: 5,
+    createdBy: '',
   },
 
   {
@@ -113,6 +115,7 @@ const recipes = [
     ],
     rating: 0,
     dishesAmmount: 3,
+    createdBy: '',
   },
   {
     description: "איזו מילה מגניבה זו מג'דרה, תודו",
@@ -149,6 +152,7 @@ const recipes = [
     comments: [],
     rating: 0,
     dishesAmmount: 2,
+    createdBy: '',
   },
 ];
 

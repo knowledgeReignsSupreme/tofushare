@@ -90,6 +90,10 @@ const recipeSchema = mongoose.Schema(
       type: Number,
       required: false,
     },
+    createdBy: {
+      type: String,
+      required: true,
+    },
     isApproved: {
       type: Boolean,
       required: false,

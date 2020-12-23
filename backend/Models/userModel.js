@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    likedRecipes: {
+    savedRecipes: {
       type: Array,
       default: [],
     },
@@ -28,6 +28,11 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       required: true,
       default: false,
+    },
+    bio: {
+      type: String,
+      required: false,
+      default: '',
     },
   },
   {

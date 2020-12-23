@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../Models/userModel');
 const generateToken = require('../utils/generateToken');
+const Recipe = require('../Models/recipeModel');
 
 // *desc Auth user and get token
 // *route POST /api/users/login
@@ -17,7 +18,7 @@ const authUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
-      likedRecipes: user.likedRecipes,
+      savedRecipes: user.savedRecipes,
       createdRecipes: user.createdRecipe,
     });
   } else {
@@ -51,7 +52,7 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
-      likedRecipes: user.likedRecipes,
+      savedRecipes: user.savedRecipes,
       createdRecipes: user.createdRecipe,
     });
   } else {
@@ -71,7 +72,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      likedRecipes: user.likedRecipes,
+      savedRecipes: user.savedRecipes,
       createdRecipes: user.createdRecipes,
     });
   } else {
@@ -82,7 +83,6 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // *desc Update user profile
 // *route PUT /api/users/profile
 // *access Private
-
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
@@ -112,7 +112,27 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+// *desc add or delete a recipe from user's liked recipes
+// *route PUT /api/users/liked/:id
+const updateUserSavedRecipes = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  const recipe = await Recipe.findById(req.body.recipeId);
+
+  if (user && recipe) {
+    user.savedRecipes = req.body.savedRecipes || user.savedRecipes;
+    user.bio = '';
+    const updatedUser = await user.save();
+
+    res.json({
+      savedRecipes: updatedUser.savedRecipes,
+    });
+  } else {
+    res.status(401).send({ message: 'אינך מורשה' });
+  }
+});
+
 exports.authUser = authUser;
 exports.getUserProfile = getUserProfile;
 exports.registerUser = registerUser;
 exports.updateUserProfile = updateUserProfile;
+exports.updateUserSavedRecipes = updateUserSavedRecipes;
