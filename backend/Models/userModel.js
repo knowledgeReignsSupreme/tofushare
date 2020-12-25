@@ -34,6 +34,20 @@ const userSchema = mongoose.Schema(
       required: false,
       default: '',
     },
+    instagramLink: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    facebookLink: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    image: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,
