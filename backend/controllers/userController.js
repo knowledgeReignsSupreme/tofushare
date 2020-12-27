@@ -24,6 +24,7 @@ const authUser = asyncHandler(async (req, res) => {
       image: user.image,
       instagramLink: user.instagramLink,
       facebookLink: user.facebookLink,
+      createdAt: user.createdAt,
     });
   } else {
     res.status(401);
@@ -62,6 +63,7 @@ const registerUser = asyncHandler(async (req, res) => {
       image: user.image,
       instagramLink: user.instagramLink,
       facebookLink: user.facebookLink,
+      createdAt: user.createdAt,
     });
   } else {
     res.status(400).send({ message: 'מידע שגוי' });
@@ -127,12 +129,13 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
       createdRecipes: updatedUser.createdRecipe,
-      likedRecipes: updatedUser.likedRecipes,
+      savedRecipes: updatedUser.savedRecipes,
       instagramLink: updatedUser.instagramLink,
       facebookLink: updatedUser.facebookLink,
       bio: updatedUser.bio,
       image: updatedUser.image,
       token: generateToken(updatedUser._id),
+      createdAt: updatedUser.createdAt,
     });
   } else {
     res.status(404).send({ message: 'משתמש לא נמצא' });
