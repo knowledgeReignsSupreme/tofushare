@@ -22,7 +22,11 @@ const commentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    comment: {
+    commentBody: {
+      type: String,
+      required: true,
+    },
+    userId: {
       type: String,
       required: true,
     },
@@ -78,7 +82,7 @@ const recipeSchema = mongoose.Schema(
       required: true,
     },
     remarks: {
-      type: Array,
+      type: String,
       required: false,
     },
     dishesAmmount: {
@@ -92,7 +96,7 @@ const recipeSchema = mongoose.Schema(
     },
     createdBy: {
       type: String,
-      required: true,
+      required: false,
     },
     isApproved: {
       type: Boolean,

@@ -5,11 +5,17 @@ const connectDB = require('./config/db');
 const recipeRoutes = require('./routes/recipeRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const userRoutes = require('./routes/userRoutes');
+const morgan = require('morgan');
 
 dotenv.config();
 connectDB();
 
 const app = express();
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 app.use(express.json());
 app.use('/api/recipes', recipeRoutes);
 app.use('/api/upload', uploadRoutes);

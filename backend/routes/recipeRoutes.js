@@ -7,12 +7,15 @@ const bodyParser = require('body-parser');
 const {
   getRecipes,
   getRecipeById,
+  createRecipeComment,
 } = require('../controllers/recipeController');
 
+const protect = require('../middleware/authMiddleware');
 const app = express();
 
 router.route('/').get(getRecipes);
 router.route('/:id').get(getRecipeById);
+router.route('/:id/comments').post(protect, createRecipeComment);
 
 //*! POSTING TO THE USER COLLECTION. USE THIS TO POST TO THE RECIPE COLLECTION
 router.post(
