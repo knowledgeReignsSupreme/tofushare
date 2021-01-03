@@ -8,6 +8,7 @@ const {
   getRecipes,
   getRecipeById,
   createRecipeComment,
+  userCookedRecipe,
 } = require('../controllers/recipeController');
 
 const protect = require('../middleware/authMiddleware');
@@ -16,6 +17,7 @@ const app = express();
 router.route('/').get(getRecipes);
 router.route('/:id').get(getRecipeById);
 router.route('/:id/comments').post(protect, createRecipeComment);
+router.put('/:id/cooked', protect, userCookedRecipe);
 
 //*! POSTING TO THE USER COLLECTION. USE THIS TO POST TO THE RECIPE COLLECTION
 router.post(
@@ -38,7 +40,11 @@ router.post(
       website: req.body.website,
       createdBy: req.body.createdBy,
     });
-    const recipeSave = await theRecipe.save();
+    const newRecipe = await theRecipe.save();
+
+    await User.findByIdAndUpdate(newRecipe.createdBy, {
+      $push: { createdRecipes: newRecipe._id },
+    });
 
     res.status(201).send(theRecipe);
   })

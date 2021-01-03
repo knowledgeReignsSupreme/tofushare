@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const Recipe = require('./recipeModel');
 
 const userSchema = mongoose.Schema(
   {
@@ -16,14 +17,8 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    savedRecipes: {
-      type: Array,
-      default: [],
-    },
-    createdRecipes: {
-      type: Array,
-      default: [],
-    },
+    savedRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
+    createdRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
     isAdmin: {
       type: Boolean,
       required: true,

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { stringify } = require('querystring');
+const User = require('./userModel');
 
 const ingredientSchema = mongoose.Schema({
   name: {
@@ -27,8 +27,9 @@ const commentSchema = mongoose.Schema(
       required: true,
     },
     userId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
+      ref: 'User',
     },
   },
   { timestamps: true }
@@ -90,12 +91,9 @@ const recipeSchema = mongoose.Schema(
       required: true,
     },
     comments: [commentSchema],
-    rating: {
-      type: Number,
-      required: false,
-    },
     createdBy: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       required: false,
     },
     isApproved: {
@@ -103,6 +101,7 @@ const recipeSchema = mongoose.Schema(
       required: false,
       default: false,
     },
+    cookedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );

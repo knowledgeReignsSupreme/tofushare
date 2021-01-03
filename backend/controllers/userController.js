@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const User = require('../Models/userModel');
 const generateToken = require('../utils/generateToken');
 const Recipe = require('../Models/recipeModel');
+const { findById } = require('../Models/recipeModel');
 
 // *desc Auth user and get token
 // *route POST /api/users/login
@@ -74,29 +75,21 @@ const registerUser = asyncHandler(async (req, res) => {
 // *route GET /api/users/profile
 // *access Private
 const getLoggedUserDetails = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
-  if (user) {
-    userInfo = user;
-
-    const recipes = await Recipe.find({ createdBy: req.user.id });
-    userInfo.createdRecipes = recipes;
-
-    const savedRecipesIds = user.savedRecipes;
-    const savedRecipes = [];
-
-    await Promise.all(
-      savedRecipesIds.map(async (recipeId) => {
-        const recipe = await Recipe.findById(recipeId);
-        savedRecipes.push(recipe);
+  try {
+    const user = await User.findById(req.user._id)
+      .populate({
+        path: 'savedRecipes',
+        match: { isApproved: true },
       })
-    ).then(() => {
-      userInfo.savedRecipes = savedRecipes;
-    });
-
-    res.json({
-      userInfo,
-    });
-  } else {
+      .populate({
+        path: 'createdRecipes',
+        match: { isApproved: true },
+      })
+      .then((data) => {
+        console.log(data.savedRecipes);
+        res.json(data);
+      });
+  } catch (error) {
     res.status(404).send({ message: 'משתמש לא נמצא' });
   }
 });
@@ -145,19 +138,23 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // *desc add or delete a recipe from user's liked recipes
 // *route PUT /api/users/liked/:id
 const updateUserSavedRecipes = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
-  const recipe = await Recipe.findById(req.body.recipeId);
+  try {
+    const user = await User.findById(req.params.id);
+    const recipe = await Recipe.findById(req.body.recipeId);
 
-  if (user && recipe) {
-    user.savedRecipes = req.body.savedRecipes || user.savedRecipes;
-    user.bio = '';
-    const updatedUser = await user.save();
+    if (user && recipe) {
+      user.savedRecipes = req.body.savedRecipes || user.savedRecipes;
+      user.bio = '';
+      const updatedUser = await user.save();
 
-    res.json({
-      savedRecipes: updatedUser.savedRecipes,
-    });
-  } else {
-    res.status(401).send({ message: 'אינך מורשה' });
+      res.json({
+        savedRecipes: updatedUser.savedRecipes,
+      });
+    } else {
+      res.status(401).send({ message: 'אינך מורשה' });
+    }
+  } catch (error) {
+    res.status(404).send({ message: 'משתמש לא קיים 404' });
   }
 });
 
@@ -165,31 +162,56 @@ const updateUserSavedRecipes = asyncHandler(async (req, res) => {
 // *route GET /api/users/:id
 // *access Public
 const getUserById = asyncHandler(async (req, res) => {
-  let userInfo = {};
-
-  const user = await User.findById(req.params.id);
-  if (user) {
-    userInfo = user;
-
-    const recipes = await Recipe.find({ createdBy: req.params.id });
-    userInfo.createdRecipes = recipes;
-
-    const savedRecipesIds = user.savedRecipes;
-    const savedRecipes = [];
-
-    await Promise.all(
-      savedRecipesIds.map(async (recipeId) => {
-        const recipe = await Recipe.findById(recipeId);
-        savedRecipes.push(recipe);
+  try {
+    const user = await User.findById(req.params.id)
+      .populate({
+        path: 'savedRecipes',
+        match: { isApproved: true },
       })
-    ).then(() => {
-      userInfo.savedRecipes = savedRecipes;
-    });
-
-    res.json(userInfo);
-  } else {
-    res.status(404).send({ message: '404 משתמש לא נמצא' });
+      .populate({
+        path: 'createdRecipes',
+        match: { isApproved: true },
+      })
+      .then((data) => {
+        console.log(data.savedRecipes);
+        res.json(data);
+      });
+  } catch (error) {
+    res.status(404).send({ message: 'משתמש לא נמצא' });
   }
+
+  // let userInfo = {};
+
+  // const approved = {
+  //   isApproved: true,
+  // };
+
+  // const user = await User.findById(req.params.id);
+  // if (user) {
+  //   userInfo = user;
+
+  //   const recipes = await Recipe.find({
+  //     createdBy: req.params.id,
+  //     ...approved,
+  //   });
+  //   userInfo.createdRecipes = recipes;
+
+  //   const savedRecipesIds = user.savedRecipes;
+  //   const savedRecipes = [];
+
+  //   await Promise.all(
+  //     savedRecipesIds.map(async (recipeId) => {
+  //       const recipe = await Recipe.findById(recipeId);
+  //       savedRecipes.push(recipe);
+  //     })
+  //   ).then(() => {
+  //     userInfo.savedRecipes = savedRecipes;
+  //   });
+
+  //   res.json(userInfo);
+  // } else {
+  //   res.status(404).send({ message: '404 משתמש לא נמצא' });
+  // }
 });
 
 exports.authUser = authUser;
