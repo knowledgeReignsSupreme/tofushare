@@ -13,6 +13,7 @@ const ErrorMessage = ({ message }) => {
 const StyledError = styled.div`
   color: ${cssVariables.secColorDark};
   width: max-content;
+  max-width: 90%;
   margin: 0 auto;
   h1 {
     margin: auto;
