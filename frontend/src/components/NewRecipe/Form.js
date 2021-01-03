@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postRecipe } from '../../actions/RecipesActions';
 import styled from 'styled-components';
@@ -74,6 +74,10 @@ const Form = () => {
     dishesAmmount: +dishesAmmount,
     createdBy: userInfo._id,
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const remarksValidator = () => {
     if (title.length <= 3) {

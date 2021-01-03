@@ -169,10 +169,10 @@ const NumberOfDishes = styled.div`
     }
   }
   button:first-of-type {
-    right: 37%;
+    right: 37% !important;
   }
   button:last-of-type {
-    left: 26%;
+    right: 63% !important;
   }
 `;
 export default Body;
