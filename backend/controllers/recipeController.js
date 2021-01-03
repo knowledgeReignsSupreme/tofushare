@@ -79,14 +79,46 @@ const getRecipeById = asyncHandler(async (req, res) => {
   }
 });
 
+// *desc Add new recipe
+// *route POST /api/recipes
+// *access Private
+const postRecipe = asyncHandler(async (req, res) => {
+  try {
+    const theRecipe = new Recipe({
+      title: req.body.title,
+      description: req.body.description,
+      category: req.body.category,
+      author: req.body.author,
+      ingredients: req.body.ingredients,
+      instructions: req.body.instructions,
+      images: req.body.images,
+      prepTime: req.body.prepTime,
+      cookingTime: req.body.cookingTime,
+      remarks: req.body.remarks,
+      tags: req.body.tags,
+      difficulty: req.body.difficulty,
+      dishesAmmount: req.body.dishesAmmount,
+      website: req.body.website,
+      createdBy: req.body.createdBy,
+    });
+    const newRecipe = await theRecipe.save();
+
+    const user = req.user;
+    await user.update({
+      $push: { createdRecipes: newRecipe._id.toString() },
+    });
+    res.status(201).send(theRecipe);
+  } catch (error) {
+    res.status(404).send({ message: 'משתמש לא נמצא' });
+  }
+});
+
 // *desc Add new review
 // *route POST /api/recipes/:id/comments
 // *access Private
-
 const createRecipeComment = asyncHandler(async (req, res) => {
-  const recipe = await Recipe.findById(req.params.id);
-
   try {
+    const recipe = await Recipe.findById(req.params.id);
     if (recipe) {
       const alreadyCommented = recipe.comments.find(
         (comment) => comment.userId === req.body.userId
@@ -109,7 +141,7 @@ const createRecipeComment = asyncHandler(async (req, res) => {
       res.status(404).send({ message: 'מתכון לא נמצא' });
     }
   } catch (error) {
-    console.log(error);
+    res.status(404).send({ message: 'מתכון לא נמצא' });
   }
 });
 
@@ -142,3 +174,4 @@ exports.getRecipes = getRecipes;
 exports.getRecipeById = getRecipeById;
 exports.createRecipeComment = createRecipeComment;
 exports.userCookedRecipe = userCookedRecipe;
+exports.postRecipe = postRecipe;

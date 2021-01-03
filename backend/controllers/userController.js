@@ -86,7 +86,6 @@ const getLoggedUserDetails = asyncHandler(async (req, res) => {
         match: { isApproved: true },
       })
       .then((data) => {
-        console.log(data.savedRecipes);
         res.json(data);
       });
   } catch (error) {
@@ -173,7 +172,6 @@ const getUserById = asyncHandler(async (req, res) => {
         match: { isApproved: true },
       })
       .then((data) => {
-        console.log(data.savedRecipes);
         res.json(data);
       });
   } catch (error) {
