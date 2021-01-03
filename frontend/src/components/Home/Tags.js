@@ -15,7 +15,9 @@ const Tags = ({ setKeyword, category, keyword }) => {
     setKeyword('');
     currentTag = e.target.value;
     if (currentTag.trim()) {
-      category && keyword && currentTag
+      !category && !keyword
+        ? history.push(`/tags/${currentTag}`)
+        : category && keyword && currentTag
         ? history.push(
             `/categories/${category}/search/${keyword}/tags/${currentTag}`
           )
