@@ -23,6 +23,7 @@ const ImageUpload = ({ isEditing, setIsEditing, currentUser }) => {
     try {
       const config = {
         headers: {
+          'Accept-Language': 'en-US,en;q=0.8',
           'Content-Type': 'multipart/form-data',
         },
       };

@@ -15,8 +15,12 @@ const Header = ({ currentRecipe, preview }) => {
   };
   return (
     <>
-      <img
+      {/* <img
         src={preview ? currentRecipe.images : currentRecipe.images[0]}
+        alt=''
+      /> */}
+      <img
+        src={currentRecipe.images[0].location || currentRecipe.images[0]}
         alt=''
       />
       <RecipeHeadingWrapper>

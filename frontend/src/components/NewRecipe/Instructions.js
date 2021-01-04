@@ -39,7 +39,6 @@ const Instructions = ({ instructions, setInstructions, instructionError }) => {
 
   useEffect(() => {
     setNewInstruction('');
-    instructionInput.current.focus();
   }, [instructions]);
 
   return (

@@ -22,7 +22,9 @@ app.use('/api/upload', uploadRoutes);
 app.use('/uploads', express.static('uploads'));
 app.use('/api/users', userRoutes);
 
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+// app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+
+// app.use('/api/uploads', uploadRoutes)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/build')));

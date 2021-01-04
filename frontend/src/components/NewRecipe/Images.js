@@ -9,12 +9,14 @@ const Images = ({ setImages, images, imagesError }) => {
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
+    console.log(file);
     const formData = new FormData();
     formData.append('file', file);
     setIsUploading(true);
     try {
       const config = {
         headers: {
+          'Accept-Language': 'en-US,en;q=0.8',
           'Content-Type': 'multipart/form-data',
         },
       };

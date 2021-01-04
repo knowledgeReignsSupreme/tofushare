@@ -8,7 +8,10 @@ const Recipe = ({ mappedRecipe }) => {
   return (
     <>
       <StyledRecipe>
-        <img src={mappedRecipe.images[0]} alt={mappedRecipe.title} />
+        <img
+          src={mappedRecipe.images[0].location || mappedRecipe.images[0]}
+          alt={mappedRecipe.title}
+        />
         <RecipeText>
           <h2>{mappedRecipe.title}</h2>
           <h4>{mappedRecipe.description}</h4>
