@@ -55,7 +55,7 @@ const Register = () => {
       password === confirmPassword &&
       password.length >= 6
     ) {
-      dispatch(register(name, email, password));
+      dispatch(register(name, email.toLowerCase(), password));
     }
   };
 

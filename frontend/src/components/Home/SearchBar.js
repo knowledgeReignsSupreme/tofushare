@@ -1,12 +1,40 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Search from './Search';
 import Category from './Category';
 import Tags from './Tags';
+import { FaSearch } from 'react-icons/fa';
 
 const SearchBar = ({ tag, category }) => {
   const [keyword, setKeyword] = useState('');
+  const [newKeyword, setNewKeyword] = useState('');
+  const [newTag, setNewTag] = useState('');
+  const [newCategory, setNewCategory] = useState('');
+
   const [isSearching, setIsSearching] = useState(false);
+  const history = useHistory();
+
+  const searchHandler = () => {
+    console.log(`category: ${newCategory} keyword: ${keyword} tag: ${newTag}`);
+    newCategory && keyword && newTag
+      ? history.push(
+          `/categories/${newCategory}/search/${keyword}/tags/${newTag}`
+        )
+      : newCategory && keyword && !newTag
+      ? history.push(`/categories/${newCategory}/search/${keyword}`)
+      : newCategory && !keyword && newTag
+      ? history.push(`/categories/${newCategory}/tags/${newTag}`)
+      : !newCategory && keyword && newTag
+      ? history.push(`/search/${keyword}/tags/${newTag}`)
+      : newCategory && !keyword && !newTag
+      ? history.push(`/categories/${newCategory}`)
+      : !newCategory && keyword && !newTag
+      ? history.push(`/search/${keyword}`)
+      : !newCategory && !keyword && newTag
+      ? history.push(`tags/${newTag}`)
+      : history.push('/');
+  };
 
   return (
     <>
@@ -19,19 +47,28 @@ const SearchBar = ({ tag, category }) => {
         {isSearching && (
           <StyledSearchBar>
             <QueryButtons>
-              <Category setKeyword={setKeyword} />
+              <Category
+                setKeyword={setKeyword}
+                setNewCategory={setNewCategory}
+              />
               <Tags
+                setNewTag={setNewTag}
                 setKeyword={setKeyword}
                 category={category}
                 keyword={keyword}
               />
             </QueryButtons>
             <Search
+              setNewKeyword={setNewKeyword}
               tag={tag}
               keyword={keyword}
               setKeyword={setKeyword}
               category={category}
             />
+            <button onClick={searchHandler}>
+              <FaSearch />
+              חיפוש
+            </button>
           </StyledSearchBar>
         )}
       </SearchWrapper>
@@ -64,7 +101,9 @@ const StyledSearchBar = styled.div`
   margin: 0.5rem auto;
   width: 100%;
   align-items: center;
-
+  p {
+    font-weight: bold;
+  }
   @media screen and (min-width: 820px) and (max-width: 1050px) {
     max-width: 780px;
   }
@@ -73,6 +112,9 @@ const StyledSearchBar = styled.div`
   }
   @media screen and (max-width: 700px) {
     flex-direction: column;
+    button {
+      margin: 1rem 0;
+    }
   }
   button {
     height: 2.2rem;
@@ -80,13 +122,14 @@ const StyledSearchBar = styled.div`
     padding: 0.5rem 1rem;
     background-color: lightgray;
     border-radius: 15px;
+    white-space: nowrap;
     &:first-of-type {
       margin-left: 0.5rem;
     }
     cursor: pointer;
     svg {
       font-size: 1rem;
-      vertical-align: middle;
+      margin-left: 0.3rem;
     }
   }
 `;

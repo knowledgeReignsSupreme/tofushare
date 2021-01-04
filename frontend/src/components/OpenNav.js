@@ -118,7 +118,7 @@ const StyledOpenNav = styled.nav`
       color: ${cssVariables.mainColorDark};
     }
     @media screen and (max-width: 600px) {
-      font-size: 1rem;
+      font-size: 1.3rem;
     }
     a active {
       color: blue;

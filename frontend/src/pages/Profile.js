@@ -59,15 +59,29 @@ const Profile = () => {
           />
           {showCreated && userData.createdRecipes.length >= 1
             ? userData.createdRecipes.map((recipe) => (
-                <Recipes mappedRecipe={recipe} key={uuid()} />
+                <Recipes
+                  mappedRecipe={recipe}
+                  header='מתכונים שנוצרו:'
+                  key={uuid()}
+                />
               ))
             : showCreated && <h1>עוד לא יצרת מתכונים</h1>}
           {showSaved && userData.savedRecipes.length >= 1
             ? userData.savedRecipes.map((recipe) => (
-                <Recipes mappedRecipe={recipe} key={uuid()} />
+                <Recipes
+                  mappedRecipe={recipe}
+                  header='מתכונים שמורים:'
+                  key={uuid()}
+                />
               ))
             : showSaved && <h1>עוד לא שמרת מתכונים</h1>}
-          {showSocial && <Bio currentUser={userData} loggedUser={userInfo} />}
+          {showSocial && (
+            <Bio
+              currentUser={userData}
+              loggedUser={userInfo}
+              header='קצת עליי:'
+            />
+          )}
         </StyledProfile>
       ) : (
         ''

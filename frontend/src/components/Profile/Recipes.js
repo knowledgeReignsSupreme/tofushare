@@ -2,22 +2,29 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Recipes = ({ mappedRecipe }) => {
+const Recipes = ({ mappedRecipe, header }) => {
   return (
-    <StyledRecipe>
-      <Link to={`/recipes/${mappedRecipe._id}`}>
-        <img src={mappedRecipe.images[0]} alt='' />
-        <StyledDetails>
-          <h3>{mappedRecipe.title}</h3>
-          <p>{mappedRecipe.description}</p>
-          <p>בושל: {mappedRecipe.cookedBy.length} פעמים</p>
-          <p> מאת: {mappedRecipe.author}</p>
-        </StyledDetails>
-      </Link>
-    </StyledRecipe>
+    <>
+      <StyledHeader>
+        <h2>{header}</h2>
+      </StyledHeader>
+      <StyledRecipe>
+        <Link to={`/recipes/${mappedRecipe._id}`}>
+          <img src={mappedRecipe.images[0]} alt='' />
+          <StyledDetails>
+            <h3>{mappedRecipe.title}</h3>
+            <p>{mappedRecipe.description}</p>
+            <p>בושל: {mappedRecipe.cookedBy.length} פעמים</p>
+            <p> מאת: {mappedRecipe.author}</p>
+          </StyledDetails>
+        </Link>
+      </StyledRecipe>
+    </>
   );
 };
-
+const StyledHeader = styled.div`
+  margin-bottom: 1rem;
+`;
 const StyledRecipe = styled.div`
   display: flex;
   width: 80%;

@@ -64,7 +64,7 @@ button {
 
 .selected-tag{
   color: white;
-  background: ${cssVariables.mainColorDark};
+  background: ${cssVariables.mainColorDark} !important;
 }
 input{
   height: 2rem !important; 

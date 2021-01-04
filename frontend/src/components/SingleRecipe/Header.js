@@ -20,8 +20,8 @@ const Header = ({ currentRecipe, preview }) => {
         alt=''
       /> */}
       <img
-        src={currentRecipe.images[0].location || currentRecipe.images[0]}
-        alt=''
+        src={currentRecipe.images.location || currentRecipe.images[0]}
+        alt='מתכון'
       />
       <RecipeHeadingWrapper>
         <StyledSubHeading>
@@ -102,6 +102,7 @@ const RecipeCookingTime = styled.div`
   p {
     position: relative;
     font-size: 0.8rem;
+    white-space: nowrap;
   }
 `;
 

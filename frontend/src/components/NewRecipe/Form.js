@@ -56,6 +56,7 @@ const Form = () => {
   const [remarks, setRemarks] = useState('');
   const [isValid, setIsValid] = useState(null);
   const [isPreviewOn, setIsPreviewOn] = useState(false);
+  const [isImageUploading, setIsImageUploading] = useState(false);
 
   const newRecipe = {
     title,
@@ -79,7 +80,7 @@ const Form = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const remarksValidator = () => {
+  const formValidator = () => {
     if (title.length <= 3) {
       setTitleError(true);
       setIsValid(false);
@@ -101,14 +102,14 @@ const Form = () => {
       setImagesError(false);
       setIsValid(true);
     }
-    if (prepTime <= 0) {
+    if (prepTime <= 0 || !prepTime) {
       setPrepTimeError(true);
       setIsValid(false);
     } else {
       setPrepTimeError(false);
       setIsValid(true);
     }
-    if (cookingTime <= 0) {
+    if (cookingTime <= 0 || !cookingTime) {
       setCookingTimeError(true);
       setIsValid(false);
     } else {
@@ -148,10 +149,10 @@ const Form = () => {
 
   const postHandler = (e) => {
     e.preventDefault();
-    remarksValidator();
-    if (!remarksValidator) {
+    formValidator();
+    if (!formValidator && !isImageUploading) {
       setShowRemarks(true);
-    } else if (remarksValidator) {
+    } else if (formValidator) {
       dispatch(postRecipe(newRecipe, userInfo.token));
     }
   };
@@ -197,6 +198,8 @@ const Form = () => {
             setImages={setImages}
             images={images}
             imagesError={imagesError}
+            isImageUploading={isImageUploading}
+            setIsImageUploading={setIsImageUploading}
           />
           <PrepTime
             setPrepTime={setPrepTime}

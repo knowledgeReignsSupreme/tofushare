@@ -40,7 +40,7 @@ const userSchema = mongoose.Schema(
       default: '',
     },
     image: {
-      type: String,
+      type: Object,
       required: false,
     },
   },

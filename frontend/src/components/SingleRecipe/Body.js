@@ -172,7 +172,7 @@ const NumberOfDishes = styled.div`
     right: 37% !important;
   }
   button:last-of-type {
-    right: 63% !important;
+    right: 60.5% !important;
   }
 `;
 export default Body;

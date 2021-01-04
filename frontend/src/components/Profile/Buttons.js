@@ -9,8 +9,8 @@ const Buttons = ({
   setShowSocial,
   loggedUser,
 }) => {
-  const toggleButtonHandler = (button) => {
-    switch (button) {
+  const toggleButtonHandler = (e, activeButton) => {
+    switch (activeButton) {
       case 'bio':
         setShowSocial(true);
         if (setShowSaved) {
@@ -35,21 +35,21 @@ const Buttons = ({
         break;
 
       default:
-        return button;
+        return activeButton;
     }
   };
 
   // TODO: Make sure only one button is true at a time
   return (
     <StyledButtons>
-      <StyledButton onClick={() => toggleButtonHandler('bio')}>
+      <StyledButton onClick={(e) => toggleButtonHandler(e, 'bio')}>
         <FaIdBadge /> מידע כללי
       </StyledButton>
-      <StyledButton onClick={() => toggleButtonHandler('created')}>
+      <StyledButton onClick={(e) => toggleButtonHandler(e, 'created')}>
         <FaFileAlt /> מתכונים שנוצרו
       </StyledButton>
       {loggedUser && (
-        <StyledButton onClick={() => toggleButtonHandler('saved')}>
+        <StyledButton onClick={(e) => toggleButtonHandler(e, 'saved')}>
           <FaBookmark /> מתכונים שמורים
         </StyledButton>
       )}

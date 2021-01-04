@@ -37,7 +37,7 @@ const Header = ({ currentUser, loggedUser }) => {
           <StyledHeader>
             <StyledImage>
               {currentUser.image ? (
-                <img src={currentUser.image} alt='user' />
+                <img src={currentUser.image.location} alt='user' />
               ) : (
                 <img src={userImage} alt='user' />
               )}

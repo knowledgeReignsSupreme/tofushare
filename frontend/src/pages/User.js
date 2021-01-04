@@ -48,11 +48,17 @@ const User = ({ match }) => {
           />
           {showCreated && userData.createdRecipes.length >= 1
             ? userData.createdRecipes.map((recipe) => (
-                <Recipes mappedRecipe={recipe} key={uuid()} />
+                <Recipes
+                  mappedRecipe={recipe}
+                  header='מתכונים שנוצרו:'
+                  key={uuid()}
+                />
               ))
             : showCreated && <h3>משתמש זה עדיין לא ייצר מתכונים</h3>}
 
-          {showSocial && <Bio currentUser={userData} loggedUser={false} />}
+          {showSocial && (
+            <Bio currentUser={userData} loggedUser={false} header='קצת עליי:' />
+          )}
         </StyledUser>
       )}
     </div>

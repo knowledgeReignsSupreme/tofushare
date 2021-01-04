@@ -9,7 +9,7 @@ import {
 import styled from 'styled-components';
 import { FaInstagram, FaFacebook, FaUserEdit } from 'react-icons/fa';
 
-const Bio = ({ currentUser, loggedUser }) => {
+const Bio = ({ currentUser, loggedUser, header }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [bio, setBio] = useState(currentUser.bio);
   const [instagramLink, setInstagramLink] = useState(currentUser.instagramLink);
@@ -37,7 +37,7 @@ const Bio = ({ currentUser, loggedUser }) => {
   return (
     <>
       <StyledHeader>
-        <h2>קצת עליי:</h2>
+        <h2>{header}</h2>
       </StyledHeader>
       <StyledBio>
         <h4>
@@ -110,7 +110,7 @@ const Bio = ({ currentUser, loggedUser }) => {
 };
 
 const StyledHeader = styled.div`
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 `;
 
 const BioButton = styled(mainColorButton)`

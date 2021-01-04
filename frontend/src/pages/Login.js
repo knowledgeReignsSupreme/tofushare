@@ -27,7 +27,7 @@ const Login = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    dispatch(login(email.toLowerCase(), password));
   };
 
   return (

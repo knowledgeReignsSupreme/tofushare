@@ -35,7 +35,7 @@ const Nav = () => {
               <p>Plant Share</p>
             </Link>
           </StyledLogo>
-          <NewRecipeButton>
+          <ProfileButton>
             {userInfo ? (
               <Link to='/profile'>
                 <StyledButton>
@@ -51,7 +51,7 @@ const Nav = () => {
                 </StyledButton>
               </Link>
             )}
-          </NewRecipeButton>
+          </ProfileButton>
         </StyledNav>
       )}
     </>
@@ -121,7 +121,7 @@ const StyledLogo = styled.div`
     width: 30px;
   }
 `;
-const NewRecipeButton = styled.div`
+const ProfileButton = styled.div`
   flex: 1;
   button {
     svg {
@@ -131,9 +131,9 @@ const NewRecipeButton = styled.div`
   }
   @media screen and (max-width: 600px) {
     button {
-      font-size: 0.8rem;
+      font-size: 1rem;
       svg {
-        font-size: 0.6rem;
+        font-size: 0.8rem;
       }
     }
   }
@@ -159,6 +159,15 @@ const NavButton = styled.div`
       font-size: 1.2rem;
       vertical-align: middle;
       margin-bottom: 0.2rem;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    button {
+      svg:first-of-type {
+        font-size: 1.5rem;
+        vertical-align: middle;
+        margin-bottom: 0.2rem;
+      }
     }
   }
 `;
