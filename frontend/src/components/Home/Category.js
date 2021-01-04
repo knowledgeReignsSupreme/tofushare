@@ -11,20 +11,14 @@ const Category = ({ setNewCategory }) => {
     <StyledCategory>
       <>
         <p>קטגוריה:</p>
-        <select name='category'>
+        <select onChange={categoryHandler} name='category'>
           <option disabled value='בחירת קטגוריה'>
             בחירת קטגוריה
           </option>
-          <option onClick={categoryHandler} value=''>
-            הכל
-          </option>
-          <option onClick={categoryHandler} value='מאכלים'>
-            מאכלים
-          </option>
-          <option onClick={categoryHandler} value='עוגות ומתוקים'>
-            עוגות ומתוקים
-          </option>
-          <option onClick={categoryHandler} value='שייקים, נוזלים ותחליפי חלב'>
+          <option value=''>הכל</option>
+          <option value='מאכלים'>מאכלים</option>
+          <option value='עוגות ומתוקים'>עוגות ומתוקים</option>
+          <option value='שייקים, נוזלים ותחליפי חלב'>
             שייקים, נוזלים ותחליפי חלב
           </option>
         </select>

@@ -11,53 +11,24 @@ const Tags = ({ setNewTag }) => {
     <StyledTags>
       <>
         <p>תגית:</p>
-        <select name='tag'>
+        <select onChange={changeTagHandler} name='tag'>
           <option disabled value='בחירת תגית'>
             בחירת תגית
           </option>
-          <option onClick={changeTagHandler} value=''>
-            הכל
-          </option>
-          <option onClick={changeTagHandler} value='מעולה לעצלנים'>
-            מעולה לעצלנים
-          </option>
-          <option onClick={changeTagHandler} value='טעים ומשביע'>
-            טעים ומשביע
-          </option>
-          <option onClick={changeTagHandler} value='פצצת חלבון'>
-            {' '}
-            פצצת חלבון
-          </option>
-          <option onClick={changeTagHandler} value='קל להכנה'>
-            קל להכנה
-          </option>
-          <option onClick={changeTagHandler} value='לא משמין'>
-            לא משמין
-          </option>
-          <option onClick={changeTagHandler} value='קליל'>
-            קליל
-          </option>
-          <option onClick={changeTagHandler} value='מתכון מתקדם'>
-            מתכון מתקדם
-          </option>
-          <option onClick={changeTagHandler} value='ללא גלוטן'>
-            ללא גלוטן
-          </option>
-          <option onClick={changeTagHandler} value='תחליף בשר'>
-            תחליף בשר
-          </option>
-          <option onClick={changeTagHandler} value='מרענן'>
-            מרענן
-          </option>
-          <option onClick={changeTagHandler} value='ליום גשום'>
-            ליום גשום
-          </option>
-          <option onClick={changeTagHandler} value='לאחרי האימון'>
-            לאחרי האימון
-          </option>
-          <option onClick={changeTagHandler} value='מתוק ומפנק'>
-            מתוק ומפנק
-          </option>
+          <option value=''>הכל</option>
+          <option value='מעולה לעצלנים'>מעולה לעצלנים</option>
+          <option value='טעים ומשביע'>טעים ומשביע</option>
+          <option value='פצצת חלבון'> פצצת חלבון</option>
+          <option value='קל להכנה'>קל להכנה</option>
+          <option value='לא משמין'>לא משמין</option>
+          <option value='קליל'>קליל</option>
+          <option value='מתכון מתקדם'>מתכון מתקדם</option>
+          <option value='ללא גלוטן'>ללא גלוטן</option>
+          <option value='תחליף בשר'>תחליף בשר</option>
+          <option value='מרענן'>מרענן</option>
+          <option value='ליום גשום'>ליום גשום</option>
+          <option value='לאחרי האימון'>לאחרי האימון</option>
+          <option value='מתוק ומפנק'>מתוק ומפנק</option>
         </select>
       </>
     </StyledTags>
