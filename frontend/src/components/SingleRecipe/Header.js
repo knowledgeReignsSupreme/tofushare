@@ -15,14 +15,17 @@ const Header = ({ currentRecipe, preview }) => {
   };
   return (
     <>
-      {/* <img
-        src={preview ? currentRecipe.images : currentRecipe.images[0]}
-        alt=''
-      /> */}
-      <img
-        src={currentRecipe.images.location || currentRecipe.images[0]}
-        alt='מתכון'
-      />
+      {preview ? (
+        <img
+          src={currentRecipe.images.location || currentRecipe.images[0]}
+          alt='מתכון'
+        />
+      ) : (
+        <img
+          src={currentRecipe.images[0].location || currentRecipe.images[0]}
+          alt='מתכון'
+        />
+      )}
       <RecipeHeadingWrapper>
         <StyledSubHeading>
           <h2>{currentRecipe.title}</h2>

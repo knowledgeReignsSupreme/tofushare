@@ -16,7 +16,6 @@ const SearchBar = ({ tag, category }) => {
   const history = useHistory();
 
   const searchHandler = () => {
-    console.log(`category: ${newCategory} keyword: ${keyword} tag: ${newTag}`);
     newCategory && keyword && newTag
       ? history.push(
           `/categories/${newCategory}/search/${keyword}/tags/${newTag}`
