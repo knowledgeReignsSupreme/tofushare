@@ -5,6 +5,11 @@ import { cssVariables } from '../../GlobalStyles';
 import { Link } from 'react-router-dom';
 
 const Header = ({ currentRecipe, preview }) => {
+  const formatDate = (date) => {
+    const monthOnly = date.slice(0, 10);
+    return monthOnly.split('-').reverse().join().replaceAll(',', '/');
+  };
+
   const timeIconsStyle = {
     position: 'absolute',
     bottom: 20,
@@ -30,6 +35,9 @@ const Header = ({ currentRecipe, preview }) => {
         <StyledSubHeading>
           <h2>{currentRecipe.title}</h2>
           <h4>{currentRecipe.description}</h4>
+          <StyledCounter>
+            בושל על ידי: {currentRecipe.cookedBy.length} משתמשים
+          </StyledCounter>
           {currentRecipe.createdBy ? (
             <Link to={`/users/${currentRecipe.createdBy}`}>
               <p>באהבה מאת: {currentRecipe.author}</p>
@@ -47,6 +55,7 @@ const Header = ({ currentRecipe, preview }) => {
               </li>
             ))}
           </ol>
+          <p>{formatDate(currentRecipe.createdAt)}</p>
         </StyledTags>
       </RecipeHeadingWrapper>
       <RecipeCookingTime>
@@ -74,6 +83,12 @@ const RecipeHeadingWrapper = styled.div`
   border-bottom: 1px solid black;
 `;
 
+const StyledCounter = styled.p`
+  font-size: 1rem;
+  font-weight: bold;
+  color: ${cssVariables.secColorDark};
+`;
+
 const StyledSubHeading = styled.div`
   align-self: flex-start;
   width: 70%;
@@ -81,8 +96,6 @@ const StyledSubHeading = styled.div`
 `;
 
 const StyledTags = styled.div`
-  margin: 0.5rem 0;
-
   ol {
     margin-top: 1rem;
     margin-bottom: 0.3rem;
@@ -92,6 +105,10 @@ const StyledTags = styled.div`
       margin-bottom: 0.3rem;
       white-space: nowrap;
     }
+  }
+  p {
+    font-size: 0.9rem;
+    color: #7a7878;
   }
 `;
 

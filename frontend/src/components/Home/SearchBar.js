@@ -8,7 +8,6 @@ import { FaSearch } from 'react-icons/fa';
 
 const SearchBar = ({ tag, category }) => {
   const [keyword, setKeyword] = useState('');
-  const [newKeyword, setNewKeyword] = useState('');
   const [newTag, setNewTag] = useState('');
   const [newCategory, setNewCategory] = useState('');
 
@@ -46,24 +45,10 @@ const SearchBar = ({ tag, category }) => {
         {isSearching && (
           <StyledSearchBar>
             <QueryButtons>
-              <Category
-                setKeyword={setKeyword}
-                setNewCategory={setNewCategory}
-              />
-              <Tags
-                setNewTag={setNewTag}
-                setKeyword={setKeyword}
-                category={category}
-                keyword={keyword}
-              />
+              <Category setNewCategory={setNewCategory} />
+              <Tags setNewTag={setNewTag} />
             </QueryButtons>
-            <Search
-              setNewKeyword={setNewKeyword}
-              tag={tag}
-              keyword={keyword}
-              setKeyword={setKeyword}
-              category={category}
-            />
+            <Search keyword={keyword} setKeyword={setKeyword} />
             <button onClick={searchHandler}>
               <FaSearch />
               חיפוש

@@ -13,7 +13,7 @@ import UserCooked from '../components/SingleRecipe/UserCooked';
 import ErrorMessage from '../components/ErrorMessage';
 import NotRegistered from '../components/NotRegistered';
 import CommonLoader from '../components/CommonLoader';
-import { FaRegComment, FaRegBookmark, FaConciergeBell } from 'react-icons/fa';
+import { FaRegComment, FaRegBookmark, FaFireAlt } from 'react-icons/fa';
 
 const SingleRecipe = ({ match }) => {
   const currentRecipeId = match.params.id;
@@ -58,7 +58,7 @@ const SingleRecipe = ({ match }) => {
                 <NotRegistered
                   buttonText='הכנתי את המתכון!'
                   message='אינך רשום/ה'
-                  icon={<FaConciergeBell />}
+                  icon={<FaFireAlt />}
                 />
                 <NotRegistered
                   buttonText='שמירת מתכון'
@@ -116,7 +116,7 @@ const WrappedButtons = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  margin-top: 3rem;
+  margin-top: 1rem;
 `;
 
 export default SingleRecipe;

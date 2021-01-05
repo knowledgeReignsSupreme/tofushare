@@ -37,6 +37,12 @@ const StyledRemarks = styled.div`
   }
   p {
     margin-top: 0.3rem;
+    margin-right: 5px;
+  }
+  p,
+  h3,
+  a {
+    margin-right: 5px;
   }
 `;
 export default Remarks;
