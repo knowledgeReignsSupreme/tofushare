@@ -50,21 +50,21 @@ const Bio = ({ currentUser, loggedUser, header }) => {
         <StyledSocial>
           {currentUser.facebookLink &&
             (success ? (
-              <a href={`https://${updatedData.facebookLink}`}>
+              <a href={`${updatedData.facebookLink}`}>
                 <FaFacebook />
               </a>
             ) : (
-              <a href={`https://${currentUser.facebookLink}`}>
+              <a href={`${currentUser.facebookLink}`}>
                 <FaFacebook />
               </a>
             ))}
           {currentUser.instagramLink &&
             (success ? (
-              <a href={`https://${updatedData.instagramLink}`}>
+              <a href={`${updatedData.instagramLink}`}>
                 <FaInstagram />
               </a>
             ) : (
-              <a href={`https://${currentUser.instagramLink}`}>
+              <a href={`${currentUser.instagramLink}`}>
                 <FaInstagram />
               </a>
             ))}
@@ -76,25 +76,25 @@ const Bio = ({ currentUser, loggedUser, header }) => {
           </BioButton>
         )}
       </StyledBio>
-      {isEditing && loggedUser && (
+      {isEditing && currentUser && (
         <StyledEdit onSubmit={editSubmitHandler}>
           <label htmlFor=''>קצת עליי:</label>
           <input
             type='text'
-            defaultValue={loggedUser.bio}
+            defaultValue={currentUser.bio}
             onChange={(e) => setBio(e.target.value)}
           />
-          <label htmlFor=''>קישור לאינסגרטם:</label>
+          <label htmlFor=''>קישור לאינסטגרם:</label>
           <input
             type='text'
-            defaultValue={loggedUser.instagramLink}
+            placeholder={currentUser.instagramLink || 'קישור לאינסטגרם'}
             onChange={(e) => setInstagramLink(e.target.value)}
           />
           <label htmlFor=''>קישור לפייסבוק:</label>
 
           <input
             type='text'
-            defaultValue={loggedUser.facebookLink}
+            placeholder={currentUser.instagramLink || 'קישור לפייסבוק'}
             onChange={(e) => setFacebookLink(e.target.value)}
           />
           <EditButton type='button' onClick={editSubmitHandler}>
@@ -120,7 +120,7 @@ const BioButton = styled(mainColorButton)`
 
 const StyledBio = styled.div`
   background: ${cssVariables.mainColorLight};
-  padding: 0.5rem 0;
+  padding: 0.3rem 0 1rem;
   display: flex;
   flex-direction: column;
   svg {

@@ -12,6 +12,7 @@ const Footer = () => {
         <Link to='/'>
           <img src={logo} alt='logo' />
           <p>Plant Share</p>
+          <h5>V1 Beta</h5>
         </Link>
         <h4>לבשל עם חמלה.</h4>
         <h4>
@@ -37,6 +38,9 @@ const StyledFooter = styled.footer`
   margin-top: 3rem;
   h4 {
     margin-top: 0.5rem;
+  }
+  h5 {
+    font-size: 0.8rem;
   }
   svg {
     margin-right: 0.5rem;

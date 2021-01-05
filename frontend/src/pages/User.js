@@ -46,15 +46,20 @@ const User = ({ match }) => {
             setShowSocial={setShowSocial}
             loggedUser={false}
           />
-          {showCreated && userData.createdRecipes.length >= 1
-            ? userData.createdRecipes.map((recipe) => (
+          {showCreated && userData.createdRecipes.length >= 1 ? (
+            <>
+              <h2>מתכונים שנוצרו:</h2>
+              {userData.createdRecipes.map((recipe) => (
                 <Recipes
                   mappedRecipe={recipe}
                   header='מתכונים שנוצרו:'
                   key={uuid()}
                 />
-              ))
-            : showCreated && <h3>משתמש זה עדיין לא ייצר מתכונים</h3>}
+              ))}
+            </>
+          ) : (
+            showCreated && <h3>משתמש זה עדיין לא ייצר מתכונים</h3>
+          )}
 
           {showSocial && (
             <Bio currentUser={userData} loggedUser={false} header='קצת עליי:' />
@@ -65,6 +70,10 @@ const User = ({ match }) => {
   );
 };
 
-const StyledUser = styled(GlobalStyledUser)``;
+const StyledUser = styled(GlobalStyledUser)`
+  h2 {
+    margin: 1rem 0;
+  }
+`;
 
 export default User;

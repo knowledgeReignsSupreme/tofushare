@@ -68,7 +68,7 @@ const Save = ({ currentRecipe }) => {
         )}
         {userInfo.savedRecipes.includes(currentRecipe._id) ||
         userSaved.success ? (
-          <p>ניתן לצפות במתכונים השמורים בפרופיל</p>
+          <p>זמין לצפייה בפרופיל</p>
         ) : (
           ''
         )}
@@ -84,7 +84,7 @@ const StyledSave = styled.div`
   }
   p {
     font-size: 0.8rem;
-    margin-top: 0.2rem;
+    margin-top: 0 !important;
     color: ${cssVariables.secColorDark};
   }
 `;

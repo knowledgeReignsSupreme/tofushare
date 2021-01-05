@@ -5,12 +5,12 @@ import styled from 'styled-components';
 const Recipes = ({ mappedRecipe, header }) => {
   return (
     <>
-      <StyledHeader>
-        <h2>{header}</h2>
-      </StyledHeader>
       <StyledRecipe>
         <Link to={`/recipes/${mappedRecipe._id}`}>
-          <img src={mappedRecipe.images[0]} alt='' />
+          <img
+            src={mappedRecipe.images[0].location || mappedRecipe.images[0]}
+            alt=''
+          />
           <StyledDetails>
             <h3>{mappedRecipe.title}</h3>
             <p>{mappedRecipe.description}</p>

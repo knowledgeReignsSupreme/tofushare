@@ -57,24 +57,34 @@ const Profile = () => {
             setShowSocial={setShowSocial}
             loggedUser={userInfo}
           />
-          {showCreated && userData.createdRecipes.length >= 1
-            ? userData.createdRecipes.map((recipe) => (
+          {showCreated && userData.createdRecipes.length >= 1 ? (
+            <>
+              <h2>מתכונים שנוצרו:</h2>
+              {userData.createdRecipes.map((recipe) => (
                 <Recipes
                   mappedRecipe={recipe}
                   header='מתכונים שנוצרו:'
                   key={uuid()}
                 />
-              ))
-            : showCreated && <h1>עוד לא יצרת מתכונים</h1>}
-          {showSaved && userData.savedRecipes.length >= 1
-            ? userData.savedRecipes.map((recipe) => (
+              ))}
+            </>
+          ) : (
+            showCreated && <h1>עוד לא יצרת מתכונים</h1>
+          )}
+          {showSaved && userData.savedRecipes.length >= 1 ? (
+            <>
+              <h2>מתכונים שמורים:</h2>
+              {userData.savedRecipes.map((recipe) => (
                 <Recipes
                   mappedRecipe={recipe}
                   header='מתכונים שמורים:'
                   key={uuid()}
                 />
-              ))
-            : showSaved && <h1>עוד לא שמרת מתכונים</h1>}
+              ))}
+            </>
+          ) : (
+            showSaved && <h1>עוד לא שמרת מתכונים</h1>
+          )}
           {showSocial && (
             <Bio
               currentUser={userData}
@@ -90,6 +100,10 @@ const Profile = () => {
   );
 };
 
-const StyledProfile = styled(GlobalStyledUser)``;
+const StyledProfile = styled(GlobalStyledUser)`
+  h2 {
+    margin: 1rem 0;
+  }
+`;
 
 export default Profile;

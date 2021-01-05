@@ -150,9 +150,9 @@ const Form = () => {
   const postHandler = (e) => {
     e.preventDefault();
     formValidator();
-    if (!formValidator && !isImageUploading) {
+    if (!formValidator() && !isImageUploading) {
       setShowRemarks(true);
-    } else if (formValidator) {
+    } else if (formValidator()) {
       dispatch(postRecipe(newRecipe, userInfo.token));
     }
   };
