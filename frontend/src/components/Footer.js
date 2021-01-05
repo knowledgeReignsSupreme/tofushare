@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { cssVariables } from '../GlobalStyles';
 import { FaGithub } from 'react-icons/fa';
-import logo from '../icon.svg';
+import logo from '../logo.svg';
 
 const Footer = () => {
   return (
@@ -11,7 +11,7 @@ const Footer = () => {
       <StyledLogo>
         <Link to='/'>
           <img src={logo} alt='logo' />
-          <p>Plant Share</p>
+          <p>Tofu Share</p>
           <h5>V1 Beta</h5>
         </Link>
         <h4>לבשל עם חמלה.</h4>

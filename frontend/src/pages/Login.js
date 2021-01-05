@@ -33,7 +33,7 @@ const Login = () => {
   return (
     <>
       <Helmet>
-        <title>Plant Share | התחברות</title>
+        <title>Tofu Share | התחברות</title>
         <meta name='description' content='התחברות משתמש לאתר' />
       </Helmet>
 

@@ -34,7 +34,7 @@ const SingleRecipe = ({ match }) => {
   return (
     <>
       <Helmet>
-        <title>Plant Share | {currentRecipe.title || ''}</title>
+        <title>Tofu Share | {currentRecipe.title || ''}</title>
         <meta name='description' content='מתכון' />
       </Helmet>
       {isLoading ? (

@@ -27,7 +27,7 @@ const Home = ({ match }) => {
   return (
     <>
       <Helmet>
-        <title>Plant Share | Home</title>
+        <title>Tofu Share | Home</title>
         <meta name='description' content='אתר שיתופי למתכונים טבועניים' />
       </Helmet>
 

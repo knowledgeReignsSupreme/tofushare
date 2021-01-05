@@ -62,7 +62,7 @@ const Register = () => {
   return (
     <>
       <Helmet>
-        <title>Plant Share | הרשמה</title>
+        <title>Tofu Share | הרשמה</title>
         <meta name='description' content='רישום משתמש חדש' />
       </Helmet>
 

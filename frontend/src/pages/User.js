@@ -31,7 +31,7 @@ const User = ({ match }) => {
     <div>
       {userData && (
         <Helmet>
-          <title>Plant Share | {!userData.name ? '' : userData.name}</title>
+          <title>Tofu Share | {!userData.name ? '' : userData.name}</title>
           <meta name='description' content='פרופיל משתמש' />
         </Helmet>
       )}

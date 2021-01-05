@@ -39,7 +39,7 @@ const Profile = () => {
     <>
       {userInfo && (
         <Helmet>
-          <title>Plant Share | {userInfo.name || ''}</title>
+          <title>Tofu Share | {userInfo.name || ''}</title>
           <meta name='description' content='פרופיל משתמש' />
         </Helmet>
       )}

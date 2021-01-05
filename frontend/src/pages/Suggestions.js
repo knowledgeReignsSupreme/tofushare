@@ -61,7 +61,7 @@ const Suggestions = () => {
   return (
     <>
       <Helmet>
-        <title>Plant Share | הצעות לשיפור</title>
+        <title>Tofu Share | הצעות לשיפור</title>
         <meta name='description' content='דף דיווח על באגים או הצעות שיפור' />
       </Helmet>
 

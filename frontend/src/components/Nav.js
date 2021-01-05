@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { cssVariables, mainColorButton } from '../GlobalStyles';
-import logo from '../icon.svg';
+import logo from '../logo.svg';
 import OpenNav from './OpenNav';
 import { FaUser, FaBars } from 'react-icons/fa';
 
@@ -32,7 +32,7 @@ const Nav = () => {
           <StyledLogo>
             <Link to='/'>
               <img src={logo} alt='logo' />
-              <p>Plant Share</p>
+              <p>Tofu Share</p>
             </Link>
           </StyledLogo>
           <ProfileButton>
@@ -107,9 +107,10 @@ const StyledLogo = styled.div`
   align-items: center;
   flex-direction: column;
   cursor: pointer;
+
   flex: 1;
   p {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: bold;
   }
   input {
@@ -117,8 +118,8 @@ const StyledLogo = styled.div`
   }
   img {
     margin-top: 0.3rem;
-    height: 30px;
-    width: 30px;
+    height: 35px;
+    width: 35px;
   }
 `;
 const ProfileButton = styled.div`

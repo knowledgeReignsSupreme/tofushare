@@ -10,7 +10,7 @@ import {
   FaTimes,
   FaUser,
 } from 'react-icons/fa';
-import logo from '../icon.svg';
+import logo from '../logo.svg';
 
 const OpenNav = ({ isNavOpen, setIsNavOpen, userInfo }) => {
   return (
@@ -22,7 +22,7 @@ const OpenNav = ({ isNavOpen, setIsNavOpen, userInfo }) => {
         <Link to='/' onClick={() => setIsNavOpen(!isNavOpen)}>
           <OpenStyledLogo>
             <img src={logo} alt='logo' />
-            <p>Plant Share</p>
+            <p>Tofu Share</p>
           </OpenStyledLogo>
         </Link>
 

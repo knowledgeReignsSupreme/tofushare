@@ -18,7 +18,7 @@ const NewRecipe = () => {
   return (
     <>
       <Helmet>
-        <title>Plant Share | מתכון חדש</title>
+        <title>Tofu Share | מתכון חדש</title>
         <meta name='description' content='הוספת מתכון חדש' />
       </Helmet>
 
