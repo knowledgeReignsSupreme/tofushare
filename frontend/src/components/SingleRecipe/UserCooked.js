@@ -5,7 +5,7 @@ import { getSingleRecipe } from '../../actions/RecipesActions';
 
 import styled from 'styled-components';
 import { transparentButton } from '../../GlobalStyles';
-import { FaConciergeBell } from 'react-icons/fa';
+import { FaConciergeBell, FaFireAlt } from 'react-icons/fa';
 
 const UserCooked = ({ user, currentRecipe }) => {
   const [userAlreadyCooked, setUserAlreadyCooked] = useState(false);
@@ -52,13 +52,13 @@ const UserCooked = ({ user, currentRecipe }) => {
                 borderRadius: 'initial',
               }}
             />
-            השתמשמת במתכון!
+            השתמשת במתכון
           </StyledButton>
         </>
       ) : (
         <>
           <StyledButton onClick={cookedHandler}>
-            <FaConciergeBell />
+            <FaFireAlt />
             הכנתי את המתכון!
           </StyledButton>
           <p>השתמשת במתכון? לחץ/י על הכפתור!</p>
@@ -77,9 +77,6 @@ const StyledCooked = styled.div`
   }
   svg {
     margin-left: 0.3rem;
-    color: white;
-    background-color: #626262;
-    border-radius: 3px;
   }
 `;
 

@@ -22,9 +22,7 @@ const Recipes = ({ mappedRecipe, header }) => {
     </>
   );
 };
-const StyledHeader = styled.div`
-  margin-bottom: 1rem;
-`;
+
 const StyledRecipe = styled.div`
   display: flex;
   width: 80%;

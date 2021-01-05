@@ -87,7 +87,7 @@ const Body = ({ currentRecipe }) => {
 };
 
 const StyledSingleRecipeBody = styled.div`
-  margin-top: 1rem;
+  margin: 1rem 0;
   align-self: flex-start;
   display: flex;
   justify-content: space-between;
