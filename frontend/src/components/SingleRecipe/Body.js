@@ -28,6 +28,14 @@ const Body = ({ currentRecipe }) => {
     return +currentIng + (currentIng / currentRecipe.dishesAmmount) * math;
   };
 
+  const isFloat = (number) => {
+    if (number > 0.1) {
+      return number % 1 === 0;
+    } else {
+      return false;
+    }
+  };
+
   useEffect(() => {
     setDishes(currentRecipe.dishesAmmount);
     setDishMath(0);
@@ -66,8 +74,13 @@ const Body = ({ currentRecipe }) => {
           {currentRecipe.ingredients.map((ingredient) => (
             <IngredientAmmount key={uuid()}>
               <p>
-                {ingredient.ammount > 0.1 &&
-                  ingredientFormatter(ingredient.ammount, dishMath).toFixed(1)}
+                {ingredient.ammount !== 0
+                  ? isFloat(ingredientFormatter(ingredient.ammount, dishMath))
+                    ? ingredientFormatter(ingredient.ammount, dishMath)
+                    : ingredientFormatter(ingredient.ammount, dishMath).toFixed(
+                        1
+                      )
+                  : ''}
               </p>
               <p>{ingredient.name}</p>
             </IngredientAmmount>
