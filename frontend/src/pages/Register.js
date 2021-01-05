@@ -15,7 +15,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [emailError, setEmailError] = useState(false);
-
+  const [nameLengthError, setNameLengthError] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
   const userRegister = useSelector((state) => state.userRegister);
@@ -49,8 +49,12 @@ const Register = () => {
     if (password === confirmPassword && password.length <= 5) {
       setPasswordError('סיסמה חייבת להכיל לפחות 6 תווים');
     }
+    if (name.trim().length <= 2 || name.length > 13) {
+      setNameLengthError('שם משתמש חייב להיות בין 3 ל-13 תווים');
+    }
     if (
       name.trim().length > 2 &&
+      name.length <= 13 &&
       isValidEmail(email) &&
       password === confirmPassword &&
       password.length >= 6
@@ -117,6 +121,11 @@ const Register = () => {
         {error && (
           <StyledError>
             <p>{error}</p>
+          </StyledError>
+        )}
+        {nameLengthError && (
+          <StyledError>
+            <p>{nameLengthError}</p>
           </StyledError>
         )}
         {isLoading && <CommonLoader size='80' />}

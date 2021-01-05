@@ -34,21 +34,16 @@ const Header = ({ currentUser, loggedUser }) => {
     <div>
       <>
         {currentUser ? (
-          <StyledHeader>
-            <StyledImage>
-              {currentUser.image ? (
-                <img src={currentUser.image.location} alt='user' />
-              ) : (
-                <img src={userImage} alt='user' />
-              )}
-              {loggedUser && (
-                <StyledLoggedUser>
-                  <UploadButton onClick={() => setIsEditing(!isEditing)}>
-                    העלאת תמונה
-                  </UploadButton>
-                  <LogoutButton onClick={logoutHandler}>התנתקות</LogoutButton>
-                </StyledLoggedUser>
-              )}
+          <>
+            <StyledHeader>
+              <StyledImage>
+                {currentUser.image ? (
+                  <img src={currentUser.image.location} alt='user' />
+                ) : (
+                  <img src={userImage} alt='user' />
+                )}
+              </StyledImage>
+
               {isEditing && loggedUser && (
                 <ImageUpload
                   isEditing={isEditing}
@@ -56,21 +51,29 @@ const Header = ({ currentUser, loggedUser }) => {
                   currentUser={loggedUser}
                 />
               )}
-            </StyledImage>
-            <StyledDetails>
-              <h1>{currentUser.name}</h1>
-              <p>מתכונים: {currentUser.createdRecipes.length}</p>
-              {currentUser.createdRecipes.length >= 1 ? (
-                <p>
-                  המתכונים שלי בושלו{' '}
-                  {userCookedCalc(currentUser.createdRecipes)} פעמים
-                </p>
-              ) : (
-                <p>המתכונים שלי בושלו 0 פעמים</p>
-              )}
-              <p>רשום/ה מאז: {formatDate(currentUser.createdAt)}</p>
-            </StyledDetails>
-          </StyledHeader>
+              <StyledDetails>
+                <h1>{currentUser.name}</h1>
+                <p>מתכונים: {currentUser.createdRecipes.length}</p>
+                {currentUser.createdRecipes.length >= 1 ? (
+                  <p>
+                    המתכונים שלי בושלו{' '}
+                    {userCookedCalc(currentUser.createdRecipes)} פעמים
+                  </p>
+                ) : (
+                  <p>המתכונים שלי בושלו 0 פעמים</p>
+                )}
+                <p>רשום/ה מאז: {formatDate(currentUser.createdAt)}</p>
+              </StyledDetails>
+            </StyledHeader>
+            {loggedUser && (
+              <StyledLoggedUser>
+                <UploadButton onClick={() => setIsEditing(!isEditing)}>
+                  העלאת תמונה
+                </UploadButton>
+                <LogoutButton onClick={logoutHandler}>התנתקות</LogoutButton>
+              </StyledLoggedUser>
+            )}
+          </>
         ) : (
           ''
         )}
@@ -83,7 +86,9 @@ const StyledLoggedUser = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  margin-bottom: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid black;
+
   button {
     align-self: flex-end;
     margin-bottom: -0.5rem;
@@ -96,8 +101,6 @@ const StyledLoggedUser = styled.div`
 const StyledHeader = styled.div`
   width: 100%;
   display: flex;
-  border-bottom: 1px solid black;
-  padding-bottom: 1rem;
   input {
     width: 100%;
   }
@@ -108,10 +111,15 @@ const StyledHeader = styled.div`
     float: right;
     shape-outside: circle(50%);
     object-fit: cover;
+    margin-left: 0.5rem;
     @media screen and (max-width: 600px) {
       height: 6rem;
       width: 6rem;
+      margin-left: 0.5rem;
     }
+  }
+  h1 {
+    font-size: 1.5rem !important;
   }
 `;
 
@@ -119,6 +127,7 @@ const StyledImage = styled.div`
   display: flex;
   flex-direction: column;
   width: 8rem;
+  height: auto;
   button {
     margin-top: 0.5rem;
   }
@@ -130,13 +139,16 @@ const StyledDetails = styled.div`
   }
   margin-right: 0.5rem;
   @media screen and (max-width: 600px) {
-    height: 6rem;
+    height: auto;
     margin-right: -1rem;
   }
-  height: 7rem;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  p {
+    margin-top: 0.5rem;
+  }
 `;
 
 const UploadButton = styled(secColorButton)``;
