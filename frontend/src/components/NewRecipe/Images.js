@@ -12,9 +12,10 @@ const Images = ({
   setIsImageUploading,
 }) => {
   const [uploadError, setUploadError] = useState(false);
+  const [uploadTypeError, setUploadTypeError] = useState(false);
 
   const checkFile = (file) => {
-    if (file.size < 3000000) {
+    if (file.size < 10000000) {
       return true;
     } else {
       return false;
@@ -25,6 +26,7 @@ const Images = ({
     const file = e.target.files[0];
     if (checkFile(file)) {
       setUploadError(false);
+      setUploadTypeError(false);
       const formData = new FormData();
       formData.append('file', file);
       setIsImageUploading(true);
@@ -40,6 +42,7 @@ const Images = ({
         setIsImageUploading(false);
       } catch (error) {
         setIsImageUploading(false);
+        setUploadTypeError(true);
       }
     } else {
       setUploadError(true);
@@ -66,7 +69,12 @@ const Images = ({
       )}
       {uploadError && (
         <span>
-          <p>תמונה גדולה מדי. על התמונה להיות פחות מ 3MB</p>
+          <p>תמונה גדולה מדי. על התמונה להיות פחות מ 10MB</p>
+        </span>
+      )}
+      {uploadTypeError && (
+        <span>
+          <p>קבצי JPG,JPEG,PNG בלבד</p>
         </span>
       )}
       {isImageUploading ? <CommonLoader size='30' /> : ''}

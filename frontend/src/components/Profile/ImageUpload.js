@@ -10,8 +10,10 @@ import { FaUpload } from 'react-icons/fa';
 const ImageUpload = ({ isEditing, setIsEditing, currentUser }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(false);
+  const [uploadTypeError, setUploadTypeError] = useState(false);
   const [newImage, setNewImage] = useState('');
   const [fileName, setFileName] = useState(false);
+
   const dispatch = useDispatch();
 
   const fileInfoHandler = async (e) => {
@@ -23,6 +25,8 @@ const ImageUpload = ({ isEditing, setIsEditing, currentUser }) => {
     if (checkFile(file)) {
       setUploadError(false);
       setIsUploading(true);
+      setUploadTypeError(false);
+
       try {
         const config = {
           headers: {
@@ -30,11 +34,16 @@ const ImageUpload = ({ isEditing, setIsEditing, currentUser }) => {
             'Content-Type': 'multipart/form-data',
           },
         };
-        const { data } = await axios.post('/api/upload', formData, config);
+        const { data } = await axios.post(
+          '/api/upload/profile',
+          formData,
+          config
+        );
         setNewImage(data);
         setIsUploading(false);
       } catch (error) {
         setIsUploading(false);
+        setUploadTypeError(true);
       }
     } else {
       setUploadError(true);
@@ -42,7 +51,7 @@ const ImageUpload = ({ isEditing, setIsEditing, currentUser }) => {
   };
 
   const checkFile = (file) => {
-    if (file.size < 3000000) {
+    if (file.size < 10000000) {
       return true;
     } else {
       return false;
@@ -50,15 +59,17 @@ const ImageUpload = ({ isEditing, setIsEditing, currentUser }) => {
   };
 
   const uploadFileHandler = () => {
-    if (!isUploading && !uploadError) {
-      dispatch(
-        updateUser(currentUser, {
-          _id: currentUser._id,
-          image: newImage,
-        })
-      );
+    if (newImage.image.length > 3) {
+      if (!isUploading && !uploadError) {
+        dispatch(
+          updateUser(currentUser, {
+            _id: currentUser._id,
+            image: newImage,
+          })
+        );
+      }
+      window.location.reload();
     }
-    window.location.reload();
   };
 
   return (
@@ -75,7 +86,9 @@ const ImageUpload = ({ isEditing, setIsEditing, currentUser }) => {
         onChange={fileInfoHandler}
       />
       {fileName && <p>שם הקובץ: {fileName} </p>}
-      {uploadError && <p>הקובץ גדול מדי. הגודל המקסימלי הינו 3MB</p>}
+      {uploadError && <p>הקובץ גדול מדי. הגודל המקסימלי הינו 10MB</p>}
+      {uploadTypeError && <p>קבצי PNG,JPEG,JPG בלבד</p>}
+
       {isUploading ? (
         <UploadButton disabled={true}>
           <FaUpload />
@@ -98,6 +111,7 @@ const StyledUpload = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-top: 1rem;
   p {
     font-weight: bold;
     &:not(:first-of-type) {

@@ -35,9 +35,11 @@ const Header = ({ currentRecipe, preview }) => {
         <StyledSubHeading>
           <h2>{currentRecipe.title}</h2>
           <h4>{currentRecipe.description}</h4>
-          <StyledCounter>
-            בושל על ידי: {currentRecipe.cookedBy.length} משתמשים
-          </StyledCounter>
+          {currentRecipe.cookedBy && (
+            <StyledCounter>
+              בושל על ידי: {currentRecipe.cookedBy.length} משתמשים
+            </StyledCounter>
+          )}
           {currentRecipe.createdBy ? (
             <Link to={`/users/${currentRecipe.createdBy}`}>
               <p>באהבה מאת: {currentRecipe.author}</p>
@@ -55,7 +57,9 @@ const Header = ({ currentRecipe, preview }) => {
               </li>
             ))}
           </ol>
-          <p>{formatDate(currentRecipe.createdAt)}</p>
+          {currentRecipe.createdAt && (
+            <p>{formatDate(currentRecipe.createdAt)}</p>
+          )}
         </StyledTags>
       </RecipeHeadingWrapper>
       <RecipeCookingTime>

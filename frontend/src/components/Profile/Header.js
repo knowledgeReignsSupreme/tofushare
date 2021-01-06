@@ -44,13 +44,6 @@ const Header = ({ currentUser, loggedUser }) => {
                 )}
               </StyledImage>
 
-              {isEditing && loggedUser && (
-                <ImageUpload
-                  isEditing={isEditing}
-                  setIsEditing={setIsEditing}
-                  currentUser={loggedUser}
-                />
-              )}
               <StyledDetails>
                 <h1>{currentUser.name}</h1>
                 <p>מתכונים: {currentUser.createdRecipes.length}</p>
@@ -72,6 +65,13 @@ const Header = ({ currentUser, loggedUser }) => {
                 </UploadButton>
                 <LogoutButton onClick={logoutHandler}>התנתקות</LogoutButton>
               </StyledLoggedUser>
+            )}
+            {isEditing && loggedUser && (
+              <ImageUpload
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+                currentUser={loggedUser}
+              />
             )}
           </>
         ) : (
@@ -110,8 +110,8 @@ const StyledHeader = styled.div`
     border-radius: 50%;
     float: right;
     shape-outside: circle(50%);
-    object-fit: cover;
     margin-left: 0.5rem;
+
     @media screen and (max-width: 600px) {
       height: 6rem;
       width: 6rem;

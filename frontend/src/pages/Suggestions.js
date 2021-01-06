@@ -7,7 +7,7 @@ import { cssVariables, mainColorButton } from '../GlobalStyles';
 import { FaPaperPlane } from 'react-icons/fa';
 import CommonLoader from '../components/CommonLoader';
 
-init('user_tvT3XOjtXRjtzeC9w0SRj');
+init(process.env.EMAIL_JS_USER);
 
 const Suggestions = () => {
   const [userName, setUserName] = useState('');
@@ -46,7 +46,7 @@ const Suggestions = () => {
           'service_vu1mupn',
           'template_qe0x8kp',
           e.target,
-          'user_tvT3XOjtXRjtzeC9w0SRj'
+          process.env.EMAIL_JS_USER
         )
         .then(
           (result) => {
