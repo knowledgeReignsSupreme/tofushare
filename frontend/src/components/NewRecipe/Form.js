@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postRecipe } from '../../actions/RecipesActions';
 import styled from 'styled-components';
@@ -57,7 +57,7 @@ const Form = () => {
   const [isValid, setIsValid] = useState(null);
   const [isPreviewOn, setIsPreviewOn] = useState(false);
   const [isImageUploading, setIsImageUploading] = useState(false);
-
+  const [check, setCheck] = useState(false);
   const newRecipe = {
     title,
     description,
@@ -80,7 +80,7 @@ const Form = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const formValidator = () => {
+  const formValidator = useCallback(() => {
     if (title.length <= 3) {
       setTitleError(true);
       setIsValid(false);
@@ -95,12 +95,12 @@ const Form = () => {
       setDescriptionError(false);
       setIsValid(true);
     }
-    if (images.length <= 3) {
-      setImagesError(true);
-      setIsValid(false);
-    } else {
+    if (images.image) {
       setImagesError(false);
       setIsValid(true);
+    } else {
+      setImagesError(true);
+      setIsValid(false);
     }
     if (prepTime <= 0 || !prepTime) {
       setPrepTimeError(true);
@@ -145,14 +145,43 @@ const Form = () => {
       setIsValid(true);
     }
     return isValid;
-  };
+  }, [
+    title.length,
+    description.length,
+    images,
+    prepTime,
+    cookingTime,
+    category,
+    dishesAmmount,
+    ingredients.length,
+    instructions.length,
+    isValid,
+  ]);
+
+  useEffect(() => {
+    formValidator();
+  }, [
+    title.length,
+    description.length,
+    images,
+    prepTime,
+    cookingTime,
+    category,
+    dishesAmmount,
+    ingredients.length,
+    instructions.length,
+    check,
+    formValidator,
+  ]);
 
   const postHandler = (e) => {
     e.preventDefault();
-    formValidator();
-    if (!formValidator() && !isImageUploading) {
+    setCheck(true);
+    console.log(formValidator());
+    console.log(images);
+    if (!formValidator() || isImageUploading) {
       setShowRemarks(true);
-    } else if (formValidator()) {
+    } else if (formValidator() && !isImageUploading) {
       dispatch(postRecipe(newRecipe, userInfo.token));
     }
   };
@@ -168,16 +197,19 @@ const Form = () => {
             setDescription={setDescription}
             description={description}
             descriptionError={descriptionError}
+            check={check}
           />
           <Category
             setCategory={setCategory}
             category={category}
             categoryError={categoryError}
+            check={check}
           />
           <DishesAmmount
             dishesAmmount={dishesAmmount}
             setDishesAmmount={setDishesAmmount}
             dishesAmmountError={dishesAmmountError}
+            check={check}
           />
           <Website setWebsite={setWebsite} />
           <Ingredients
@@ -188,11 +220,13 @@ const Form = () => {
             ingredientAmmount={ingredientAmmount}
             ingredientName={ingredientName}
             ingredientError={ingredientError}
+            check={check}
           />
           <Instructions
             setInstructions={setInstructions}
             instructions={instructions}
             instructionError={instructionError}
+            check={check}
           />
           <Images
             setImages={setImages}
@@ -200,16 +234,19 @@ const Form = () => {
             imagesError={imagesError}
             isImageUploading={isImageUploading}
             setIsImageUploading={setIsImageUploading}
+            check={check}
           />
           <PrepTime
             setPrepTime={setPrepTime}
             prepTime={prepTime}
             prepTimeError={prepTimeError}
+            check={check}
           />
           <CookingTime
             setCookingTime={setCookingTime}
             cookingTime={cookingTime}
             cookingTimeError={cookingTimeError}
+            check={check}
           />
           <Difficulty setDifficulty={setDifficulty} />
           <Tags tags={tags} setTags={setTags} />
@@ -235,12 +272,12 @@ const Form = () => {
           {isPreviewOn && !newRecipe.dishesAmmount >= 1 && (
             <p>* ניתן להשתמש בתצוגה מקדימה רק לאחר ציון מספר מנות</p>
           )}
-          {showRemakrs && (
+          {/* {showRemakrs && (
             <span>
               {' '}
               <p>הטופס אינו תקין. נא לשים לב לשדות נדרשים לפני השליחה</p>
             </span>
-          )}
+          )} */}
           {error && (
             <span>
               <p>נא לוודא שהטופס תקין או לנסות שוב</p>

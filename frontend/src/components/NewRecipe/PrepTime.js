@@ -3,7 +3,7 @@ import { GlobalStyledLabel, InputWrapper } from '../../GlobalStyles';
 import styled from 'styled-components';
 import Explanation from './Explanation';
 
-const PrepTime = ({ setPrepTime, prepTime, prepTimeError }) => {
+const PrepTime = ({ setPrepTime, prepTime, prepTimeError, check }) => {
   const [isExplaining, setIsExplaining] = useState(false);
 
   return (
@@ -33,7 +33,7 @@ const PrepTime = ({ setPrepTime, prepTime, prepTimeError }) => {
         min='1'
         onChange={(e) => setPrepTime(e.target.value)}
       />
-      {prepTimeError && (
+      {prepTimeError && check && (
         <span>
           <p>חובה להזין זמן במספר בלבד</p>
         </span>

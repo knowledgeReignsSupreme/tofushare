@@ -7,6 +7,7 @@ const DishesAmmount = ({
   dishesAmmount,
   setDishesAmmount,
   dishesAmmountError,
+  check,
 }) => {
   const [isExplaining, setIsExplaining] = useState(false);
 
@@ -39,7 +40,7 @@ const DishesAmmount = ({
         max='8'
         onChange={(e) => setDishesAmmount(e.target.value)}
       />
-      {dishesAmmountError && (
+      {dishesAmmountError && check && (
         <span>
           <p>מספר המנות חייב להיות בין 1 ל 8</p>
         </span>

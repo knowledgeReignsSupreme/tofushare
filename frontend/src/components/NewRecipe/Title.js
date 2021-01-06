@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { GlobalStyledLabel, InputWrapper } from '../../GlobalStyles';
 import Explanation from './Explanation';
 
-const Title = ({ setTitle, title, titleError }) => {
+const Title = ({ setTitle, title, titleError, check }) => {
   const [isExplaining, setIsExplaining] = useState(false);
 
   return (
@@ -30,7 +30,7 @@ const Title = ({ setTitle, title, titleError }) => {
         name='title'
         onChange={(e) => setTitle(e.target.value)}
       />
-      {titleError ? (
+      {titleError && check ? (
         <span>
           <p>שם המתכון אינו תקין</p>{' '}
         </span>

@@ -3,7 +3,12 @@ import { GlobalStyledLabel, InputWrapper } from '../../GlobalStyles';
 import styled from 'styled-components';
 import Explanation from './Explanation';
 
-const CookingTime = ({ setCookingTime, cookingTime, cookingTimeError }) => {
+const CookingTime = ({
+  setCookingTime,
+  cookingTime,
+  cookingTimeError,
+  check,
+}) => {
   const [isExplaining, setIsExplaining] = useState(false);
 
   return (
@@ -34,7 +39,7 @@ const CookingTime = ({ setCookingTime, cookingTime, cookingTimeError }) => {
         min='1'
         onChange={(e) => setCookingTime(e.target.value)}
       />
-      {cookingTimeError && (
+      {cookingTimeError && check && (
         <span>
           <p>חובה להזין זמן סה"כ</p>
         </span>

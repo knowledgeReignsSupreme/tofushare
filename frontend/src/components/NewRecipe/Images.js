@@ -10,6 +10,7 @@ const Images = ({
   imagesError,
   isImageUploading,
   setIsImageUploading,
+  check,
 }) => {
   const [uploadError, setUploadError] = useState(false);
   const [uploadTypeError, setUploadTypeError] = useState(false);
@@ -62,7 +63,7 @@ const Images = ({
         name='file'
         onChange={uploadFileHandler}
       />
-      {imagesError && (
+      {imagesError && check && (
         <span>
           <p>חובה לבחור תמונה</p>
         </span>

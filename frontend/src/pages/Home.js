@@ -38,8 +38,6 @@ const Home = ({ match }) => {
       ) : (
         <>
           <SearchBar tag={tag} category={category} />
-          {/* {pageNumber === 1 && !category && !keyword && !tag && (
-          )} */}
           <StyledSearch>
             {tag || keyword || category ? (
               <h3>אמצעי חיפוש מתכון:</h3>
@@ -79,7 +77,7 @@ const Home = ({ match }) => {
   );
 };
 
-const StyledHeader = styled.h1`
+const StyledHeader = styled.div`
   margin: 1rem auto;
   width: max-content;
   max-width: 90%;

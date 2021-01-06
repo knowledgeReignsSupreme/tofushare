@@ -8,6 +8,7 @@ const Category = ({
   setCategory,
   categoryError,
   setCategoryError,
+  check,
 }) => {
   const [isExplaining, setIsExplaining] = useState(false);
 
@@ -44,7 +45,7 @@ const Category = ({
             שייקים, נוזלים ותחליפי חלב
           </option>
         </select>
-        {categoryError && (
+        {categoryError && check && (
           <span>
             <p>חובה לבחור קטגוריה</p>
           </span>

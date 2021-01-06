@@ -13,6 +13,7 @@ const Ingredients = ({
   ingredientAmmount,
   ingredientName,
   ingredientError,
+  check,
 }) => {
   const ammount = useRef();
 
@@ -106,7 +107,7 @@ const Ingredients = ({
           </IngredientButton>
         </IngredientButtons>
         {addedFeedback && <h5>המצרך נוסף בהצלחה!</h5>}
-        {ingredientError && (
+        {ingredientError && check && (
           <span>
             {' '}
             <p>חובה להזין מצרכים</p>

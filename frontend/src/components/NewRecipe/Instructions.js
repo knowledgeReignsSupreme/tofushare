@@ -9,7 +9,12 @@ import { cssVariables } from '../../GlobalStyles';
 import ListPreview from './ListPreview';
 import Explanation from './Explanation';
 
-const Instructions = ({ instructions, setInstructions, instructionError }) => {
+const Instructions = ({
+  instructions,
+  setInstructions,
+  instructionError,
+  check,
+}) => {
   const instructionInput = useRef();
 
   const [instNumb, setInstNumb] = useState(1);
@@ -86,7 +91,7 @@ const Instructions = ({ instructions, setInstructions, instructionError }) => {
         </InstructionButtons>
         {addedFeedback && <h5>השלב נוסף בהצלחה!</h5>}
 
-        {instructionError && (
+        {instructionError && check && (
           <span>
             <p>חובה להזין שלבים</p>
           </span>
