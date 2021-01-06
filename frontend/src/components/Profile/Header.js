@@ -128,6 +128,10 @@ const StyledImage = styled.div`
   flex-direction: column;
   width: 8rem;
   height: auto;
+  @media screen and (max-width: 600px) {
+    width: 8rem;
+    margin-left: 0.8rem;
+  }
   button {
     margin-top: 0.5rem;
   }
@@ -135,7 +139,7 @@ const StyledImage = styled.div`
 
 const StyledDetails = styled.div`
   @media screen and (min-width: 600px) {
-    margin-right: 0.5rem;
+    margin-right: 0.5rem !important;
   }
   margin-right: 0.5rem;
   @media screen and (max-width: 600px) {
