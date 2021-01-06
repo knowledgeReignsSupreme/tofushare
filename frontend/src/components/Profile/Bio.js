@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../actions/userActions';
 import {
@@ -11,21 +11,21 @@ import { FaInstagram, FaFacebook, FaUserEdit } from 'react-icons/fa';
 
 const Bio = ({ currentUser, loggedUser, header }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [bio, setBio] = useState(currentUser.bio);
-  const [instagramLink, setInstagramLink] = useState(currentUser.instagramLink);
-  const [facebookLink, setFacebookLink] = useState(currentUser.facebookLink);
+  const [bio, setBio] = useState('');
+  const [instagramLink, setInstagramLink] = useState('');
+  const [facebookLink, setFacebookLink] = useState('');
 
   const userUpdate = useSelector((state) => state.userUpdateProfile);
   const dispatch = useDispatch();
 
-  const { updatedData, isLoading, error, success } = userUpdate;
+  const { isLoading, error, success } = userUpdate;
 
   const editSubmitHandler = (e) => {
     e.preventDefault();
 
     dispatch(
-      updateUser(loggedUser, {
-        _id: loggedUser._id,
+      updateUser(currentUser, {
+        _id: currentUser._id,
         bio,
         instagramLink,
         facebookLink,
@@ -34,6 +34,12 @@ const Bio = ({ currentUser, loggedUser, header }) => {
     setIsEditing(false);
   };
 
+  useEffect(() => {
+    if (success) {
+      window.location.reload();
+    }
+  }, [success]);
+
   return (
     <>
       <StyledHeader>
@@ -41,33 +47,21 @@ const Bio = ({ currentUser, loggedUser, header }) => {
       </StyledHeader>
       <StyledBio>
         <h4>
-          {success
-            ? updatedData.bio
-            : currentUser.bio.length > 3
+          {currentUser.bio.length > 3
             ? currentUser.bio
             : 'לפרופיל זה אין פירוט כרגע'}
         </h4>
         <StyledSocial>
-          {currentUser.facebookLink &&
-            (success ? (
-              <a href={`${updatedData.facebookLink}`}>
-                <FaFacebook />
-              </a>
-            ) : (
-              <a href={`${currentUser.facebookLink}`}>
-                <FaFacebook />
-              </a>
-            ))}
-          {currentUser.instagramLink &&
-            (success ? (
-              <a href={`${updatedData.instagramLink}`}>
-                <FaInstagram />
-              </a>
-            ) : (
-              <a href={`${currentUser.instagramLink}`}>
-                <FaInstagram />
-              </a>
-            ))}
+          {currentUser.facebookLink && (
+            <a href={`${currentUser.facebookLink}`}>
+              <FaFacebook />
+            </a>
+          )}
+          {currentUser.instagramLink && (
+            <a href={`${currentUser.instagramLink}`}>
+              <FaInstagram />
+            </a>
+          )}
         </StyledSocial>
         {loggedUser && (
           <BioButton onClick={() => setIsEditing(!isEditing)}>
@@ -114,7 +108,7 @@ const StyledHeader = styled.div`
 `;
 
 const BioButton = styled(mainColorButton)`
-  margin-top: 0;
+  margin-top: 1rem;
   margin-bottom: 0;
 `;
 
@@ -167,6 +161,7 @@ const StyledEdit = styled.form`
     width: 20%;
     margin-top: 1rem;
     text-align: center;
+
     @media screen and (max-width: 600px) {
       width: 30%;
     }

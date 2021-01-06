@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../actions/userActions';
 import axios from 'axios';
 import { mainColorButton } from '../../GlobalStyles';
@@ -15,6 +15,8 @@ const ImageUpload = ({ isEditing, setIsEditing, currentUser }) => {
   const [fileName, setFileName] = useState(false);
 
   const dispatch = useDispatch();
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success } = userUpdateProfile;
 
   const fileInfoHandler = async (e) => {
     const file = e.target.files[0];
@@ -68,9 +70,14 @@ const ImageUpload = ({ isEditing, setIsEditing, currentUser }) => {
           })
         );
       }
-      window.location.reload();
     }
   };
+
+  useEffect(() => {
+    if (success) {
+      window.location.reload();
+    }
+  }, [success]);
 
   return (
     <StyledUpload>

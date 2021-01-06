@@ -44,10 +44,10 @@ const SearchBar = ({ tag, category }) => {
         </TriggerSearch>
         {isSearching && (
           <StyledSearchBar>
-            <QueryButtons>
+            <FilterButtons>
               <Category setNewCategory={setNewCategory} />
               <Tags setNewTag={setNewTag} />
-            </QueryButtons>
+            </FilterButtons>
             <Search keyword={keyword} setKeyword={setKeyword} />
             <button onClick={searchHandler}>
               <FaSearch />
@@ -118,7 +118,7 @@ const StyledSearchBar = styled.div`
   }
 `;
 
-const QueryButtons = styled.div`
+const FilterButtons = styled.div`
   display: flex;
 
   @media screen and (max-width: 600px) {

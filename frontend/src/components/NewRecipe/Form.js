@@ -47,7 +47,6 @@ const Form = () => {
   const [cookingTimeError, setCookingTimeError] = useState(false);
   const [dishesAmmount, setDishesAmmount] = useState(null);
   const [dishesAmmountError, setDishesAmmountError] = useState(false);
-  const [showRemakrs, setShowRemarks] = useState(false);
   const [category, setCategory] = useState('מאכלים');
   const [categoryError, setCategoryError] = useState(false);
   const [website, setWebsite] = useState('');
@@ -179,9 +178,7 @@ const Form = () => {
     setCheck(true);
     console.log(formValidator());
     console.log(images);
-    if (!formValidator() || isImageUploading) {
-      setShowRemarks(true);
-    } else if (formValidator() && !isImageUploading) {
+    if (formValidator() && !isImageUploading) {
       dispatch(postRecipe(newRecipe, userInfo.token));
     }
   };
@@ -272,12 +269,6 @@ const Form = () => {
           {isPreviewOn && !newRecipe.dishesAmmount >= 1 && (
             <p>* ניתן להשתמש בתצוגה מקדימה רק לאחר ציון מספר מנות</p>
           )}
-          {/* {showRemakrs && (
-            <span>
-              {' '}
-              <p>הטופס אינו תקין. נא לשים לב לשדות נדרשים לפני השליחה</p>
-            </span>
-          )} */}
           {error && (
             <span>
               <p>נא לוודא שהטופס תקין או לנסות שוב</p>

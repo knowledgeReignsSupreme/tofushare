@@ -44,7 +44,6 @@ const newImage = multer({
 
 router.post('/', newImage.single('file'), (req, res, next) => {
   try {
-    console.log(req.file);
     const imageName = req.file.key;
     const imageLocation = req.file.Location; // Save the file name into database into profile
     res.json({
@@ -60,7 +59,6 @@ function checkFileType(file, cb) {
   const filetypes = /jpg|jpeg|png/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = filetypes.test(file.mimetype);
-  console.log(extname, mimetype);
   if (extname && mimetype) {
     return cb(null, true);
   } else {
@@ -105,7 +103,6 @@ const profileImage = multer({
 
 router.post('/profile', profileImage.single('file'), (req, res, next) => {
   try {
-    console.log(req.file);
     const imageName = req.file.key;
     const imageLocation = req.file.Location; // Save the file name into database into profile
     res.json({

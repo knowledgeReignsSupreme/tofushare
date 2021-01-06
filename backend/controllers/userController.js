@@ -20,7 +20,7 @@ const authUser = asyncHandler(async (req, res) => {
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
       savedRecipes: user.savedRecipes,
-      createdRecipes: user.createdRecipe,
+      createdRecipes: user.createdRecipes,
       bio: user.bio,
       image: user.image,
       instagramLink: user.instagramLink,
@@ -59,7 +59,7 @@ const registerUser = asyncHandler(async (req, res) => {
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
       savedRecipes: user.savedRecipes,
-      createdRecipes: user.createdRecipe,
+      createdRecipes: user.createdRecipes,
       bio: user.bio,
       image: user.image,
       instagramLink: user.instagramLink,
@@ -76,7 +76,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // *access Private
 const getLoggedUserDetails = asyncHandler(async (req, res) => {
   try {
-    const user = await User.findById(req.user._id)
+    await User.findById(req.user._id)
       .populate({
         path: 'savedRecipes',
         match: { isApproved: true },
@@ -87,6 +87,31 @@ const getLoggedUserDetails = asyncHandler(async (req, res) => {
         match: { isApproved: true },
         options: { sort: { _id: -1 } },
       })
+      .then((data) => {
+        res.json(data);
+      });
+  } catch (error) {
+    res.status(404).send({ message: 'משתמש לא נמצא' });
+  }
+});
+
+// *desc Fetch single user
+// *route GET /api/users/:id
+// *access Public
+const getUserById = asyncHandler(async (req, res) => {
+  try {
+    await User.findById(req.params.id)
+      .populate({
+        path: 'createdRecipes',
+        match: { isApproved: true },
+        options: { sort: { _id: -1 } },
+      })
+      .populate({
+        path: 'savedRecipes',
+        match: { isApproved: true },
+        options: { sort: { _id: -1 } },
+      })
+
       .then((data) => {
         res.json(data);
       });
@@ -122,7 +147,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
-      createdRecipes: updatedUser.createdRecipe,
+      createdRecipes: updatedUser.createdRecipes,
       savedRecipes: updatedUser.savedRecipes,
       instagramLink: updatedUser.instagramLink,
       facebookLink: updatedUser.facebookLink,
@@ -145,7 +170,6 @@ const updateUserSavedRecipes = asyncHandler(async (req, res) => {
 
     if (user && recipe) {
       user.savedRecipes = req.body.savedRecipes || user.savedRecipes;
-      user.bio = '';
       const updatedUser = await user.save();
 
       res.json({
@@ -156,32 +180,6 @@ const updateUserSavedRecipes = asyncHandler(async (req, res) => {
     }
   } catch (error) {
     res.status(404).send({ message: 'משתמש לא קיים 404' });
-  }
-});
-
-// *desc Fetch single user
-// *route GET /api/users/:id
-// *access Public
-const getUserById = asyncHandler(async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id)
-      .populate({
-        path: 'savedRecipes',
-        match: { isApproved: true },
-        options: { sort: { _id: -1 } },
-      })
-      .sort({ _id: -1 })
-      .populate({
-        path: 'createdRecipes',
-        match: { isApproved: true },
-        options: { sort: { _id: -1 } },
-      })
-      .sort({ _id: -1 })
-      .then((data) => {
-        res.json(data);
-      });
-  } catch (error) {
-    res.status(404).send({ message: 'משתמש לא נמצא' });
   }
 });
 

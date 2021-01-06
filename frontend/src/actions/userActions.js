@@ -171,7 +171,9 @@ export const updateUser = (userInfo, details) => async (dispatch) => {
       payload: data,
     });
 
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    const newUserInfo = data;
+
+    localStorage.setItem('userInfo', JSON.stringify(newUserInfo));
   } catch (error) {
     dispatch({
       type: 'USER_DETAILS_UPDATE_FAIL',

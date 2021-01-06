@@ -70,7 +70,7 @@ const Header = ({ currentUser, loggedUser }) => {
               <ImageUpload
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
-                currentUser={loggedUser}
+                currentUser={currentUser}
               />
             )}
           </>

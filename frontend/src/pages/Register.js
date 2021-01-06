@@ -130,7 +130,6 @@ const Register = () => {
         )}
         {isLoading && <CommonLoader size='80' />}
         <StyledRegisterButton type='submit'>הרשמה</StyledRegisterButton>
-
         <p>
           כבר נרשמת? <Link to={'/login'}>התחברות</Link>
         </p>
