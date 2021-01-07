@@ -25,7 +25,11 @@ const Header = ({ currentUser, isLogged }) => {
 
   const userCookedCalc = (recipes) => {
     let sum = recipes.reduce(function (total, currentValue) {
-      return total + currentValue.cookedBy.length;
+      if (currentValue.cookedBy) {
+        return total + currentValue.cookedBy.length;
+      } else {
+        return 0;
+      }
     }, 0);
     return sum;
   };
