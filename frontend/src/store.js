@@ -6,8 +6,8 @@ import {
   postRecipeReducer,
   recipeCommentReducer,
   recipeCookedReducer,
+  recipeReducer,
 } from './reducers/recipesReducer';
-import recipeReducer from './reducers/recipeReducer';
 import {
   userLoginReducer,
   userRegisterReducer,
@@ -29,12 +29,12 @@ const combinedReducers = combineReducers({
   recipeCooked: recipeCookedReducer,
 });
 
-const userInfoFromStorage = localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo'))
+const userInfoFromStorage = localStorage.getItem('loggedUser')
+  ? JSON.parse(localStorage.getItem('loggedUser'))
   : null;
 
 const initialState = {
-  userLogin: { userInfo: userInfoFromStorage },
+  userLogin: { loggedUser: userInfoFromStorage },
 };
 
 const middleware = [thunk];

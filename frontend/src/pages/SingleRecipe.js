@@ -24,7 +24,7 @@ const SingleRecipe = ({ match }) => {
   );
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { loggedUser } = userLogin;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -47,13 +47,13 @@ const SingleRecipe = ({ match }) => {
             <Header currentRecipe={currentRecipe} />
             <Body currentRecipe={currentRecipe} />
 
-            {userInfo && (
+            {loggedUser && (
               <WrappedButtons>
-                <UserCooked user={userInfo} currentRecipe={currentRecipe} />
+                <UserCooked user={loggedUser} currentRecipe={currentRecipe} />
                 <Save currentRecipe={currentRecipe} />
               </WrappedButtons>
             )}
-            {!userInfo && (
+            {!loggedUser && (
               <WrappedButtons>
                 <NotRegistered
                   buttonText='הכנתי את המתכון!'
@@ -69,8 +69,8 @@ const SingleRecipe = ({ match }) => {
             )}
 
             <Remarks currentRecipe={currentRecipe} />
-            {userInfo && <NewComment currentRecipe={currentRecipe} />}
-            {!userInfo && (
+            {loggedUser && <NewComment currentRecipe={currentRecipe} />}
+            {!loggedUser && (
               <NotRegistered
                 buttonText='הוספת תגובה'
                 message='אינך רשום/ה'

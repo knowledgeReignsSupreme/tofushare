@@ -21,21 +21,26 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo, isLoading, error } = userLogin;
+  const { loggedUser, isLoading, error, success } = userLogin;
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (userInfo === null) {
+    if (loggedUser === null) {
       history.push('/login');
     }
-    dispatch(getLoggedUserProfile(userInfo));
-  }, [userInfo, history, dispatch]);
+  }, [history, loggedUser]);
+
+  useEffect(() => {
+    if (!success) {
+      dispatch(getLoggedUserProfile(loggedUser.token));
+    }
+  }, [loggedUser.token, dispatch, success]);
 
   return (
     <>
-      {userInfo && (
+      {loggedUser && (
         <Helmet>
-          <title>Tofu Share | {userInfo.name || ''}</title>
+          <title>Tofu Share | {loggedUser.name || ''}</title>
           <meta name='description' content='פרופיל משתמש' />
         </Helmet>
       )}
@@ -43,20 +48,20 @@ const Profile = () => {
       {isLoading ? <CommonLoader size='80' /> : ''}
       {error && <h1>{error}</h1>}
 
-      {userInfo && !isLoading ? (
+      {loggedUser && !isLoading ? (
         <StyledProfile>
-          <Header currentUser={userInfo} loggedUser={true} />
+          <Header currentUser={loggedUser} isLogged={true} />
 
           <Buttons
             setShowCreated={setShowCreated}
             setShowSaved={setShowSaved}
             setShowSocial={setShowSocial}
-            loggedUser={userInfo}
+            loggedUser={loggedUser}
           />
-          {showCreated && userInfo.createdRecipes.length >= 1 ? (
+          {showCreated && loggedUser.createdRecipes.length >= 1 ? (
             <>
               <h2>מתכונים שנוצרו:</h2>
-              {userInfo.createdRecipes.map((recipe) => (
+              {loggedUser.createdRecipes.map((recipe) => (
                 <Recipes
                   mappedRecipe={recipe}
                   header='מתכונים שנוצרו:'
@@ -67,10 +72,10 @@ const Profile = () => {
           ) : (
             showCreated && <h1>עוד לא יצרת מתכונים</h1>
           )}
-          {showSaved && userInfo.savedRecipes.length >= 1 ? (
+          {showSaved && loggedUser.savedRecipes.length >= 1 ? (
             <>
               <h2>מתכונים שמורים:</h2>
-              {userInfo.savedRecipes.map((recipe) => (
+              {loggedUser.savedRecipes.map((recipe) => (
                 <Recipes
                   mappedRecipe={recipe}
                   header='מתכונים שמורים:'
@@ -82,7 +87,7 @@ const Profile = () => {
             showSaved && <h1>עוד לא שמרת מתכונים</h1>
           )}
           {showSocial && (
-            <Bio currentUser={userInfo} loggedUser={true} header='קצת עליי:' />
+            <Bio currentUser={loggedUser} isLogged={true} header='קצת עליי:' />
           )}
         </StyledProfile>
       ) : (

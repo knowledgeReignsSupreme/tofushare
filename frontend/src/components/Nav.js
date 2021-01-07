@@ -12,7 +12,7 @@ const Nav = () => {
 
   const userLogin = useSelector((state) => state.userLogin);
 
-  const { userInfo } = userLogin;
+  const { loggedUser } = userLogin;
 
   return (
     <>
@@ -20,7 +20,7 @@ const Nav = () => {
         <OpenNav
           setIsNavOpen={setIsNavOpen}
           isNavOpen={isNavOpen}
-          userInfo={userInfo}
+          loggedUser={loggedUser}
         />
       ) : (
         <StyledNav>
@@ -36,7 +36,7 @@ const Nav = () => {
             </Link>
           </StyledLogo>
           <ProfileButton>
-            {userInfo ? (
+            {loggedUser ? (
               <Link to='/profile'>
                 <StyledButton>
                   <FaUser />

@@ -15,15 +15,15 @@ const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
-  const { isLoading, error, userInfo } = userLogin;
+  const { isLoading, error, loggedUser } = userLogin;
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    if (userInfo) {
+    if (loggedUser) {
       history.push('/');
     }
-  }, [history, userInfo]);
+  }, [history, loggedUser]);
 
   const submitHandler = (e) => {
     e.preventDefault();

@@ -30,7 +30,7 @@ const SearchBar = ({ tag, category }) => {
       : !newCategory && keyword && !newTag
       ? history.push(`/search/${keyword}`)
       : !newCategory && !keyword && newTag
-      ? history.push(`tags/${newTag}`)
+      ? history.push(`/tags/${newTag}`)
       : history.push('/');
   };
 

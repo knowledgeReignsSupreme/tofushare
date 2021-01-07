@@ -7,7 +7,7 @@ import { cssVariables, mainColorButton } from '../GlobalStyles';
 import { FaPaperPlane } from 'react-icons/fa';
 import CommonLoader from '../components/CommonLoader';
 
-init(process.env.EMAIL_JS_USER);
+init('user_tvT3XOjtXRjtzeC9w0SRj');
 
 const Suggestions = () => {
   const [userName, setUserName] = useState('');
@@ -45,8 +45,7 @@ const Suggestions = () => {
         .sendForm(
           'service_vu1mupn',
           'template_qe0x8kp',
-          e.target,
-          process.env.EMAIL_JS_USER
+          'user_tvT3XOjtXRjtzeC9w0SRj'
         )
         .then(
           (result) => {

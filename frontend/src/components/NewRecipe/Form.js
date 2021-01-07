@@ -27,7 +27,7 @@ const Form = () => {
     (state) => state.postRecipe
   );
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { loggedUser } = userLogin;
 
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState(false);
@@ -60,7 +60,7 @@ const Form = () => {
   const newRecipe = {
     title,
     description,
-    author: userInfo.name,
+    author: loggedUser.name,
     website,
     category,
     ingredients,
@@ -72,7 +72,7 @@ const Form = () => {
     tags,
     remarks,
     dishesAmmount: +dishesAmmount,
-    createdBy: userInfo._id,
+    createdBy: loggedUser._id,
   };
 
   useEffect(() => {
@@ -179,7 +179,7 @@ const Form = () => {
     console.log(formValidator());
     console.log(images);
     if (formValidator() && !isImageUploading) {
-      dispatch(postRecipe(newRecipe, userInfo.token));
+      dispatch(postRecipe(newRecipe, loggedUser.token));
     }
   };
 

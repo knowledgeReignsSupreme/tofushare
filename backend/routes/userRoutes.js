@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const {
-  authUser,
+  authUserLogin,
   getLoggedUserDetails,
   registerUser,
   updateUserSavedRecipes,
-  updateUserLiked,
   getUserById,
   updateUserProfile,
 } = require('../controllers/userController');
@@ -15,7 +14,7 @@ const app = express();
 //*route /api/users
 
 router.route('/').post(registerUser);
-router.post('/login', authUser);
+router.post('/login', authUserLogin);
 router
   .route('/profile')
   .get(protect, getLoggedUserDetails)

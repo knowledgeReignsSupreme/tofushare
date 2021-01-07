@@ -12,24 +12,24 @@ const Save = ({ currentRecipe }) => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { loggedUser } = userLogin;
 
   const userSaved = useSelector((state) => state.userSaved);
   const { success, isLoading } = userSaved;
 
   const alreadySaved = useCallback(() => {
-    if (userInfo.savedRecipes.includes(currentRecipe._id)) {
+    if (loggedUser.savedRecipes.includes(currentRecipe._id)) {
       setUserAlreadySaved(true);
     }
-  }, [currentRecipe._id, userInfo.savedRecipes]);
+  }, [currentRecipe._id, loggedUser.savedRecipes]);
 
   const saveRecipeHandler = () => {
-    if (userLogin.userInfo) {
+    if (userLogin.loggedUser) {
       if (!userAlreadySaved) {
-        const newSaved = [...userInfo.savedRecipes, currentRecipe._id];
-        dispatch(saveRecipe(userInfo, currentRecipe._id, newSaved)).then(
+        const newSaved = [...loggedUser.savedRecipes, currentRecipe._id];
+        dispatch(saveRecipe(loggedUser, currentRecipe._id, newSaved)).then(
           (data) => {
-            userInfo.savedRecipes = [...newSaved];
+            loggedUser.savedRecipes = [...newSaved];
           }
         );
       }
@@ -66,7 +66,7 @@ const Save = ({ currentRecipe }) => {
             שמירת מתכון
           </StyledButton>
         )}
-        {userInfo.savedRecipes.includes(currentRecipe._id) ||
+        {loggedUser.savedRecipes.includes(currentRecipe._id) ||
         userSaved.success ? (
           <p>זמין לצפייה בפרופיל</p>
         ) : (

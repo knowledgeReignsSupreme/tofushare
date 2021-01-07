@@ -7,9 +7,10 @@ import {
   secColorButton,
 } from '../../GlobalStyles';
 import styled from 'styled-components';
+import CommonLoader from '../CommonLoader';
 import { FaInstagram, FaFacebook, FaUserEdit } from 'react-icons/fa';
 
-const Bio = ({ currentUser, loggedUser, header }) => {
+const Bio = ({ currentUser, isLogged, header }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [bio, setBio] = useState('');
   const [instagramLink, setInstagramLink] = useState('');
@@ -45,31 +46,35 @@ const Bio = ({ currentUser, loggedUser, header }) => {
       <StyledHeader>
         <h2>{header}</h2>
       </StyledHeader>
-      <StyledBio>
-        <h4>
-          {currentUser.bio.length > 3
-            ? currentUser.bio
-            : 'לפרופיל זה אין פירוט כרגע'}
-        </h4>
-        <StyledSocial>
-          {currentUser.facebookLink && (
-            <a href={`${currentUser.facebookLink}`}>
-              <FaFacebook />
-            </a>
+      {isLoading ? (
+        <CommonLoader size={40} />
+      ) : (
+        <StyledBio>
+          <h4>
+            {currentUser.bio.length > 3
+              ? currentUser.bio
+              : 'לפרופיל זה אין פירוט כרגע'}
+          </h4>
+          <StyledSocial>
+            {currentUser.facebookLink && (
+              <a href={`${currentUser.facebookLink}`}>
+                <FaFacebook />
+              </a>
+            )}
+            {currentUser.instagramLink && (
+              <a href={`${currentUser.instagramLink}`}>
+                <FaInstagram />
+              </a>
+            )}
+          </StyledSocial>
+          {isLogged && (
+            <BioButton onClick={() => setIsEditing(!isEditing)}>
+              {' '}
+              {isLoading ? 'שולח...' : 'עריכה'}
+            </BioButton>
           )}
-          {currentUser.instagramLink && (
-            <a href={`${currentUser.instagramLink}`}>
-              <FaInstagram />
-            </a>
-          )}
-        </StyledSocial>
-        {loggedUser && (
-          <BioButton onClick={() => setIsEditing(!isEditing)}>
-            {' '}
-            {isLoading ? 'שולח...' : 'עריכה'}
-          </BioButton>
-        )}
-      </StyledBio>
+        </StyledBio>
+      )}
       {isEditing && currentUser && (
         <StyledEdit onSubmit={editSubmitHandler}>
           <label htmlFor=''>קצת עליי:</label>

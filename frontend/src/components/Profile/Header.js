@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { secColorButton, mainColorButton } from '../../GlobalStyles';
 import ImageUpload from './ImageUpload';
 
-const Header = ({ currentUser, loggedUser }) => {
+const Header = ({ currentUser, isLogged }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const history = useHistory();
@@ -58,7 +58,7 @@ const Header = ({ currentUser, loggedUser }) => {
                 <p>רשום/ה מאז: {formatDate(currentUser.createdAt)}</p>
               </StyledDetails>
             </StyledHeader>
-            {loggedUser && (
+            {isLogged && (
               <StyledLoggedUser>
                 <UploadButton onClick={() => setIsEditing(!isEditing)}>
                   העלאת תמונה
@@ -66,7 +66,7 @@ const Header = ({ currentUser, loggedUser }) => {
                 <LogoutButton onClick={logoutHandler}>התנתקות</LogoutButton>
               </StyledLoggedUser>
             )}
-            {isEditing && loggedUser && (
+            {isEditing && isLogged && (
               <ImageUpload
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}

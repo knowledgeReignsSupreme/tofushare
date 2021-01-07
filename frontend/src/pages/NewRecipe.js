@@ -9,7 +9,7 @@ import ErrorMessage from '../components/ErrorMessage';
 const NewRecipe = () => {
   const userLogin = useSelector((state) => state.userLogin);
 
-  const { userInfo } = userLogin;
+  const { loggedUser } = userLogin;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -22,7 +22,7 @@ const NewRecipe = () => {
         <meta name='description' content='הוספת מתכון חדש' />
       </Helmet>
 
-      {userInfo ? (
+      {loggedUser ? (
         <StyledNewRecipe>
           <Form />
         </StyledNewRecipe>

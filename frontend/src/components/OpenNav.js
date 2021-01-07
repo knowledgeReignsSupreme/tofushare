@@ -12,7 +12,7 @@ import {
 } from 'react-icons/fa';
 import logo from '../logo.svg';
 
-const OpenNav = ({ isNavOpen, setIsNavOpen, userInfo }) => {
+const OpenNav = ({ isNavOpen, setIsNavOpen, loggedUser }) => {
   return (
     <>
       <StyledOpenNav>
@@ -30,7 +30,7 @@ const OpenNav = ({ isNavOpen, setIsNavOpen, userInfo }) => {
           <FaHome />
           בית
         </NavLink>
-        {userInfo ? (
+        {loggedUser ? (
           <NavLink to='/profile' exact onClick={() => setIsNavOpen(!isNavOpen)}>
             <FaUser />
             פרופיל

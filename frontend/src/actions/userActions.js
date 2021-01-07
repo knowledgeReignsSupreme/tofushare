@@ -20,7 +20,7 @@ export const login = (email, password) => async (dispatch) => {
       type: 'USER_LOGIN_SUCCESS',
       payload: data,
     });
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    localStorage.setItem('loggedUser', JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: 'USER_LOGIN_FAIL',
@@ -33,7 +33,7 @@ export const logout = () => async (dispatch) => {
   dispatch({
     type: 'USER_LOGOUT',
   });
-  localStorage.removeItem('userInfo');
+  localStorage.removeItem('loggedUser');
 };
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -59,7 +59,7 @@ export const register = (name, email, password) => async (dispatch) => {
       type: 'USER_LOGIN_SUCCESS',
       payload: data,
     });
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    localStorage.setItem('loggedUser', JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: 'USER_REGISTER_FAIL',
@@ -95,12 +95,12 @@ export const saveRecipe = (userInfo, recipeId, savedRecipes) => async (
       payload: data,
     });
 
-    const currentUserInfo = JSON.parse(localStorage.getItem('userInfo'));
+    const currentUserInfo = JSON.parse(localStorage.getItem('loggedUser'));
     const newUserInfo = {
       ...currentUserInfo,
       savedRecipes: savedRecipes,
     };
-    localStorage.setItem('userInfo', JSON.stringify(newUserInfo));
+    localStorage.setItem('loggedUser', JSON.stringify(newUserInfo));
   } catch (error) {
     dispatch({
       type: 'USER_SAVE_RECIPE_FAIL',
@@ -128,26 +128,26 @@ export const getUser = (userId) => async (dispatch) => {
   }
 };
 
-export const getLoggedUserProfile = (user) => async (dispatch) => {
+export const getLoggedUserProfile = (token) => async (dispatch) => {
   try {
     dispatch({
-      type: 'USER_DETAILS_REQUEST',
+      type: 'LOGGED_USER_PROFILE_REQUEST',
     });
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
     const { data } = await axios.get(`/api/users/profile`, config);
     dispatch({
-      type: 'USER_DETAILS_SUCCESS',
+      type: 'LOGGED_USER_PROFILE_SUCCESS',
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: 'USER_DETAILS_FAIL',
-      payload: error,
+      type: 'LOGGED_USER_PROFILE_FAIL',
+      payload: error.response.data.message,
     });
   }
 };
@@ -173,7 +173,7 @@ export const updateUser = (userInfo, details) => async (dispatch) => {
 
     const newUserInfo = data;
 
-    localStorage.setItem('userInfo', JSON.stringify(newUserInfo));
+    localStorage.setItem('loggedUser', JSON.stringify(newUserInfo));
   } catch (error) {
     dispatch({
       type: 'USER_DETAILS_UPDATE_FAIL',

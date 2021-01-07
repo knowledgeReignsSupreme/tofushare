@@ -19,15 +19,15 @@ const Register = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const userRegister = useSelector((state) => state.userRegister);
-  const { isLoading, error, userInfo } = userRegister;
+  const { isLoading, error, loggedUser } = userRegister;
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    if (userInfo) {
+    if (loggedUser) {
       history.push('/');
     }
-  }, [history, userInfo]);
+  }, [history, loggedUser]);
 
   const isValidEmail = (e) => {
     // eslint-disable-next-line

@@ -3,9 +3,20 @@ export const userLoginReducer = (state = {}, action) => {
     case 'USER_LOGIN_REQUEST':
       return { isLoading: true };
     case 'USER_LOGIN_SUCCESS':
-      return { isLoading: false, userInfo: action.payload };
+      return { isLoading: false, loggedUser: action.payload };
     case 'USER_LOGIN_FAIL':
       return { isLoading: false, error: action.payload };
+    case 'LOGGED_USER_PROFILE_REQUEST':
+      return { ...state, isLoading: true };
+    case 'LOGGED_USER_PROFILE_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        success: true,
+        loggedUser: action.payload,
+      };
+    case 'LOGGED_USER_PROFILE_FAIL':
+      return { ...state, isLoading: false, error: action.payload };
     case 'USER_LOGOUT':
       return {};
     default:
@@ -18,11 +29,11 @@ export const userRegisterReducer = (state = {}, action) => {
     case 'USER_REGISTER_REQUEST':
       return { isLoading: true };
     case 'USER_REGISTER_SUCCESS':
-      return { isLoading: false, userInfo: action.payload };
+      return { isLoading: false, loggedUser: action.payload };
     case 'USER_REGISTER_FAIL':
       return { isLoading: false, error: action.payload };
     case 'USER_UPDATE_REQUEST':
-      return { isLoading: true, userInfo: action.payload };
+      return { isLoading: true, loggedUser: action.payload };
     default:
       return state;
   }

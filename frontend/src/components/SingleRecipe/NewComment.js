@@ -18,25 +18,25 @@ const NewComment = ({ currentRecipe }) => {
 
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { loggedUser } = userLogin;
 
   const recipeComment = useSelector((state) => state.recipeComment);
   const { error, success, isLoading } = recipeComment;
 
   const didComment = useCallback(() => {
     return currentRecipe.comments.find(
-      (comment) => comment.userId === userInfo._id
+      (comment) => comment.userId === loggedUser._id
     );
-  }, [currentRecipe.comments, userInfo._id]);
+  }, [currentRecipe.comments, loggedUser._id]);
 
   const newCommentHandler = (e) => {
     if (!didComment()) {
       const newComment = {
-        name: userInfo.name,
+        name: loggedUser.name,
         commentBody: commentBody,
-        userId: userInfo._id,
+        userId: loggedUser._id,
       };
-      dispatch(createComment(userInfo.token, currentRecipe._id, newComment));
+      dispatch(createComment(loggedUser.token, currentRecipe._id, newComment));
     }
   };
 

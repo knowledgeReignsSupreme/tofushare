@@ -7,7 +7,7 @@ const { findById } = require('../Models/recipeModel');
 // *desc Auth user and get token
 // *route POST /api/users/login
 // *access Public
-const authUser = asyncHandler(async (req, res) => {
+const authUserLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -183,7 +183,7 @@ const updateUserSavedRecipes = asyncHandler(async (req, res) => {
   }
 });
 
-exports.authUser = authUser;
+exports.authUserLogin = authUserLogin;
 exports.getLoggedUserDetails = getLoggedUserDetails;
 exports.registerUser = registerUser;
 exports.updateUserProfile = updateUserProfile;
