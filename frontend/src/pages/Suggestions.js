@@ -40,19 +40,24 @@ const Suggestions = () => {
       setSuggestionError(true);
     }
     if (userName.length >= 3 && isEmailValid() && suggestion.length >= 5) {
-      setIsLoading(true);
+      // setIsLoading(true);
       emailjs
         .sendForm(
           'service_vu1mupn',
           'template_qe0x8kp',
+          e.target,
           'user_tvT3XOjtXRjtzeC9w0SRj'
         )
         .then(
           (result) => {
+            console.log(result);
             setFormSuccess(true);
+            setIsLoading(false);
           },
           (error) => {
+            console.log(error);
             setFormFail(true);
+            setIsLoading(false);
           }
         );
     }

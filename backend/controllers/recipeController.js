@@ -1,7 +1,10 @@
 const asyncHandler = require('express-async-handler');
 const Recipe = require('../Models/recipeModel');
+const User = require('../Models/userModel');
 const mongoose = require('mongoose');
+const { REFUSED } = require('dns');
 
+mongoose.set('useFindAndModify', false);
 // *desc Fetch all recipes
 // *route GET /api/recipes
 // *access Public
@@ -160,18 +163,55 @@ const userCookedRecipe = asyncHandler(async (req, res) => {
   }
 });
 
-//TODO: Change the Recipe model and even the existing one
-//TODO: Creare a private post route
-//TODO: Recieve the user id and the recipe id
-//TODO: check if the user already cooked
-//TODO: save the recipe with its new cooker
-//TODO: udate the cookedby to validate who already cooked
-//TODO: handle in the action how to know if the user already clicked the button even if he didnt refresh
-//TODO: put to the given url, handle error and success
-//TODO: handle not logged user
+// *desc get unapproved recipes
+// *route GET /api/recipes/unapproved
+// *access Private/Admin
+const getUnapprovedRecipes = asyncHandler(async (req, res) => {
+  try {
+    const unapprovedRecipes = await Recipe.find({ isApproved: false });
+    res.json(unapprovedRecipes);
+  } catch (error) {
+    res.status(401).send({ message: 'אין גישה' });
+  }
+});
+
+// *desc approve recipe
+// *route PUT /api/recipes/approve/:id
+// *access Private/Admin
+const approveRecipe = asyncHandler(async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    recipe.isApproved = true;
+    const savedRecipe = await recipe.save();
+    res.json(savedRecipe);
+  } catch (error) {
+    res.status(401).send({ message: 'מתכון לא קיים או שכבר אושר' });
+  }
+});
+
+const deleteRecipe = asyncHandler(async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    await User.findOneAndUpdate(
+      { createdRecipes: { $in: req.params.id } },
+      { $pull: { createdRecipes: recipe._id } }
+    );
+    await User.updateMany(
+      { savedRecipes: { $in: req.params.id } },
+      { $pull: { savedRecipes: recipe._id } }
+    );
+    await Recipe.findByIdAndRemove(req.params.id);
+    res.json('Deleted Successfully');
+  } catch (error) {
+    res.status(404).send({ message: 'מתכון לא קיים או שכבר אושר' });
+  }
+});
 
 exports.getRecipes = getRecipes;
 exports.getRecipeById = getRecipeById;
 exports.createRecipeComment = createRecipeComment;
 exports.userCookedRecipe = userCookedRecipe;
 exports.postRecipe = postRecipe;
+exports.getUnapprovedRecipes = getUnapprovedRecipes;
+exports.approveRecipe = approveRecipe;
+exports.deleteRecipe = deleteRecipe;

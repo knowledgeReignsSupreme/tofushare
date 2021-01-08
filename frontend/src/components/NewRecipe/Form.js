@@ -275,7 +275,9 @@ const Form = () => {
             </span>
           )}
           {isPreviewOn && newRecipe.dishesAmmount >= 1 && (
-            <Preview currentRecipe={newRecipe} />
+            <StyledPreview>
+              <Preview currentRecipe={newRecipe} preview={true} />
+            </StyledPreview>
           )}
         </StyledForm>
       )}
@@ -355,6 +357,13 @@ const StyledPostButton = styled.div`
   justify-content: space-between;
   @media screen and (max-width: 600px) {
     width: 90%;
+  }
+`;
+
+const StyledPreview = styled.div`
+  width: 60%;
+  @media screen and (max-width: 600px) {
+    width: 90% !important;
   }
 `;
 

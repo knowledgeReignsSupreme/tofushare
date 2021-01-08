@@ -5,10 +5,10 @@ import styled from 'styled-components';
 import Body from '../SingleRecipe/Body';
 import Remarks from '../SingleRecipe/Remarks';
 
-const Preview = ({ currentRecipe }) => {
+const Preview = ({ currentRecipe, preview }) => {
   return (
     <StyledPreview style={{ width: '60%' }}>
-      <Header currentRecipe={currentRecipe} preview={true} />
+      <Header currentRecipe={currentRecipe} preview={preview} />
       <Body currentRecipe={currentRecipe} />
       <Remarks currentRecipe={currentRecipe} />
     </StyledPreview>
@@ -16,13 +16,10 @@ const Preview = ({ currentRecipe }) => {
 };
 
 const StyledPreview = styled.div`
-  width: 60%;
+  width: 100% !important;
   margin-top: 2rem;
   img {
     width: 100%;
-  }
-  @media screen and (max-width: 600px) {
-    width: 90% !important;
   }
 
   h3 {

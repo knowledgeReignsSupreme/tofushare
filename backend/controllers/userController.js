@@ -183,9 +183,22 @@ const updateUserSavedRecipes = asyncHandler(async (req, res) => {
   }
 });
 
+// *desc Fetch all users
+// *route GET /api/users
+// *access Private/Admin
+const getUsers = asyncHandler(async (req, res) => {
+  try {
+    const users = await User.find({}).sort({ _id: -1 });
+    res.json(users);
+  } catch (error) {
+    res.status(404).send({ message: 'משתמש לא נמצא' });
+  }
+});
+
 exports.authUserLogin = authUserLogin;
 exports.getLoggedUserDetails = getLoggedUserDetails;
 exports.registerUser = registerUser;
 exports.updateUserProfile = updateUserProfile;
 exports.updateUserSavedRecipes = updateUserSavedRecipes;
 exports.getUserById = getUserById;
+exports.getUsers = getUsers;

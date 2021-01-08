@@ -10,17 +10,21 @@ const {
   createRecipeComment,
   userCookedRecipe,
   postRecipe,
+  getUnapprovedRecipes,
+  approveRecipe,
+  deleteRecipe,
 } = require('../controllers/recipeController');
 
-const protect = require('../middleware/authMiddleware');
+const { protect, isAdmin } = require('../middleware/authMiddleware');
 const app = express();
 
-router.route('/').get(getRecipes);
+router.get('/unapproved', protect, isAdmin, getUnapprovedRecipes);
+router.put('/delete/:id', protect, isAdmin, deleteRecipe);
+router.put('/approve/:id', protect, isAdmin, approveRecipe);
+router.route('/').get(getRecipes).post(protect, postRecipe);
 router.route('/:id').get(getRecipeById);
 router.route('/:id/comments').post(protect, createRecipeComment);
 router.put('/:id/cooked', protect, userCookedRecipe);
-router.post('/', protect, postRecipe);
-
 const PORT = process.env.PORT || 5001;
 
 module.exports = router;

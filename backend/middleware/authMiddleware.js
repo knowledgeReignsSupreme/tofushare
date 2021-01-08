@@ -22,8 +22,18 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 
   if (!token) {
+    console.log(req.headers);
     res.status(401).send({ message: 'אינך מורשה' });
   }
 });
 
-module.exports = protect;
+const isAdmin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    res.status(401).send({ message: 'אינך מורשה' });
+    throw new Error('אינך מורשה כאדמין');
+  }
+};
+exports.protect = protect;
+exports.isAdmin = isAdmin;

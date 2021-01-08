@@ -116,11 +116,21 @@ const Ingredients = styled.div`
   p {
     margin-top: 0.1rem !important;
   }
+  h3 {
+    text-align: right;
+  }
   @media screen and (max-width: 700px) {
     margin-bottom: 2rem;
   }
 `;
 const Instructions = styled.div`
+  align-self: flex-start;
+  ol {
+    text-align: right;
+  }
+  h3 {
+    text-align: right;
+  }
   li {
     margin-right: 1rem;
 

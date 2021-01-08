@@ -15,6 +15,11 @@ import {
   userGetReducer,
   userPutProfileReducer,
 } from './reducers/userReducers';
+import {
+  usersListReducer,
+  unapprovedRecipesReducer,
+  editRecipeReducer,
+} from './reducers/adminReducers';
 
 const combinedReducers = combineReducers({
   recipes: recipesReducer,
@@ -27,6 +32,9 @@ const combinedReducers = combineReducers({
   userUpdateProfile: userPutProfileReducer,
   recipeComment: recipeCommentReducer,
   recipeCooked: recipeCookedReducer,
+  usersList: usersListReducer,
+  unapprovedRecipes: unapprovedRecipesReducer,
+  editedRecipes: editRecipeReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('loggedUser')

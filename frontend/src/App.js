@@ -12,6 +12,8 @@ import Profile from './pages/Profile';
 import User from './pages/User';
 import WhatsNew from './pages/WhatsNew';
 import Suggestions from './pages/Suggestions';
+import UserList from './pages/Admin/UserList';
+import UnapprovedRecipes from './pages/Admin/UnapprovedRecipes';
 
 function App() {
   return (
@@ -103,6 +105,8 @@ function App() {
           <Route path='/register' component={Register} />
           <Route path='/profile' component={Profile} />
           <Route path='/users/:id' component={User} />
+          <Route path='/admin/users' component={UserList} />
+          <Route path='/admin/recipes' component={UnapprovedRecipes} />
         </Switch>
         <Footer />
       </BrowserRouter>
