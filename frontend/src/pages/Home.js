@@ -8,6 +8,7 @@ import SearchBar from '../components/Home/SearchBar';
 import Pagination from '../components/Pagination';
 import ErrorMessage from '../components/ErrorMessage';
 import CommonLoader from '../components/CommonLoader';
+import Welcome from '../components/Home/Welcome';
 
 const Home = ({ match }) => {
   const keyword = match.params.keyword;
@@ -37,6 +38,7 @@ const Home = ({ match }) => {
         <ErrorMessage message={error} />
       ) : (
         <>
+          <Welcome />
           <SearchBar tag={tag} category={category} />
           <StyledSearch>
             {tag || keyword || category ? (
