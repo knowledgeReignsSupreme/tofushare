@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 
@@ -21,7 +22,10 @@ const WhatsNew = () => {
           <li>בלוג אישי לכל משתמש שירצה</li>
           <li>ועוד המון</li>
         </ol>
-        <h4>אשמח לשמוע הצעות חדשות ומעניינות!</h4>
+        <Link to='/suggestions'>
+          <h4>אשמח לשמוע הצעות חדשות ומעניינות!</h4>
+          <h4>לחץ/י לדף ההצעות</h4>
+        </Link>
       </StyledWhatsNew>
     </>
   );
@@ -39,6 +43,7 @@ const StyledWhatsNew = styled.div`
   h4 {
     margin-top: 1rem;
   }
+
   p {
     line-height: 1.5;
     max-width: 60ch;

@@ -61,6 +61,7 @@ const ImageUpload = ({ isEditing, setIsEditing, currentUser }) => {
   };
 
   const uploadFileHandler = () => {
+    localStorage.getItem('loggedUser');
     if (newImage.image.length > 3) {
       if (!isUploading && !uploadError) {
         dispatch(

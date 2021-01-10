@@ -176,8 +176,6 @@ const Form = () => {
   const postHandler = (e) => {
     e.preventDefault();
     setCheck(true);
-    console.log(formValidator());
-    console.log(images);
     if (formValidator() && !isImageUploading) {
       dispatch(postRecipe(newRecipe, loggedUser.token));
     }

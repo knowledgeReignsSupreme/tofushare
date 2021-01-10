@@ -140,6 +140,7 @@ export const getLoggedUserProfile = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(`/api/users/profile`, config);
+    data.token = token;
     dispatch({
       type: 'LOGGED_USER_PROFILE_SUCCESS',
       payload: data,
@@ -163,7 +164,6 @@ export const updateUser = (userInfo, details) => async (dispatch) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-
     const { data } = await axios.put(`/api/users/profile`, details, config);
 
     dispatch({

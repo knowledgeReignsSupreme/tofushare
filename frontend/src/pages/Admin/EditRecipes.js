@@ -14,8 +14,9 @@ import CommonLoader from '../../components/CommonLoader';
 import ErrorMessage from '../../components/ErrorMessage';
 import Preview from '../../components/NewRecipe/Preview';
 
-const UnapprovedRecipes = () => {
+const EditRecipes = () => {
   const [isPreviewOn, setIsPreviewOn] = useState(false);
+  const [currentPreview, setCurrentPreview] = useState('');
   const [deleteApprove, setDeleteApprove] = useState(false);
 
   const dispatch = useDispatch();
@@ -27,7 +28,6 @@ const UnapprovedRecipes = () => {
 
   const editedRecipes = useSelector((state) => state.editedRecipes);
   const {
-    approved,
     isLoading: editIsLoading,
     error: editError,
     success: editSuccess,
@@ -41,7 +41,7 @@ const UnapprovedRecipes = () => {
     } else {
       history.push('/');
     }
-  }, [dispatch, history, loggedUser]);
+  }, [dispatch, history, loggedUser, success]);
 
   const approveRecipeHandler = (recipeId) => {
     dispatch(approveRecipe(loggedUser, recipeId));
@@ -72,10 +72,15 @@ const UnapprovedRecipes = () => {
             <Link to={`/users/${recipe.createdBy}`}>
               <p>{recipe.createdBy}</p>
             </Link>
-            <StyledApprove onClick={() => setIsPreviewOn(!isPreviewOn)}>
+            <StyledApprove
+              onClick={() => {
+                setIsPreviewOn(!isPreviewOn);
+                setCurrentPreview(recipe._id);
+              }}
+            >
               תצוגה מקדימה
             </StyledApprove>
-            {isPreviewOn && (
+            {isPreviewOn && currentPreview === recipe._id && (
               <StyledPreview>
                 {editIsLoading ? (
                   <CommonLoader size={80}></CommonLoader>
@@ -99,7 +104,10 @@ const UnapprovedRecipes = () => {
                     <p>המתכון יימחק לצמיתות. אתה בטוח?</p>
                     <RegretButtons>
                       <StyledDelete
-                        onClick={() => deleteRecipeHandler(recipe._id)}
+                        onClick={() => {
+                          deleteRecipeHandler(recipe._id);
+                          setDeleteApprove(!deleteApprove);
+                        }}
                       >
                         כן
                       </StyledDelete>
@@ -183,4 +191,4 @@ const RegretButtons = styled.div`
 const StyledApprove = styled(mainColorButton)``;
 const StyledDelete = styled(secColorButton)``;
 
-export default UnapprovedRecipes;
+export default EditRecipes;

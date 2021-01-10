@@ -50,6 +50,11 @@ const Header = ({ currentUser, isLogged }) => {
 
               <StyledDetails>
                 <h1>{currentUser.name}</h1>
+                {currentUser.isAdmin && (
+                  <span>
+                    <p>אדמין</p>
+                  </span>
+                )}
                 <p>מתכונים: {currentUser.createdRecipes.length}</p>
                 {currentUser.createdRecipes.length >= 1 ? (
                   <p>
@@ -105,6 +110,10 @@ const StyledLoggedUser = styled.div`
 const StyledHeader = styled.div`
   width: 100%;
   display: flex;
+  span p {
+    color: red;
+    font-weight: bold;
+  }
   input {
     width: 100%;
   }

@@ -9,6 +9,7 @@ import {
   FaEnvelope,
   FaTimes,
   FaUser,
+  FaCrown,
 } from 'react-icons/fa';
 import logo from '../logo.svg';
 
@@ -63,6 +64,12 @@ const OpenNav = ({ isNavOpen, setIsNavOpen, loggedUser }) => {
           <FaEnvelope />
           הצעות לשיפור
         </NavLink>
+        {loggedUser && loggedUser.isAdmin && (
+          <NavLink to='/admin' exact onClick={() => setIsNavOpen(!isNavOpen)}>
+            <FaCrown />
+            אדמין
+          </NavLink>
+        )}
       </StyledOpenNav>
     </>
   );

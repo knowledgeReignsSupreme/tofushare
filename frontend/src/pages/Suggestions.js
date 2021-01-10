@@ -40,7 +40,6 @@ const Suggestions = () => {
       setSuggestionError(true);
     }
     if (userName.length >= 3 && isEmailValid() && suggestion.length >= 5) {
-      // setIsLoading(true);
       emailjs
         .sendForm(
           'service_vu1mupn',
@@ -50,12 +49,10 @@ const Suggestions = () => {
         )
         .then(
           (result) => {
-            console.log(result);
             setFormSuccess(true);
             setIsLoading(false);
           },
           (error) => {
-            console.log(error);
             setFormFail(true);
             setIsLoading(false);
           }

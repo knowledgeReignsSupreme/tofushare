@@ -17,12 +17,13 @@ const protect = asyncHandler(async (req, res, next) => {
 
       next();
     } catch (error) {
+      console.log(token);
       res.status(401).send({ message: 'אינך מורשה' });
     }
   }
 
   if (!token) {
-    console.log(req.headers);
+    console.log(token);
     res.status(401).send({ message: 'אינך מורשה' });
   }
 });

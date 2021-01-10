@@ -7,10 +7,7 @@ const Recipes = ({ mappedRecipe }) => {
     <>
       <StyledRecipe>
         <Link to={`/recipes/${mappedRecipe._id}`}>
-          <img
-            src={mappedRecipe.images[0] || mappedRecipe.images[0].location}
-            alt=''
-          />
+          <img src={mappedRecipe.images[0].location} alt='' />
           <StyledDetails>
             <h3>{mappedRecipe.title}</h3>
             <p>{mappedRecipe.description}</p>

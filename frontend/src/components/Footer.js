@@ -14,7 +14,7 @@ const Footer = () => {
           <p>Tofu Share</p>
           <h5>V1 Beta</h5>
         </Link>
-        <h4>לבשל עם חמלה.</h4>
+        <h4>לבשל עם אהבה לטבע</h4>
         <h4>
           <a href='https://www.github.com/knowledgereignssupreme'>
             Github

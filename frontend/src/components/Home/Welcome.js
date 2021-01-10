@@ -10,8 +10,8 @@ const Welcome = () => {
     <StyledWelcome>
       <StyledWelcomeHeader>
         <StyledText>
-          <h1>ברוכים הבאים</h1>
-          <h3>אתר שיתוף המתכונים הטבעוני הראשון בארץ</h3>
+          <h3>ברוכים הבאים</h3>
+          <h1>אתר שיתוף המתכונים הטבעוני הראשון בארץ</h1>
           <p>תתכוננו, הולך להיות טעים!</p>
         </StyledText>
         <Buttons>
@@ -35,11 +35,15 @@ const StyledWelcome = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: ${cssVariables.mainColorLight};
+
   h1 {
     color: black;
+    margin-top: 0.5rem;
+    font-size: 1rem;
   }
   h3 {
     color: black;
+    font-size: 1.3rem;
   }
   p {
     color: black;
@@ -50,10 +54,10 @@ const StyledWelcome = styled.div`
   @media screen and (max-width: 600px) {
     width: 90%;
     height: 20vh;
-    h1 {
+    h3 {
       font-size: 1.3rem;
     }
-    h3 {
+    h1 {
       font-size: 1rem;
     }
     p {
@@ -66,40 +70,40 @@ const StyledWelcome = styled.div`
   @media screen and (min-width: 601px) and (max-width: 801px) {
     width: 70%;
     height: 20vh;
-    h1 {
+    h3 {
       font-size: 1.5rem;
     }
-    h3 {
+    h1 {
       font-size: 1rem;
     }
   }
   @media screen and (min-width: 801px) and (max-width: 1000px) {
     width: 60%;
     height: 20vh;
-    h1 {
+    h3 {
       font-size: 1.5rem;
     }
-    h3 {
+    h1 {
       font-size: 1rem;
     }
   }
   @media screen and (min-width: 1001px) and (max-width: 1500) {
     width: 50%;
     height: 20vh;
-    h1 {
+    h3 {
       font-size: 1.5rem;
     }
-    h3 {
+    h1 {
       font-size: 1rem;
     }
   }
   @media screen and (min-width: 1501px) and (max-width: 2000px) {
     width: 40%;
     height: 20vh;
-    h1 {
+    h3 {
       font-size: 1.5rem;
     }
-    h3 {
+    h1 {
       font-size: 1rem;
     }
     img {
@@ -109,10 +113,10 @@ const StyledWelcome = styled.div`
   @media screen and (min-width: 2001px) {
     width: 25%;
     height: 20vh;
-    h1 {
+    h3 {
       font-size: 1.5rem;
     }
-    h3 {
+    h1 {
       font-size: 1rem;
     }
     img {
