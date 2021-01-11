@@ -28,6 +28,14 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
+const isAuthor = (req, res, next) => {
+  if (req.user && req.user.createdRecipes.includes(req.params.id)) {
+    next();
+  } else {
+    throw new Error('אינך יוצר המתכון');
+  }
+};
+
 const isAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
@@ -38,3 +46,4 @@ const isAdmin = (req, res, next) => {
 };
 exports.protect = protect;
 exports.isAdmin = isAdmin;
+exports.isAuthor = isAuthor;

@@ -39,6 +39,16 @@ const userSchema = mongoose.Schema(
       required: false,
       default: '',
     },
+    websiteLink: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    isVerified: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     image: {
       type: Object,
       required: false,

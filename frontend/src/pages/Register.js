@@ -12,6 +12,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [website, setWebsite] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [emailError, setEmailError] = useState(false);
@@ -59,7 +60,7 @@ const Register = () => {
       password === confirmPassword &&
       password.length >= 6
     ) {
-      dispatch(register(name, email.toLowerCase(), password));
+      dispatch(register(name, email.toLowerCase(), password, website));
     }
   };
 
@@ -73,7 +74,12 @@ const Register = () => {
       <StyledForm onSubmit={(e) => submitHandler(e)}>
         <h1>הרשמה</h1>
         <SingleInput>
-          <label htmlFor='name'>שם משתמש/שם מלא:</label>
+          <label htmlFor='name'>
+            <p>
+              <span>*</span>
+              שם משתמש/שם מלא:
+            </p>
+          </label>
           <input
             type='text'
             placeholder='שם'
@@ -82,7 +88,12 @@ const Register = () => {
           />
         </SingleInput>
         <SingleInput>
-          <label htmlFor='email'>כתובת אימייל:</label>
+          <label htmlFor='email'>
+            <p>
+              <span>*</span>
+              כתובת אימייל:
+            </p>
+          </label>
           <input
             type='email'
             placeholder='כתובת אימייל'
@@ -91,7 +102,23 @@ const Register = () => {
           />
         </SingleInput>
         <SingleInput>
-          <label htmlFor='email'>סיסמה:</label>
+          <label htmlFor='email'>
+            <p>קישור לאתר/בלוג</p>
+          </label>
+          <input
+            type='text'
+            placeholder='לא חובה'
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+          />
+        </SingleInput>
+        <SingleInput>
+          <label htmlFor='email'>
+            <p>
+              <span>*</span>
+              סיסמה:
+            </p>
+          </label>
           <input
             type='password'
             placeholder='סיסמה'
@@ -100,7 +127,12 @@ const Register = () => {
           />
         </SingleInput>
         <SingleInput>
-          <label htmlFor='email'>אימות סיסמה:</label>
+          <label htmlFor='email'>
+            <p>
+              <span>*</span>
+              אימות סיסמה:
+            </p>
+          </label>
           <input
             type='password'
             placeholder='אימות סיסמה'
@@ -145,6 +177,11 @@ const StyledForm = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  p span {
+    color: red;
+    font-weight: bold;
+    margin-left: 0.3rem;
+  }
   h1 {
     color: inherit;
     margin-bottom: 0.5rem;

@@ -36,7 +36,9 @@ export const logout = () => async (dispatch) => {
   localStorage.removeItem('loggedUser');
 };
 
-export const register = (name, email, password) => async (dispatch) => {
+export const register = (name, email, password, websiteLink) => async (
+  dispatch
+) => {
   try {
     dispatch({
       type: 'USER_REGISTER_REQUEST',
@@ -48,7 +50,7 @@ export const register = (name, email, password) => async (dispatch) => {
     };
     const { data } = await axios.post(
       '/api/users',
-      { name, email, password },
+      { name, email, password, websiteLink },
       config
     );
     dispatch({
@@ -68,9 +70,11 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 };
 
-export const saveRecipe = (userInfo, recipeId, savedRecipes) => async (
-  dispatch
-) => {
+export const editUserSavedRecipes = (
+  userInfo,
+  recipeId,
+  savedRecipes
+) => async (dispatch) => {
   try {
     dispatch({
       type: 'USER_SAVE_RECIPE_REQUEST',
@@ -128,7 +132,7 @@ export const getUser = (userId) => async (dispatch) => {
   }
 };
 
-export const getLoggedUserProfile = (token) => async (dispatch) => {
+export const getLoggedUserProfile = (user) => async (dispatch) => {
   try {
     dispatch({
       type: 'LOGGED_USER_PROFILE_REQUEST',
@@ -136,11 +140,12 @@ export const getLoggedUserProfile = (token) => async (dispatch) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${user.token}`,
       },
     };
+
     const { data } = await axios.get(`/api/users/profile`, config);
-    data.token = token;
+    data.token = user.token;
     dispatch({
       type: 'LOGGED_USER_PROFILE_SUCCESS',
       payload: data,

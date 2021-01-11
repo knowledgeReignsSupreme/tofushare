@@ -207,6 +207,20 @@ const deleteRecipe = asyncHandler(async (req, res) => {
   }
 });
 
+// *desc Edit Recipe
+// *route PUT /api/recipes/:id
+// *access Private/Author
+const editRecipe = asyncHandler(async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    recipe.website = req.body.website || recipe.website;
+    const updatedRecipe = await recipe.save();
+    res.json(updatedRecipe);
+  } catch (error) {
+    res.status(404).send({ message: 'מתכון לא קיים' });
+  }
+});
+
 exports.getRecipes = getRecipes;
 exports.getRecipeById = getRecipeById;
 exports.createRecipeComment = createRecipeComment;
@@ -215,3 +229,4 @@ exports.postRecipe = postRecipe;
 exports.getUnapprovedRecipes = getUnapprovedRecipes;
 exports.approveRecipe = approveRecipe;
 exports.deleteRecipe = deleteRecipe;
+exports.editRecipe = editRecipe;

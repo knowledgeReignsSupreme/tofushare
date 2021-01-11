@@ -15,7 +15,7 @@ const Bio = ({ currentUser, isLogged, header }) => {
   const [bio, setBio] = useState('');
   const [instagramLink, setInstagramLink] = useState('');
   const [facebookLink, setFacebookLink] = useState('');
-
+  const [websiteLink, setWebsiteLink] = useState('');
   const userUpdate = useSelector((state) => state.userUpdateProfile);
   const dispatch = useDispatch();
 
@@ -30,9 +30,21 @@ const Bio = ({ currentUser, isLogged, header }) => {
         bio,
         instagramLink,
         facebookLink,
+        websiteLink,
       })
     );
     setIsEditing(false);
+  };
+
+  const linkFormat = (link) => {
+    if (
+      link.split(':')[0].includes('http') ||
+      link.split(':')[0].includes('https')
+    ) {
+      return link;
+    } else {
+      return `http://${link}`;
+    }
   };
 
   useEffect(() => {
@@ -51,6 +63,9 @@ const Bio = ({ currentUser, isLogged, header }) => {
       ) : (
         <StyledBio>
           <h4>
+            {currentUser.websiteLink.trim().length > 3 && (
+              <a href={linkFormat(currentUser.websiteLink)}>לאתר שלי</a>
+            )}
             {currentUser.bio.length > 3
               ? currentUser.bio
               : 'לפרופיל זה אין פירוט כרגע'}
@@ -82,6 +97,13 @@ const Bio = ({ currentUser, isLogged, header }) => {
             type='text'
             defaultValue={currentUser.bio}
             onChange={(e) => setBio(e.target.value)}
+          />
+          <label htmlFor=''>קישור לאתר/בלוג:</label>
+
+          <input
+            type='text'
+            placeholder={currentUser.websiteLink || 'קישור לאתר'}
+            onChange={(e) => setWebsiteLink(e.target.value)}
           />
           <label htmlFor=''>קישור לאינסטגרם:</label>
           <input
@@ -136,6 +158,13 @@ const StyledBio = styled.div`
     @media screen and (max-width: 600px) {
       width: 30%;
     }
+  }
+  a {
+    font-weight: bold;
+    color: blue;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
   }
 `;
 

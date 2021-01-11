@@ -8,7 +8,8 @@ import SearchBar from '../components/Home/SearchBar';
 import Pagination from '../components/Pagination';
 import ErrorMessage from '../components/ErrorMessage';
 import CommonLoader from '../components/CommonLoader';
-import Welcome from '../components/Home/Welcome';
+import Welcome from '../components/Welcome';
+import { FaPlus } from 'react-icons/fa';
 
 const Home = ({ match }) => {
   const keyword = match.params.keyword;
@@ -38,7 +39,14 @@ const Home = ({ match }) => {
         <ErrorMessage message={error} />
       ) : (
         <>
-          <Welcome />
+          <Welcome
+            header='ברוכים הבאים'
+            subHeader='אתר שיתוף המתכונים הטבעוני הראשון בארץ'
+            paragraph='תתכוננו, הולך להיות טעים!'
+            button='יצירת מתכון'
+            icon={<FaPlus />}
+            link='/new-recipe'
+          />
           <SearchBar tag={tag} category={category} />
           <StyledSearch>
             {tag || keyword || category ? (

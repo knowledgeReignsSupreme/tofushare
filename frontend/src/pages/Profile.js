@@ -18,6 +18,8 @@ const Profile = () => {
   const [showCreated, setShowCreated] = useState(false);
   const [showSaved, setShowSaved] = useState(false);
   const [showSocial, setShowSocial] = useState(true);
+  const [firstVisit, setFirstVisit] = useState(true);
+
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -31,10 +33,14 @@ const Profile = () => {
   }, [history, loggedUser]);
 
   useEffect(() => {
-    if (!success) {
-      dispatch(getLoggedUserProfile(loggedUser.token));
+    if (!success && !isLoading) {
+      dispatch(getLoggedUserProfile(loggedUser));
+      setFirstVisit(false);
+    } else if (firstVisit && !isLoading) {
+      dispatch(getLoggedUserProfile(loggedUser));
+      setFirstVisit(false);
     }
-  }, [loggedUser.token, dispatch, success]);
+  }, [loggedUser, dispatch, success, firstVisit, isLoading]);
 
   return (
     <>
@@ -66,6 +72,9 @@ const Profile = () => {
                   mappedRecipe={recipe}
                   header='מתכונים שנוצרו:'
                   key={uuid()}
+                  isLogged={true}
+                  isAuthor={true}
+                  loggedUser={loggedUser}
                 />
               ))}
             </>
@@ -80,6 +89,8 @@ const Profile = () => {
                   mappedRecipe={recipe}
                   header='מתכונים שמורים:'
                   key={uuid()}
+                  saved={true}
+                  loggedUser={loggedUser}
                 />
               ))}
             </>

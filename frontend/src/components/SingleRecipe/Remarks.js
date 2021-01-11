@@ -3,11 +3,22 @@ import styled from 'styled-components';
 import { cssVariables } from '../../GlobalStyles';
 
 const Remarks = ({ currentRecipe }) => {
+  const linkFormat = (link) => {
+    if (
+      link.split(':')[0].includes('http') ||
+      link.split(':')[0].includes('https')
+    ) {
+      return link;
+    } else {
+      return `http://${link}`;
+    }
+  };
+
   return (
     <StyledRemarks>
       <h3>הערות המחבר/ת:</h3>
-      {currentRecipe.website && (
-        <a href={`https://${currentRecipe.website}`}>לאתר המחבר/ת</a>
+      {currentRecipe.website.trim().length > 3 && (
+        <a href={linkFormat(currentRecipe.website)}>לאתר המחבר/ת</a>
       )}
       {currentRecipe.remarks.trim().length >= 1 ? (
         <p>{currentRecipe.remarks}</p>

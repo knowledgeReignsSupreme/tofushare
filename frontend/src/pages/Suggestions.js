@@ -6,6 +6,7 @@ import { init } from 'emailjs-com';
 import { cssVariables, mainColorButton } from '../GlobalStyles';
 import { FaPaperPlane } from 'react-icons/fa';
 import CommonLoader from '../components/CommonLoader';
+import Welcome from '../components/Welcome';
 
 init('user_tvT3XOjtXRjtzeC9w0SRj');
 
@@ -65,14 +66,18 @@ const Suggestions = () => {
         <title>Tofu Share | הצעות לשיפור</title>
         <meta name='description' content='דף דיווח על באגים או הצעות שיפור' />
       </Helmet>
-
+      <Welcome
+        header='רוצים לשמוע מכם'
+        subHeader='עזרו לנו להרחיב את קהילת הטבעונים בארץ'
+        paragraph="מצאתם באג באתר? יש לכם רעיון לפיצ'ר חדש? זה המקום!"
+        button={false}
+      />
       {formSuccess ? (
         <StyledSuccess>
           <h3>הטופס נשלח בהצלחה. תודה רבה על הרצון הטוב ושיתוף הפעולה</h3>
         </StyledSuccess>
       ) : (
         <StyledSuggestions onSubmit={submitHandler}>
-          <h4>במידה ומצאתם באג באתר או שיש לכם רעיון לפיצ'ר חדש זה המקום!</h4>
           <SingleInput>
             <label htmlFor='userName' name='userName'>
               {' '}
@@ -159,6 +164,7 @@ const StyledSuccess = styled.div`
 `;
 
 const StyledSuggestions = styled.form`
+  margin-top: 1rem !important;
   h4 {
     margin: 1rem 0;
   }
@@ -171,7 +177,6 @@ const StyledSuggestions = styled.form`
   p span {
     color: red;
     font-size: 1rem;
-    margin-right: 0.3rem;
     margin-top: 0.3rem;
   }
   input[type='text'],
@@ -183,8 +188,9 @@ const StyledSuggestions = styled.form`
     border: 1px solid ${cssVariables.secColorDark};
     padding-right: 0.6rem;
     height: 2rem;
+
     @media screen and (max-width: 600px) {
-      width: 90%;
+      width: 80%;
     }
   }
   textarea {
@@ -195,6 +201,24 @@ const StyledSuggestions = styled.form`
       margin-left: 0.3rem;
       font-size: 0.9rem;
     }
+  }
+  @media screen and (max-width: 600px) {
+    width: 90%;
+  }
+  @media screen and (min-width: 601px) and (max-width: 801px) {
+    width: 70%;
+  }
+  @media screen and (min-width: 801px) and (max-width: 1000px) {
+    width: 60%;
+  }
+  @media screen and (min-width: 1001px) and (max-width: 1500) {
+    width: 50%;
+  }
+  @media screen and (min-width: 1501px) and (max-width: 2000px) {
+    width: 40%;
+  }
+  @media screen and (min-width: 2001px) {
+    width: 25%;
   }
 `;
 

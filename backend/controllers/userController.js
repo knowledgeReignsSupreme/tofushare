@@ -26,6 +26,8 @@ const authUserLogin = asyncHandler(async (req, res) => {
       instagramLink: user.instagramLink,
       facebookLink: user.facebookLink,
       createdAt: user.createdAt,
+      websiteLink: user.websiteLink,
+      isVerified: user.isVerified,
     });
   } else {
     res.status(401);
@@ -37,7 +39,7 @@ const authUserLogin = asyncHandler(async (req, res) => {
 // *route POST /api/users
 // *access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, websiteLink } = req.body;
 
   const isExists = await User.findOne({ email });
 
@@ -49,6 +51,7 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    websiteLink,
   });
 
   if (user) {
@@ -65,6 +68,8 @@ const registerUser = asyncHandler(async (req, res) => {
       instagramLink: user.instagramLink,
       facebookLink: user.facebookLink,
       createdAt: user.createdAt,
+      websiteLink: user.websiteLink,
+      isVerified: user.isVerified,
     });
   } else {
     res.status(400).send({ message: 'מידע שגוי' });
@@ -135,6 +140,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     user.instagramLink = req.body.instagramLink || user.instagramLink;
     user.facebookLink = req.body.facebookLink || user.facebookLink;
     user.image = req.body.image || user.image;
+    user.websiteLink = req.body.websiteLink || user.websiteLink;
+    user.isVerified = req.body.isVerified || user.isVerified;
 
     if (req.body.password) {
       user.password = req.body.password;
@@ -155,6 +162,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       image: updatedUser.image,
       token: generateToken(updatedUser._id),
       createdAt: updatedUser.createdAt,
+      websiteLink: user.websiteLink,
+      isVerified: user.isVerified,
     });
   } else {
     res.status(404).send({ message: 'משתמש לא נמצא' });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveRecipe } from '../../actions/userActions';
+import { editUserSavedRecipes } from '../../actions/userActions';
 import { getSingleRecipe } from '../../actions/RecipesActions';
 import styled from 'styled-components';
 import { cssVariables, transparentButton } from '../../GlobalStyles';
@@ -27,11 +27,11 @@ const Save = ({ currentRecipe }) => {
     if (userLogin.loggedUser) {
       if (!userAlreadySaved) {
         const newSaved = [...loggedUser.savedRecipes, currentRecipe._id];
-        dispatch(saveRecipe(loggedUser, currentRecipe._id, newSaved)).then(
-          (data) => {
-            loggedUser.savedRecipes = [...newSaved];
-          }
-        );
+        dispatch(
+          editUserSavedRecipes(loggedUser, currentRecipe._id, newSaved)
+        ).then((data) => {
+          loggedUser.savedRecipes = [...newSaved];
+        });
       }
     }
   };

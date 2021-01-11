@@ -7,6 +7,7 @@ import {
   recipeCommentReducer,
   recipeCookedReducer,
   recipeReducer,
+  recipeAuthorEditReducer,
 } from './reducers/recipesReducer';
 import {
   userLoginReducer,
@@ -35,6 +36,7 @@ const combinedReducers = combineReducers({
   usersList: usersListReducer,
   unapprovedRecipes: unapprovedRecipesReducer,
   editedRecipes: editRecipeReducer,
+  recipeAuthorUpdate: recipeAuthorEditReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('loggedUser')

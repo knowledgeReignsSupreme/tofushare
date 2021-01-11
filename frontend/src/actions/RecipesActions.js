@@ -125,3 +125,24 @@ export const cookedRecipe = (user, recipeId) => async (dispatch) => {
     });
   }
 };
+
+export const editRecipe = (user, recipeId, editedInfo) => async (dispatch) => {
+  //TODO: In the future, add the possibilty to edit the whole recipe.
+  try {
+    dispatch({ type: 'RECIPE_AUTHOR_EDIT_REQUEST' });
+    const config = {
+      headers: {
+        'Contet-Type': 'appliaction/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    await axios.put(`/api/recipes/${recipeId}`, editedInfo, config);
+    dispatch({ type: 'RECIPE_AUTHOR_EDIT_SUCCESS' });
+  } catch (error) {
+    dispatch({
+      type: 'RECIPE_AUTHOR_EDIT_FAIL',
+      payload: error.response.data.message,
+    });
+  }
+};

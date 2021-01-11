@@ -1,27 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
-import { cssVariables, mainColorButton } from '../../GlobalStyles';
+import { cssVariables, mainColorButton } from '../GlobalStyles';
 import { Link } from 'react-router-dom';
-import tofu from '../../tofufigure.png';
-import { FaPlus } from 'react-icons/fa';
+import tofu from '../tofufigure.png';
 
-const Welcome = () => {
+const Welcome = ({ header, subHeader, paragraph, button, icon, link }) => {
   return (
     <StyledWelcome>
       <StyledWelcomeHeader>
         <StyledText>
-          <h3>ברוכים הבאים</h3>
-          <h1>אתר שיתוף המתכונים הטבעוני הראשון בארץ</h1>
-          <p>תתכוננו, הולך להיות טעים!</p>
+          <h3>{header}</h3>
+          <h1>{subHeader}</h1>
+          <p>{paragraph}</p>
         </StyledText>
-        <Buttons>
-          <Link to='/new-recipe'>
-            <NewRecipeButton>
-              <FaPlus />
-              יצירת מתכון
-            </NewRecipeButton>
-          </Link>
-        </Buttons>
+        {button && (
+          <Buttons>
+            <Link to={link}>
+              <NewRecipeButton>
+                {icon}
+                {button}
+              </NewRecipeButton>
+            </Link>
+          </Buttons>
+        )}
       </StyledWelcomeHeader>
       <img src={tofu} alt='logo' />
     </StyledWelcome>
@@ -30,7 +31,7 @@ const Welcome = () => {
 
 const StyledWelcome = styled.div`
   margin-top: 1rem;
-  width: 50%;
+  width: 40rem;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -53,7 +54,7 @@ const StyledWelcome = styled.div`
   }
   @media screen and (max-width: 600px) {
     width: 90%;
-    height: 20vh;
+    height: 25vh;
     h3 {
       font-size: 1.3rem;
     }
@@ -62,6 +63,7 @@ const StyledWelcome = styled.div`
     }
     p {
       font-size: 0.8rem;
+      margin-top: 0.3rem;
     }
     img {
       width: 12rem;

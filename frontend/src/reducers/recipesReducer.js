@@ -136,3 +136,30 @@ export const recipeCookedReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const recipeAuthorEditReducer = (state = {}, action) => {
+  switch (action.type) {
+    case 'RECIPE_AUTHOR_EDIT_REQUEST':
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case 'RECIPE_AUTHOR_EDIT_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        success: true,
+        updatedRecipe: action.payload,
+      };
+    case 'RECIPE_AUTHOR_EDIT_FAIL':
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+    case 'RECIPE_AUTHOR_EDIT_RESET':
+      return {};
+    default:
+      return state;
+  }
+};
