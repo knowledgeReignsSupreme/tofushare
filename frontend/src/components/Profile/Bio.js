@@ -63,9 +63,10 @@ const Bio = ({ currentUser, isLogged, header }) => {
       ) : (
         <StyledBio>
           <h4>
-            {currentUser.websiteLink.trim().length > 3 && (
-              <a href={linkFormat(currentUser.websiteLink)}>לאתר שלי</a>
-            )}
+            {currentUser.webiteLink &&
+              currentUser.websiteLink.trim().length > 3 && (
+                <a href={linkFormat(currentUser.websiteLink)}>לאתר שלי</a>
+              )}
             {currentUser.bio.length > 3
               ? currentUser.bio
               : 'לפרופיל זה אין פירוט כרגע'}
