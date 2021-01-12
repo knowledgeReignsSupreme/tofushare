@@ -13,12 +13,14 @@ const authUserLogin = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
+    const token = generateToken(user._id);
+    res.cookie('token', token, { httpOnly: true });
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id),
+      token: token,
       savedRecipes: user.savedRecipes,
       createdRecipes: user.createdRecipes,
       bio: user.bio,

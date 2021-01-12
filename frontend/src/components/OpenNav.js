@@ -75,15 +75,22 @@ const OpenNav = ({ isNavOpen, setIsNavOpen, loggedUser }) => {
   );
 };
 
-const revealNav = keyframes`
-  0%{
-    transform: translateX(80%)
+const showNav = keyframes`
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
   }
 
-  100%{
-    transform: translateX(0)
-
+  80% {
+    transform: translateX(-30px);
+    opacity: 0.8;
   }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 `;
 
 const StyledOpenNav = styled.nav`
@@ -98,9 +105,9 @@ const StyledOpenNav = styled.nav`
   align-items: center;
   z-index: 3;
   vertical-align: middle;
-  animation-name: ${revealNav};
-  animation-duration: 2s;
-  transition: all 3s ease-out;
+  animation-name: ${showNav};
+  animation-duration: 1s;
+  transition: all 3s ease-in;
   @media screen and (max-width: 640px) {
     width: 70%;
   }

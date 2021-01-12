@@ -44,6 +44,7 @@ const isAdmin = (req, res, next) => {
     throw new Error('אינך מורשה כאדמין');
   }
 };
+
 exports.protect = protect;
 exports.isAdmin = isAdmin;
 exports.isAuthor = isAuthor;
