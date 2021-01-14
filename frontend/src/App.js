@@ -1,20 +1,21 @@
 import React from 'react';
 import { GlobalStyles } from './GlobalStyles';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Nav from './components/Nav';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import SingleRecipe from './pages/SingleRecipe';
-import NewRecipe from './pages/NewRecipe';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/Profile';
-import User from './pages/User';
-import WhatsNew from './pages/WhatsNew';
-import Suggestions from './pages/Suggestions';
-import UserList from './pages/Admin/UserList';
-import EditRecipes from './pages/Admin/EditRecipes';
-import MainAdminScreen from './pages/Admin/MainAdminScreen';
+import Nav from './Common/Nav';
+import Footer from './Common/Footer';
+import Home from './Home';
+import SingleRecipe from './SingleRecipe';
+import NewRecipe from './NewRecipe';
+import Login from './Login';
+import Register from './Register';
+import Profile from './LoggedUserProfile';
+import User from './UserProfile';
+import WhatsNew from './WhatsNew';
+import Suggestions from './Suggestions';
+import UserList from './Admin/UserList';
+import EditRecipes from './Admin/EditRecipes';
+import MainAdminScreen from './Admin/MainAdminScreen';
+import TestUI from './Tester/TestUI';
 
 function App() {
   return (
@@ -109,6 +110,7 @@ function App() {
           <Route path='/admin' exact component={MainAdminScreen} />
           <Route path='/admin/users' component={UserList} />
           <Route path='/admin/recipes' component={EditRecipes} />
+          <Route path='/test' component={TestUI} />
         </Switch>
         <Footer />
       </BrowserRouter>
