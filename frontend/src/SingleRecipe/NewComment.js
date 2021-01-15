@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createComment } from '../actions/RecipesActions';
-import { getSingleRecipe } from '../actions/RecipesActions';
+
 import styled from 'styled-components';
 import {
   cssVariables,
@@ -11,41 +9,33 @@ import {
 
 import { FaRegComment, FaComment } from 'react-icons/fa';
 
-const NewComment = ({ currentRecipe }) => {
+const NewComment = ({
+  currentRecipe,
+  user,
+  handleComment,
+  error,
+  isLoading,
+}) => {
   const [commentBody, setCommentBody] = useState('');
   const [isCommenting, setIsCommenting] = useState(false);
   const [alreadyCommented, setAlreadyCommented] = useState(false);
 
-  const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loggedUser } = userLogin;
-
-  const recipeComment = useSelector((state) => state.recipeComment);
-  const { error, success, isLoading } = recipeComment;
-
   const didComment = useCallback(() => {
     return currentRecipe.comments.find(
-      (comment) => comment.userId === loggedUser._id
+      (comment) => comment.userId === user._id
     );
-  }, [currentRecipe.comments, loggedUser._id]);
+  }, [currentRecipe.comments, user._id]);
 
   const newCommentHandler = (e) => {
     if (!didComment()) {
       const newComment = {
-        name: loggedUser.name,
+        name: user.name,
         commentBody: commentBody,
-        userId: loggedUser._id,
+        userId: user._id,
       };
-      dispatch(createComment(loggedUser.token, currentRecipe._id, newComment));
+      handleComment(newComment);
     }
   };
-
-  useEffect(() => {
-    if (success) {
-      dispatch({ type: 'RECIPE_CREATE_COMMENT_RESET' });
-      dispatch(getSingleRecipe(currentRecipe._id));
-    }
-  }, [success, currentRecipe._id, dispatch]);
 
   useEffect(() => {
     if (didComment()) {

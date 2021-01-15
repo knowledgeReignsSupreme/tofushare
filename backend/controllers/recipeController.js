@@ -116,55 +116,8 @@ const postRecipe = asyncHandler(async (req, res) => {
   }
 });
 
-// *desc Add new review
-// *route POST /api/recipes/:id/comments
-// *access Private
-const createRecipeComment = asyncHandler(async (req, res) => {
-  try {
-    const recipe = await Recipe.findById(req.params.id);
-    if (recipe) {
-      const alreadyCommented = recipe.comments.find(
-        (comment) => comment.userId === req.body.userId
-      );
-      if (alreadyCommented) {
-        res.status(400).send({ message: 'רשמת כבר תגובה' });
-      }
-
-      const comment = {
-        name: req.body.name,
-        commentBody: req.body.commentBody,
-        userId: req.body.userId,
-      };
-
-      recipe.comments.push(comment);
-
-      await recipe.save();
-      res.status(201).json({ message: 'תגובה נוספה' });
-    } else {
-      res.status(404).send({ message: 'מתכון לא נמצא' });
-    }
-  } catch (error) {
-    res.status(404).send({ message: 'מתכון לא נמצא' });
-  }
-});
-
-// *desc Add new cooker
-// *route PUT /api/recipes/:id/cooked
-// *access Private
-
-const userCookedRecipe = asyncHandler(async (req, res) => {
-  try {
-    await Recipe.findByIdAndUpdate(req.params.id, {
-      $push: { cookedBy: req.body.userId },
-    });
-    res.status(201).json('העדכון בוצע. תודה');
-  } catch (error) {
-    res.status(404).send({ message: '404 משתמש לא נמצא' });
-  }
-});
-
 // *desc get unapproved recipes
-// *route GET /api/recipes/unapproved
+// *route GET /api/recipes/admin
 // *access Private/Admin
 const getUnapprovedRecipes = asyncHandler(async (req, res) => {
   try {
@@ -176,11 +129,12 @@ const getUnapprovedRecipes = asyncHandler(async (req, res) => {
 });
 
 // *desc approve recipe
-// *route PUT /api/recipes/approve/:id
+// *route PUT /api/recipes/admin
 // *access Private/Admin
 const approveRecipe = asyncHandler(async (req, res) => {
+  console.log(req.body.recipeId);
   try {
-    const recipe = await Recipe.findById(req.params.id);
+    const recipe = await Recipe.findById(req.body.recipeId);
     recipe.isApproved = true;
     const savedRecipe = await recipe.save();
     res.json(savedRecipe);
@@ -189,9 +143,12 @@ const approveRecipe = asyncHandler(async (req, res) => {
   }
 });
 
+// *desc approve recipe
+// *route DELETE /api/recipes/admin
+// *access Private/Admin
 const deleteRecipe = asyncHandler(async (req, res) => {
   try {
-    const recipe = await Recipe.findById(req.params.id);
+    const recipe = await Recipe.findById(req.body.recipeId);
     await User.findOneAndUpdate(
       { createdRecipes: { $in: req.params.id } },
       { $pull: { createdRecipes: recipe._id } }
@@ -200,33 +157,59 @@ const deleteRecipe = asyncHandler(async (req, res) => {
       { savedRecipes: { $in: req.params.id } },
       { $pull: { savedRecipes: recipe._id } }
     );
-    await Recipe.findByIdAndRemove(req.params.id);
+    await Recipe.findByIdAndRemove(req.body.recipeId);
     res.json('Deleted Successfully');
   } catch (error) {
     res.status(404).send({ message: 'מתכון לא קיים או שכבר אושר' });
   }
 });
 
-// *desc Edit Recipe
-// *route PUT /api/recipes/:id
-// *access Private/Author
-const editRecipe = asyncHandler(async (req, res) => {
+// *desc Edit Recipe Status
+// *route PUT /api/recipes
+// *access Private
+const editRecipeStatus = asyncHandler(async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
+
+    if (recipe) {
+      recipe.cookedBy = req.body.cookedBy || recipe.cookedBy;
+      recipe.comments = req.body.comment || recipe.comments;
+
+      const updatedRecipe = await recipe.save();
+
+      res.json({
+        updatedRecipe,
+      });
+    } else {
+      res.status(404).send({ message: 'מתכון לא נמצא' });
+    }
+  } catch (error) {
+    res.status(404).send({ message: 'מתכון לא קיים' });
+  }
+});
+
+// *desc Edit Recipe
+// *route PUT /api/recipes/author
+// *access Private/Author
+const authorEditRecipe = asyncHandler(async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.body.recipeId);
     recipe.website = req.body.website || recipe.website;
+
     const updatedRecipe = await recipe.save();
+
     res.json(updatedRecipe);
   } catch (error) {
+    console.log(error);
     res.status(404).send({ message: 'מתכון לא קיים' });
   }
 });
 
 exports.getRecipes = getRecipes;
 exports.getRecipeById = getRecipeById;
-exports.createRecipeComment = createRecipeComment;
-exports.userCookedRecipe = userCookedRecipe;
 exports.postRecipe = postRecipe;
 exports.getUnapprovedRecipes = getUnapprovedRecipes;
 exports.approveRecipe = approveRecipe;
 exports.deleteRecipe = deleteRecipe;
-exports.editRecipe = editRecipe;
+exports.authorEditRecipe = authorEditRecipe;
+exports.editRecipeStatus = editRecipeStatus;

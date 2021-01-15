@@ -70,11 +70,9 @@ export const register = (name, email, password, websiteLink) => async (
   }
 };
 
-export const editUserSavedRecipes = (
-  userInfo,
-  recipeId,
-  savedRecipes
-) => async (dispatch) => {
+export const editUserSavedRecipes = (userInfo, savedRecipes) => async (
+  dispatch
+) => {
   try {
     dispatch({
       type: 'USER_SAVE_RECIPE_REQUEST',
@@ -86,10 +84,8 @@ export const editUserSavedRecipes = (
       },
     };
     const { data } = await axios.put(
-      `/api/users/liked/${userInfo._id}`,
+      `/api/users/profile/`,
       {
-        userId: userInfo._id,
-        recipeId: recipeId,
         savedRecipes: savedRecipes,
       },
       config
@@ -153,7 +149,7 @@ export const getLoggedUserProfile = (user) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: 'LOGGED_USER_PROFILE_FAIL',
-      payload: error.response.data.message,
+      payload: error,
     });
   }
 };

@@ -30,8 +30,8 @@ const NewRecipe = () => {
         <StyledError>
           <Link to='register'>
             <ErrorMessage
-              message='רק משתמשים רשומים יכולים לפרסם מתכון.
-             לחץ/י להרשמה'
+              message='רק משתמשים רשומים יכולים לפרסם מתכון.'
+              explaination='לחץ/י להרשמה'
             />
           </Link>
         </StyledError>

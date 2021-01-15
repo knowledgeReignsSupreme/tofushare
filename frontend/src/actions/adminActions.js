@@ -35,7 +35,8 @@ export const listRecipes = (user) => async (dispatch) => {
         Authorization: `Bearer ${user.token}`,
       },
     };
-    const { data } = await axios.get(`/api/recipes/unapproved`, config);
+
+    const { data } = await axios.get(`/api/recipes/admin`, config);
     dispatch({
       type: 'UNAPPROVED_RECIPES_SUCCESS',
       payload: data,
@@ -53,15 +54,19 @@ export const approveRecipe = (user, recipeId) => async (dispatch) => {
     dispatch({
       type: 'APPROVE_RECIPE_REQUEST',
     });
-
+    const details = {
+      recipeId: recipeId,
+    };
     const { data } = await axios({
       method: 'put',
-      url: `/api/recipes/approve/${recipeId}`,
+      url: `/api/recipes/admin`,
+      data: details,
       headers: {
         'Contet-Type': 'application/x-www-form-urlencoded',
         Authorization: `Bearer ${user.token}`,
       },
     });
+
     dispatch({
       type: 'APPROVE_RECIPE_SUCCESS',
       payload: data,
@@ -79,10 +84,13 @@ export const deleteRecipe = (user, recipeId) => async (dispatch) => {
     dispatch({
       type: 'DELETE_RECIPE_REQUEST',
     });
-
+    const details = {
+      recipeId: recipeId,
+    };
     const { data } = await axios({
-      method: 'put',
-      url: `/api/recipes/delete/${recipeId}`,
+      method: 'delete',
+      url: `/api/recipes/admin`,
+      data: details,
       headers: {
         'Contet-Type': 'application/x-www-form-urlencoded',
         Authorization: `Bearer ${user.token}`,

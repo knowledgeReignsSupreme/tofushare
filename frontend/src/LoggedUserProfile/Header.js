@@ -6,6 +6,7 @@ import userImage from '../Images/no-image-user.jpg';
 import styled from 'styled-components';
 import { secColorButton, mainColorButton } from '../GlobalStyles';
 import ImageUpload from './ImageUpload';
+import { formatDate } from '../Helpers/Functions';
 
 const Header = ({ currentUser, isLogged }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -16,11 +17,6 @@ const Header = ({ currentUser, isLogged }) => {
   const logoutHandler = () => {
     dispatch(logout());
     history.push('/');
-  };
-
-  const formatDate = (date) => {
-    const monthOnly = date.slice(0, 10);
-    return monthOnly.split('-').reverse().join().replaceAll(',', '/');
   };
 
   const userCookedCalc = (recipes) => {
@@ -123,12 +119,10 @@ const StyledHeader = styled.div`
     border-radius: 50%;
     float: right;
     shape-outside: circle(50%);
-    margin-left: 0.5rem;
 
     @media screen and (max-width: 600px) {
       height: 6rem;
       width: 6rem;
-      margin-left: 0.5rem;
     }
   }
   h1 {
@@ -143,7 +137,7 @@ const StyledImage = styled.div`
   height: auto;
   @media screen and (max-width: 600px) {
     width: 8rem;
-    margin-left: 0.8rem;
+    margin-left: -0.3rem;
   }
   button {
     margin-top: 0.5rem;
@@ -152,7 +146,7 @@ const StyledImage = styled.div`
 
 const StyledDetails = styled.div`
   @media screen and (min-width: 600px) {
-    margin-right: 0.5rem !important;
+    margin-right: 0.2rem !important;
   }
   margin-right: 0.5rem;
   @media screen and (max-width: 600px) {

@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSingleRecipe } from '../actions/RecipesActions';
+import {
+  getSingleRecipe,
+  cookedRecipe,
+  createComment,
+} from '../actions/RecipesActions';
+import { editUserSavedRecipes } from '../actions/userActions';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import Header from './Header';
@@ -19,6 +24,7 @@ const SingleRecipe = ({ match }) => {
   const currentRecipeId = match.params.id;
 
   const dispatch = useDispatch();
+
   const { currentRecipe, isLoading, error } = useSelector(
     (state) => state.recipe
   );
@@ -26,10 +32,69 @@ const SingleRecipe = ({ match }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { loggedUser } = userLogin;
 
+  const recipeCooked = useSelector((state) => state.recipeCooked);
+  const {
+    success: recipeCookedSuccess,
+    isLoading: recipeCookedIsLoading,
+  } = recipeCooked;
+
+  const userSaved = useSelector((state) => state.userSaved);
+  const {
+    success: userSavedSuccess,
+    isLoading: userSavedIsLoading,
+  } = userSaved;
+
+  const recipeComment = useSelector((state) => state.recipeComment);
+  const {
+    error: commentError,
+    success: recipeCommentSuccess,
+    isLoading: recipeCommentIsLoading,
+  } = recipeComment;
+
   useEffect(() => {
     window.scrollTo(0, 0);
+
     dispatch(getSingleRecipe(currentRecipeId));
   }, [currentRecipeId, dispatch]);
+
+  useEffect(() => {
+    if (recipeCookedSuccess) {
+      dispatch({ type: 'RECIPE_COOKED_RESET' });
+      dispatch(getSingleRecipe(currentRecipe._id));
+    }
+    if (userSavedSuccess) {
+      dispatch({ type: 'USER_SAVE_RECIPE_RESET' });
+      loggedUser.savedRecipes.push(currentRecipe._id);
+      dispatch(getSingleRecipe(currentRecipe._id));
+    }
+    if (recipeCommentSuccess) {
+      dispatch({ type: 'RECIPE_CREATE_COMMENT_RESET' });
+      dispatch(getSingleRecipe(currentRecipe._id));
+    }
+  }, [
+    recipeCookedSuccess,
+    currentRecipe._id,
+    dispatch,
+    userSavedSuccess,
+    loggedUser,
+    recipeCommentSuccess,
+  ]);
+
+  const recipeCookedHandler = () => {
+    const newCooked = [...currentRecipe.cookedBy, loggedUser._id];
+    console.log(newCooked);
+    dispatch(cookedRecipe(loggedUser, currentRecipe._id, newCooked));
+  };
+
+  const saveRecipeHandler = () => {
+    const newSaved = [...loggedUser.savedRecipes, currentRecipe._id];
+    dispatch(editUserSavedRecipes(loggedUser, newSaved));
+  };
+
+  const newCommentHandler = (comment) => {
+    const newComments = [...currentRecipe.comments, comment];
+    dispatch(createComment(loggedUser.token, currentRecipe._id, newComments));
+  };
 
   return (
     <>
@@ -49,8 +114,18 @@ const SingleRecipe = ({ match }) => {
 
             {loggedUser && (
               <WrappedButtons>
-                <UserCooked user={loggedUser} currentRecipe={currentRecipe} />
-                <Save currentRecipe={currentRecipe} />
+                <UserCooked
+                  user={loggedUser}
+                  currentRecipe={currentRecipe}
+                  handleCooked={recipeCookedHandler}
+                  isLoading={recipeCookedIsLoading}
+                />
+                <Save
+                  currentRecipe={currentRecipe}
+                  handleSaved={saveRecipeHandler}
+                  user={loggedUser}
+                  isLoading={userSavedIsLoading}
+                />
               </WrappedButtons>
             )}
             {!loggedUser && (
@@ -69,7 +144,15 @@ const SingleRecipe = ({ match }) => {
             )}
 
             <Remarks currentRecipe={currentRecipe} />
-            {loggedUser && <NewComment currentRecipe={currentRecipe} />}
+            {loggedUser && (
+              <NewComment
+                currentRecipe={currentRecipe}
+                handleComment={newCommentHandler}
+                user={loggedUser}
+                error={commentError}
+                isLoading={recipeCommentIsLoading}
+              />
+            )}
             {!loggedUser && (
               <NotRegistered
                 buttonText='הוספת תגובה'

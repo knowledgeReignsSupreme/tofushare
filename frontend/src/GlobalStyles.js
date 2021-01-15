@@ -73,14 +73,13 @@ input{
 `;
 
 export const InputWrapper = styled.div`
-  width: 100%;
   margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
   span {
-    color: ${cssVariables.secColorDark};
+    color: red;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1rem;
     vertical-align: middle;
     margin-left: 0.3rem;
   }

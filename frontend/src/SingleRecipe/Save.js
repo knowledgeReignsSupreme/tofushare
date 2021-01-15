@@ -1,47 +1,22 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { editUserSavedRecipes } from '../actions/userActions';
-import { getSingleRecipe } from '../actions/RecipesActions';
 import styled from 'styled-components';
 import { cssVariables, transparentButton } from '../GlobalStyles';
 
-const Save = ({ currentRecipe }) => {
+const Save = ({ currentRecipe, handleSaved, user, isLoading }) => {
   const [userAlreadySaved, setUserAlreadySaved] = useState(false);
 
-  const dispatch = useDispatch();
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loggedUser } = userLogin;
-
-  const userSaved = useSelector((state) => state.userSaved);
-  const { success, isLoading } = userSaved;
-
   const alreadySaved = useCallback(() => {
-    if (loggedUser.savedRecipes.includes(currentRecipe._id)) {
+    if (user.savedRecipes.includes(currentRecipe._id)) {
       setUserAlreadySaved(true);
     }
-  }, [currentRecipe._id, loggedUser.savedRecipes]);
+  }, [currentRecipe._id, user.savedRecipes]);
 
   const saveRecipeHandler = () => {
-    if (userLogin.loggedUser) {
-      if (!userAlreadySaved) {
-        const newSaved = [...loggedUser.savedRecipes, currentRecipe._id];
-        dispatch(
-          editUserSavedRecipes(loggedUser, currentRecipe._id, newSaved)
-        ).then((data) => {
-          loggedUser.savedRecipes = [...newSaved];
-        });
-      }
+    if (!userAlreadySaved) {
+      handleSaved();
     }
   };
-
-  useEffect(() => {
-    if (success) {
-      dispatch({ type: 'USER_SAVE_RECIPE_RESET' });
-      dispatch(getSingleRecipe(currentRecipe._id));
-    }
-  }, [success, currentRecipe._id, dispatch]);
 
   useEffect(() => {
     alreadySaved();
@@ -53,7 +28,7 @@ const Save = ({ currentRecipe }) => {
         {isLoading ? (
           <StyledButton disabled={true}>
             <FaBookmark />
-            שומר מתכון...
+            שומר...
           </StyledButton>
         ) : userAlreadySaved ? (
           <StyledButton>
@@ -66,8 +41,7 @@ const Save = ({ currentRecipe }) => {
             שמירת מתכון
           </StyledButton>
         )}
-        {loggedUser.savedRecipes.includes(currentRecipe._id) ||
-        userSaved.success ? (
+        {user.savedRecipes.includes(currentRecipe._id) ? (
           <p>זמין לצפייה בפרופיל</p>
         ) : (
           ''

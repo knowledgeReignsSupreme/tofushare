@@ -3,12 +3,9 @@ import styled from 'styled-components';
 import { cssVariables } from '../GlobalStyles';
 import { Link } from 'react-router-dom';
 import uuid from 'react-uuid';
+import { formatDate } from '../Helpers/Functions';
 
 const Comments = ({ currentRecipe }) => {
-  const formatDate = (date) => {
-    const monthOnly = date.slice(0, 10);
-    return monthOnly.split('-').reverse().join().replaceAll(',', '/');
-  };
   return (
     <StyledComments>
       <h3>תגובות:</h3>

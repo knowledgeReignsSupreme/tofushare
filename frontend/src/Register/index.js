@@ -5,7 +5,8 @@ import { Helmet } from 'react-helmet';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { cssVariables, secColorButton } from '../GlobalStyles';
+import { secColorButton } from '../GlobalStyles';
+import Input from '../Common/Input';
 import Loader from '../Common/Loader';
 
 const Register = () => {
@@ -73,73 +74,43 @@ const Register = () => {
 
       <StyledForm onSubmit={(e) => submitHandler(e)}>
         <h1>הרשמה</h1>
-        <SingleInput>
-          <label htmlFor='name'>
-            <p>
-              <span>*</span>
-              שם משתמש/שם מלא:
-            </p>
-          </label>
-          <input
-            type='text'
-            placeholder='שם'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </SingleInput>
-        <SingleInput>
-          <label htmlFor='email'>
-            <p>
-              <span>*</span>
-              כתובת אימייל:
-            </p>
-          </label>
-          <input
-            type='email'
-            placeholder='כתובת אימייל'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </SingleInput>
-        <SingleInput>
-          <label htmlFor='email'>
-            <p>קישור לאתר/בלוג</p>
-          </label>
-          <input
-            type='text'
-            placeholder='לא חובה'
-            value={website}
-            onChange={(e) => setWebsite(e.target.value)}
-          />
-        </SingleInput>
-        <SingleInput>
-          <label htmlFor='email'>
-            <p>
-              <span>*</span>
-              סיסמה:
-            </p>
-          </label>
-          <input
-            type='password'
-            placeholder='סיסמה'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </SingleInput>
-        <SingleInput>
-          <label htmlFor='email'>
-            <p>
-              <span>*</span>
-              אימות סיסמה:
-            </p>
-          </label>
-          <input
-            type='password'
-            placeholder='אימות סיסמה'
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </SingleInput>
+        <Input
+          tag='שם משתמש / שם מלא'
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          required={true}
+          placeholder='שם'
+        />{' '}
+        <Input
+          tag='כתובת אימייל:'
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          required={true}
+          placeholder='כתובת אימייל'
+          type='email'
+        />{' '}
+        <Input
+          tag='קישור לאתר / בלוג:'
+          onChange={(e) => setWebsite(e.target.value)}
+          value={website}
+          placeholder='לא חובה'
+        />
+        <Input
+          tag='סיסמה:'
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          required={true}
+          placeholder='סיסמה'
+          type='password'
+        />
+        <Input
+          tag='אימות סיסמה:'
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          value={confirmPassword}
+          required={true}
+          placeholder='אימות סיסמה'
+          type='password'
+        />
         {emailError && (
           <StyledError>
             <p>אימייל לא חוקי</p>
@@ -194,27 +165,6 @@ const StyledForm = styled.form`
   }
   a {
     color: green;
-  }
-`;
-
-const SingleInput = styled.div`
-  width: 100%;
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  label {
-    margin-bottom: 0.5rem;
-    align-self: flex-start;
-  }
-  input {
-    width: 60%;
-    border-radius: 15px;
-    border: 1px solid ${cssVariables.secColorDark};
-    padding-right: 0.6rem;
-    @media screen and (max-width: 600px) {
-      width: 80%;
-    }
   }
 `;
 

@@ -8,7 +8,7 @@ import { FaPaperPlane } from 'react-icons/fa';
 import Loader from '../Common/Loader';
 import Welcome from '../Common/Welcome';
 
-init('user_tvT3XOjtXRjtzeC9w0SRj');
+init(process.env.REACT_APP_EMAILJS_USER);
 
 const Suggestions = () => {
   const [userName, setUserName] = useState('');
@@ -21,6 +21,7 @@ const Suggestions = () => {
   const [formFail, setFormFail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log(process.env.REACT_APP_EMAILJS_USER);
   let isEmailValid = () => {
     if (email.length === 0) {
       return false;
@@ -43,10 +44,10 @@ const Suggestions = () => {
     if (userName.length >= 3 && isEmailValid() && suggestion.length >= 5) {
       emailjs
         .sendForm(
-          'service_vu1mupn',
-          'template_qe0x8kp',
+          process.env.REACT_APP_EMAILJS_SERVICE,
+          process.env.REACT_APP_EMAILJS_TEMPLATE,
           e.target,
-          'user_tvT3XOjtXRjtzeC9w0SRj'
+          process.env.REACT_APP_EMAILJS_USER
         )
         .then(
           (result) => {
@@ -66,12 +67,16 @@ const Suggestions = () => {
         <title>Tofu Share | הצעות לשיפור</title>
         <meta name='description' content='דף דיווח על באגים או הצעות שיפור' />
       </Helmet>
-      <Welcome
-        header='רוצים לשמוע מכם'
-        subHeader='עזרו לנו להרחיב את קהילת הטבעונים בארץ'
-        paragraph="מצאתם באג באתר? יש לכם רעיון לפיצ'ר חדש? זה המקום!"
-        button={false}
-      />
+      {formSuccess ? (
+        ''
+      ) : (
+        <Welcome
+          header='רוצים לשמוע מכם'
+          subHeader='עזרו לנו להרחיב את קהילת הטבעונים בארץ'
+          paragraph="מצאתם באג באתר? יש לכם רעיון לפיצ'ר חדש? זה המקום!"
+          button={false}
+        />
+      )}
       {formSuccess ? (
         <StyledSuccess>
           <h3>הטופס נשלח בהצלחה. תודה רבה על הרצון הטוב ושיתוף הפעולה</h3>

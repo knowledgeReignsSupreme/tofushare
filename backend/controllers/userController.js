@@ -8,32 +8,36 @@ const { findById } = require('../Models/recipeModel');
 // *route POST /api/users/login
 // *access Public
 const authUserLogin = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
-  if (user && (await user.matchPassword(password))) {
-    const token = generateToken(user._id);
-    res.cookie('token', token, { httpOnly: true });
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      token: token,
-      savedRecipes: user.savedRecipes,
-      createdRecipes: user.createdRecipes,
-      bio: user.bio,
-      image: user.image,
-      instagramLink: user.instagramLink,
-      facebookLink: user.facebookLink,
-      createdAt: user.createdAt,
-      websiteLink: user.websiteLink,
-      isVerified: user.isVerified,
-    });
-  } else {
-    res.status(401);
-    throw new Error('אימייל או סיסמה לא תקינים');
+    if (user && (await user.matchPassword(password))) {
+      const token = generateToken(user._id);
+      res.cookie('token', token, { httpOnly: true });
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        token: token,
+        savedRecipes: user.savedRecipes,
+        createdRecipes: user.createdRecipes,
+        bio: user.bio,
+        image: user.image,
+        instagramLink: user.instagramLink,
+        facebookLink: user.facebookLink,
+        createdAt: user.createdAt,
+        websiteLink: user.websiteLink,
+        isVerified: user.isVerified,
+      });
+    } else {
+      res.status(401);
+      throw new Error('אימייל או סיסמה לא תקינים');
+    }
+  } catch (error) {
+    res.status(400).send({ message: 'מידע שגוי' });
   }
 });
 
@@ -136,7 +140,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-    user.likedRecipes = req.body.likedRecipes || user.likedRecipes;
+    user.savedRecipes = req.body.savedRecipes || user.savedRecipes;
     user.createdRecipes = req.body.createdRecipes || user.createdRecipes;
     user.bio = req.body.bio || user.bio;
     user.instagramLink = req.body.instagramLink || user.instagramLink;
@@ -172,28 +176,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-// *desc add or delete a recipe from user's liked recipes
-// *route PUT /api/users/liked/:id
-const updateUserSavedRecipes = asyncHandler(async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    const recipe = await Recipe.findById(req.body.recipeId);
-
-    if (user && recipe) {
-      user.savedRecipes = req.body.savedRecipes || user.savedRecipes;
-      const updatedUser = await user.save();
-
-      res.json({
-        savedRecipes: updatedUser.savedRecipes,
-      });
-    } else {
-      res.status(401).send({ message: 'אינך מורשה' });
-    }
-  } catch (error) {
-    res.status(404).send({ message: 'משתמש לא קיים 404' });
-  }
-});
-
 // *desc Fetch all users
 // *route GET /api/users
 // *access Private/Admin
@@ -210,6 +192,5 @@ exports.authUserLogin = authUserLogin;
 exports.getLoggedUserDetails = getLoggedUserDetails;
 exports.registerUser = registerUser;
 exports.updateUserProfile = updateUserProfile;
-exports.updateUserSavedRecipes = updateUserSavedRecipes;
 exports.getUserById = getUserById;
 exports.getUsers = getUsers;

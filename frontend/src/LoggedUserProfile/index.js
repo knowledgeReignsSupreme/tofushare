@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getLoggedUserProfile } from '../actions/userActions';
+import { getLoggedUserProfile, updateUser } from '../actions/userActions';
 import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import uuid from 'react-uuid';
@@ -9,38 +9,66 @@ import { GlobalStyledUser } from '../GlobalStyles';
 import Header from './Header';
 import Buttons from './Buttons';
 import Recipes from './Recipes';
+import EditBio from './EditBio';
 import Bio from './Bio';
 import Loader from '../Common/Loader';
+import ErrorMessage from '../Common/ErrorMessage';
 
 const Profile = () => {
-  const history = useHistory();
-
   const [showCreated, setShowCreated] = useState(false);
   const [showSaved, setShowSaved] = useState(false);
   const [showSocial, setShowSocial] = useState(true);
-  const [firstVisit, setFirstVisit] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [bio, setBio] = useState('');
+  const [instagramLink, setInstagramLink] = useState('');
+  const [facebookLink, setFacebookLink] = useState('');
+  const [websiteLink, setWebsiteLink] = useState('');
 
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
+  const userUpdate = useSelector((state) => state.userUpdateProfile);
   const { loggedUser, isLoading, error, success } = userLogin;
+  const {
+    isLoading: updateIsLoading,
+    error: updateError,
+    success: updateSuccess,
+  } = userUpdate;
+
+  const handleUserUpdate = (e) => {
+    dispatch(
+      updateUser(loggedUser, {
+        _id: loggedUser._id,
+        bio,
+        instagramLink,
+        facebookLink,
+        websiteLink,
+      })
+    );
+  };
+
+  const history = useHistory();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
     if (loggedUser === null) {
       history.push('/login');
     }
-  }, [history, loggedUser]);
+  });
+
+  useEffect(() => {
+    if (updateSuccess) {
+      dispatch({ type: 'USER_DETAILS_UPDATE_RESET' });
+      dispatch(getLoggedUserProfile(loggedUser));
+    }
+  }, [success, updateSuccess, loggedUser, dispatch]);
 
   useEffect(() => {
     if (!success && !isLoading) {
       dispatch(getLoggedUserProfile(loggedUser));
-      setFirstVisit(false);
-    } else if (firstVisit && !isLoading) {
-      dispatch(getLoggedUserProfile(loggedUser));
-      setFirstVisit(false);
     }
-  }, [loggedUser, dispatch, success, firstVisit, isLoading]);
+  }, [loggedUser, dispatch, success, isLoading]);
 
   return (
     <>
@@ -51,10 +79,11 @@ const Profile = () => {
         </Helmet>
       )}
 
-      {isLoading ? <Loader size='80' /> : ''}
-      {error && <h1>{error}</h1>}
-
-      {loggedUser && !isLoading ? (
+      {isLoading ? (
+        <Loader size='80' />
+      ) : error ? (
+        <ErrorMessage message={error} />
+      ) : loggedUser && !isLoading ? (
         <StyledProfile>
           <Header currentUser={loggedUser} isLogged={true} />
 
@@ -98,7 +127,27 @@ const Profile = () => {
             showSaved && <h1>עוד לא שמרת מתכונים</h1>
           )}
           {showSocial && (
-            <Bio currentUser={loggedUser} isLogged={true} header='קצת עליי:' />
+            <Bio
+              currentUser={loggedUser}
+              isLogged={true}
+              setIsEditing={setIsEditing}
+              isEditing={isEditing}
+              header='קצת עליי:'
+              isLoading={updateIsLoading}
+              error={updateError}
+            />
+          )}
+          {isEditing && (
+            <EditBio
+              currentUser={loggedUser}
+              isLoading={isLoading}
+              setInstagramLink={setInstagramLink}
+              setFacebookLink={setFacebookLink}
+              setWebsiteLink={setWebsiteLink}
+              setBio={setBio}
+              handleUserUpdate={handleUserUpdate}
+              setIsEditing={setIsEditing}
+            />
           )}
         </StyledProfile>
       ) : (

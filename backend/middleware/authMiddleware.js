@@ -29,7 +29,7 @@ const protect = asyncHandler(async (req, res, next) => {
 });
 
 const isAuthor = (req, res, next) => {
-  if (req.user && req.user.createdRecipes.includes(req.params.id)) {
+  if (req.user && req.user.createdRecipes.includes(req.body.recipeId)) {
     next();
   } else {
     throw new Error('אינך יוצר המתכון');
