@@ -1,2 +1,2 @@
 # tofushare
-A web add to for sharing vegan recipes
+A web add for sharing vegan recipes
