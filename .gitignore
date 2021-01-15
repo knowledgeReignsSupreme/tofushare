@@ -12,6 +12,7 @@
 /frontend/build
 
 # misc
+/uploads
 .DS_Store
 .env
 /frontend/.env
