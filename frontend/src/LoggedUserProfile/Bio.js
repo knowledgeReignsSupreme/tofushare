@@ -1,44 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateUser } from '../actions/userActions';
-import { cssVariables, mainColorButton, secColorButton } from '../GlobalStyles';
+import React from 'react';
+import { cssVariables, mainColorButton } from '../GlobalStyles';
 import styled from 'styled-components';
 import Loader from '../Common/Loader';
+import ErrorMessage from '../Common/ErrorMessage';
 import { linkFormat } from '../Helpers/Functions';
-import { FaInstagram, FaFacebook, FaUserEdit } from 'react-icons/fa';
+import { FaInstagram, FaFacebook } from 'react-icons/fa';
 
-const Bio = ({ currentUser, isLogged, header }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [bio, setBio] = useState('');
-  const [instagramLink, setInstagramLink] = useState('');
-  const [facebookLink, setFacebookLink] = useState('');
-  const [websiteLink, setWebsiteLink] = useState('');
-  const userUpdate = useSelector((state) => state.userUpdateProfile);
-  const dispatch = useDispatch();
-
-  const { isLoading, error, success } = userUpdate;
-
-  const editSubmitHandler = (e) => {
-    e.preventDefault();
-
-    dispatch(
-      updateUser(currentUser, {
-        _id: currentUser._id,
-        bio,
-        instagramLink,
-        facebookLink,
-        websiteLink,
-      })
-    );
-    setIsEditing(false);
-  };
-
-  useEffect(() => {
-    if (success) {
-      window.location.reload();
-    }
-  }, [success]);
-
+const Bio = ({
+  currentUser,
+  isLogged,
+  header,
+  isEditing,
+  setIsEditing,
+  isLoading,
+  error,
+}) => {
   return (
     <>
       <StyledHeader>
@@ -46,10 +22,12 @@ const Bio = ({ currentUser, isLogged, header }) => {
       </StyledHeader>
       {isLoading ? (
         <Loader size={40} />
+      ) : error ? (
+        <ErrorMessage message={error} />
       ) : (
         <StyledBio>
           <h4>
-            {currentUser.webiteLink &&
+            {currentUser.websiteLink &&
               currentUser.websiteLink.trim().length > 3 && (
                 <a href={linkFormat(currentUser.websiteLink)}>לאתר שלי</a>
               )}
@@ -58,13 +36,13 @@ const Bio = ({ currentUser, isLogged, header }) => {
               : 'לפרופיל זה אין פירוט כרגע'}
           </h4>
           <StyledSocial>
-            {currentUser.facebookLink && (
-              <a href={`${currentUser.facebookLink}`}>
+            {currentUser.facebookLink.trim().length > 3 && (
+              <a href={linkFormat(currentUser.facebookLink)}>
                 <FaFacebook />
               </a>
             )}
-            {currentUser.instagramLink && (
-              <a href={`${currentUser.instagramLink}`}>
+            {currentUser.instagramLink.trim().length > 3 && (
+              <a href={linkFormat(currentUser.instagramLink)}>
                 <FaInstagram />
               </a>
             )}
@@ -76,42 +54,6 @@ const Bio = ({ currentUser, isLogged, header }) => {
             </BioButton>
           )}
         </StyledBio>
-      )}
-      {isEditing && currentUser && (
-        <StyledEdit onSubmit={editSubmitHandler}>
-          <label htmlFor=''>קצת עליי:</label>
-          <input
-            type='text'
-            defaultValue={currentUser.bio}
-            onChange={(e) => setBio(e.target.value)}
-          />
-          <label htmlFor=''>קישור לאתר/בלוג:</label>
-
-          <input
-            type='text'
-            placeholder={currentUser.websiteLink || 'קישור לאתר'}
-            onChange={(e) => setWebsiteLink(e.target.value)}
-          />
-          <label htmlFor=''>קישור לאינסטגרם:</label>
-          <input
-            type='text'
-            placeholder={currentUser.instagramLink || 'קישור לאינסטגרם'}
-            onChange={(e) => setInstagramLink(e.target.value)}
-          />
-          <label htmlFor=''>קישור לפייסבוק:</label>
-
-          <input
-            type='text'
-            placeholder={currentUser.instagramLink || 'קישור לפייסבוק'}
-            onChange={(e) => setFacebookLink(e.target.value)}
-          />
-          <EditButton type='button' onClick={editSubmitHandler}>
-            {' '}
-            <FaUserEdit />
-            {isLoading ? 'שולח...' : 'עריכה'}
-          </EditButton>
-          {error && <p>{error}</p>}
-        </StyledEdit>
       )}
     </>
   );
@@ -155,41 +97,8 @@ const StyledBio = styled.div`
   }
 `;
 
-const StyledSocial = styled.div``;
-
-const EditButton = styled(secColorButton)``;
-
-const StyledEdit = styled.form`
+const StyledSocial = styled.div`
   display: flex;
-  flex-direction: column;
-  label {
-    margin: 0.5rem 0;
-    font-size: 1.1rem;
-  }
-  input {
-    border: 1px solid ${cssVariables.secColorDark};
-    border-radius: 15px;
-    padding-right: 1rem;
-    color: #2f2f2f;
-    overflow: visible;
-    height: auto !important;
-    &:first-of-type {
-      padding: 0 1rem 6rem;
-      overflow: wrap;
-    }
-  }
-  button {
-    width: 20%;
-    margin-top: 1rem;
-    text-align: center;
-
-    @media screen and (max-width: 600px) {
-      width: 30%;
-    }
-    svg {
-      margin-left: 0.3rem;
-    }
-  }
 `;
 
 export default Bio;

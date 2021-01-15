@@ -1,15 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
-import { FaClock, FaMortarPestle, FaUtensils } from 'react-icons/fa';
-import { cssVariables } from '../GlobalStyles';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { cssVariables } from '../GlobalStyles';
+import { FaClock, FaMortarPestle, FaUtensils } from 'react-icons/fa';
+import { formatDate } from '../Helpers/Functions';
 
 const Header = ({ currentRecipe, preview }) => {
-  const formatDate = (date) => {
-    const monthOnly = date.slice(0, 10);
-    return monthOnly.split('-').reverse().join().replaceAll(',', '/');
-  };
-
   const timeIconsStyle = {
     position: 'absolute',
     bottom: 20,

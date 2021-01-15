@@ -13,12 +13,17 @@ const ErrorMessage = ({ message, explaination }) => {
 
 const StyledError = styled.div`
   background: ${cssVariables.secColorLight};
-  width: 30rem;
-  height: 5rem;
+  padding: 5rem 0;
   max-width: 90%;
   margin: 0 auto;
   h2 {
-    margin: 0.5rem auto;
+    margin: 0.5rem;
+    line-height: 2;
+    font-size: 1.8rem;
+  }
+  p {
+    margin: 0.5rem;
+    font-size: 1.3rem;
   }
 `;
 

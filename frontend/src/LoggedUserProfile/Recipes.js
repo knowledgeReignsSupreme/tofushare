@@ -28,10 +28,11 @@ const Recipes = ({ mappedRecipe, isLogged, isAuthor, loggedUser, saved }) => {
 
   const editRecipeHandler = (e, recipeId) => {
     e.preventDefault();
-    const newInfo = {
+    const editedInfo = {
       website: newLink,
+      recipeId: recipeId,
     };
-    dispatch(editRecipe(loggedUser, recipeId, newInfo));
+    dispatch(editRecipe(loggedUser, editedInfo));
   };
 
   const deleteHandler = (recipeId) => {
@@ -40,7 +41,7 @@ const Recipes = ({ mappedRecipe, isLogged, isAuthor, loggedUser, saved }) => {
       return recipe._id !== recipeId;
     });
     if (newSavedRecipes) {
-      dispatch(editUserSavedRecipes(loggedUser, recipeId, newSavedRecipes));
+      dispatch(editUserSavedRecipes(loggedUser, newSavedRecipes));
     }
   };
 
@@ -105,7 +106,11 @@ const Recipes = ({ mappedRecipe, isLogged, isAuthor, loggedUser, saved }) => {
                   placeholder='דוגמא: www.example.com'
                   onChange={(e) => setNewLink(e.target.value)}
                 ></input>
-                <SubmitButton type='submit'>עדכון</SubmitButton>
+                {isLoading ? (
+                  <Loader size={20} />
+                ) : (
+                  <SubmitButton type='submit'>עדכון</SubmitButton>
+                )}
               </StyledInput>
             </StyledForm>
           )}

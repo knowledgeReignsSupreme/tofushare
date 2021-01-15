@@ -86,9 +86,14 @@ export const createComment = (token, recipeId, comment) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
-      `/api/recipes/${recipeId}/comments`,
-      comment,
+    const details = {
+      comment: comment,
+      recipeId: recipeId,
+    };
+
+    const { data } = await axios.put(
+      `/api/recipes/${recipeId}`,
+      details,
       config
     );
 
@@ -101,7 +106,7 @@ export const createComment = (token, recipeId, comment) => async (dispatch) => {
   }
 };
 
-export const cookedRecipe = (user, recipeId) => async (dispatch) => {
+export const cookedRecipe = (user, recipeId, cooked) => async (dispatch) => {
   try {
     dispatch({ type: 'RECIPE_COOKED_REQUEST' });
 
@@ -112,10 +117,11 @@ export const cookedRecipe = (user, recipeId) => async (dispatch) => {
       },
     };
 
-    const userId = {
-      userId: user._id,
+    const details = {
+      cookedBy: cooked,
     };
-    await axios.put(`/api/recipes/${recipeId}/cooked`, userId, config);
+
+    await axios.put(`/api/recipes/${recipeId}`, details, config);
 
     dispatch({ type: 'RECIPE_COOKED_SUCCESS' });
   } catch (error) {
@@ -126,7 +132,7 @@ export const cookedRecipe = (user, recipeId) => async (dispatch) => {
   }
 };
 
-export const editRecipe = (user, recipeId, editedInfo) => async (dispatch) => {
+export const editRecipe = (user, editedInfo) => async (dispatch) => {
   //TODO: In the future, add the possibilty to edit the whole recipe.
   try {
     dispatch({ type: 'RECIPE_AUTHOR_EDIT_REQUEST' });
@@ -137,7 +143,7 @@ export const editRecipe = (user, recipeId, editedInfo) => async (dispatch) => {
       },
     };
 
-    await axios.put(`/api/recipes/${recipeId}`, editedInfo, config);
+    await axios.put(`/api/recipes/author`, editedInfo, config);
     dispatch({ type: 'RECIPE_AUTHOR_EDIT_SUCCESS' });
   } catch (error) {
     dispatch({

@@ -1,27 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { cookedRecipe } from '../actions/RecipesActions';
-import { getSingleRecipe } from '../actions/RecipesActions';
-
 import styled from 'styled-components';
 import { transparentButton } from '../GlobalStyles';
 import { FaConciergeBell, FaFireAlt } from 'react-icons/fa';
 
-const UserCooked = ({ user, currentRecipe }) => {
+const UserCooked = ({ user, currentRecipe, handleCooked, isLoading }) => {
   const [userAlreadyCooked, setUserAlreadyCooked] = useState(false);
-
-  const dispatch = useDispatch();
-
-  const recipeCooked = useSelector((state) => state.recipeCooked);
-  const { success } = recipeCooked;
-
-  const cookedHandler = () => {
-    if (!userAlreadyCooked) {
-      dispatch(cookedRecipe(user, currentRecipe._id));
-    } else {
-      setUserAlreadyCooked(true);
-    }
-  };
 
   const isAlreadyCooked = useCallback(() => {
     if (currentRecipe.cookedBy.includes(user._id)) {
@@ -29,20 +12,26 @@ const UserCooked = ({ user, currentRecipe }) => {
     }
   }, [currentRecipe.cookedBy, user._id]);
 
+  const cookedHandler = () => {
+    if (!userAlreadyCooked) {
+      handleCooked();
+    } else {
+      setUserAlreadyCooked(true);
+    }
+  };
+
   useEffect(() => {
     isAlreadyCooked();
   }, [isAlreadyCooked, user._id]);
 
-  useEffect(() => {
-    if (success) {
-      dispatch({ type: 'RECIPE_COOKED_RESET' });
-      dispatch(getSingleRecipe(currentRecipe._id));
-    }
-  }, [success, currentRecipe._id, dispatch]);
-
   return (
     <StyledCooked>
-      {userAlreadyCooked ? (
+      {isLoading ? (
+        <StyledButton disabled={true}>
+          <FaConciergeBell />
+          מעדכן...
+        </StyledButton>
+      ) : userAlreadyCooked ? (
         <>
           <StyledButton>
             <FaConciergeBell

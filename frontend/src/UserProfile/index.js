@@ -10,7 +10,7 @@ import Buttons from '../LoggedUserProfile/Buttons';
 import Recipes from '../LoggedUserProfile/Recipes';
 import Bio from '../LoggedUserProfile/Bio';
 import Loader from '../Common/Loader';
-
+import ErrorMessage from '../Common/ErrorMessage';
 const User = ({ match }) => {
   const [showCreated, setShowCreated] = useState(false);
   const [showSocial, setShowSocial] = useState(true);
@@ -35,36 +35,45 @@ const User = ({ match }) => {
           <meta name='description' content='פרופיל משתמש' />
         </Helmet>
       )}
-      {error ? <h1 style={{ textAlign: 'center' }}>{error}</h1> : ''}
-      {isLoading ? <Loader size='80' /> : ''}
-      {userData && !isLoading && (
-        <StyledUser>
-          <Header currentUser={userData} loggedUser={false} />
+      {error ? (
+        <ErrorMessage message={error} />
+      ) : isLoading ? (
+        <Loader size={80} />
+      ) : (
+        userData &&
+        !isLoading && (
+          <StyledUser>
+            <Header currentUser={userData} loggedUser={false} />
 
-          <Buttons
-            setShowCreated={setShowCreated}
-            setShowSocial={setShowSocial}
-            loggedUser={false}
-          />
-          {showCreated && userData.createdRecipes.length >= 1 ? (
-            <>
-              <h2>מתכונים שנוצרו:</h2>
-              {userData.createdRecipes.map((recipe) => (
-                <Recipes
-                  mappedRecipe={recipe}
-                  header='מתכונים שנוצרו:'
-                  key={uuid()}
-                />
-              ))}
-            </>
-          ) : (
-            showCreated && <h3>משתמש זה עדיין לא ייצר מתכונים</h3>
-          )}
+            <Buttons
+              setShowCreated={setShowCreated}
+              setShowSocial={setShowSocial}
+              loggedUser={false}
+            />
+            {showCreated && userData.createdRecipes.length >= 1 ? (
+              <>
+                <h2>מתכונים שנוצרו:</h2>
+                {userData.createdRecipes.map((recipe) => (
+                  <Recipes
+                    mappedRecipe={recipe}
+                    header='מתכונים שנוצרו:'
+                    key={uuid()}
+                  />
+                ))}
+              </>
+            ) : (
+              showCreated && <h3>משתמש זה עדיין לא ייצר מתכונים</h3>
+            )}
 
-          {showSocial && (
-            <Bio currentUser={userData} loggedUser={false} header='קצת עליי:' />
-          )}
-        </StyledUser>
+            {showSocial && (
+              <Bio
+                currentUser={userData}
+                loggedUser={false}
+                header='קצת עליי:'
+              />
+            )}
+          </StyledUser>
+        )
       )}
     </div>
   );

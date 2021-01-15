@@ -90,6 +90,8 @@ export const userPutProfileReducer = (state = {}, action) => {
         isLoading: false,
         success: true,
       };
+    case 'USER_DETAILS_UPDATE_RESET':
+      return {};
     case 'USER_DETAILS_UPDATE_FAIL':
       return { ...state, isLoading: false, error: action.payload };
     default:

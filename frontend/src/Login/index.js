@@ -5,7 +5,8 @@ import { Helmet } from 'react-helmet';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { cssVariables, secColorButton } from '../GlobalStyles';
+import { secColorButton } from '../GlobalStyles';
+import Input from '../Common/Input';
 import Loader from '../Common/Loader';
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
-  const { isLoading, error, loggedUser } = userLogin;
+  const { isLoading: LoginLoading, error: LoginError, loggedUser } = userLogin;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -39,33 +40,29 @@ const Login = () => {
 
       <StyledForm onSubmit={(e) => submitHandler(e)}>
         <h1>התחבר/י</h1>
-
-        <SingleInput>
-          <label htmlFor='email'>כתובת אימייל:</label>
-          <input
-            type='email'
-            placeholder='כתובת אימייל'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </SingleInput>
-        <SingleInput>
-          <label htmlFor='email'>סיסמה:</label>
-          <input
-            type='password'
-            placeholder='סיסמה'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </SingleInput>
-        {error && (
+        <Input
+          tag='כתובת אימייל:'
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          required={true}
+          placeholder='כתובת אימייל'
+          type='email'
+        />{' '}
+        <Input
+          tag='סיסמה:'
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          required={true}
+          placeholder='סיסמה'
+          type='password'
+        />{' '}
+        {LoginError && (
           <StyledError>
             <p>אימייל או סיסמה לא נכונים</p>
           </StyledError>
         )}
-        {isLoading && <Loader size='80' />}
+        {LoginLoading && <Loader size='80' />}
         <StyledLoginButton type='submit'>התחברות</StyledLoginButton>
-
         <p>
           עדיין לא נרשמת? <Link to={'/register'}>הרשמה</Link>
         </p>
@@ -93,27 +90,6 @@ const StyledForm = styled.form`
   }
   a {
     color: green;
-  }
-`;
-
-const SingleInput = styled.div`
-  width: 100%;
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  label {
-    margin-bottom: 0.5rem;
-    align-self: flex-start;
-  }
-  input {
-    width: 60%;
-    border-radius: 15px;
-    border: 1px solid ${cssVariables.secColorDark};
-    padding-right: 0.6rem;
-    @media screen and (max-width: 600px) {
-      width: 80%;
-    }
   }
 `;
 
