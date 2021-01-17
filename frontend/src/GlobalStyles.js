@@ -73,9 +73,13 @@ input{
 `;
 
 export const InputWrapper = styled.div`
+  width: 80%;
   margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
+  @media screen and (max-width: 600px) {
+    width: 80%;
+  }
   span {
     color: red;
     font-weight: bold;
@@ -84,7 +88,6 @@ export const InputWrapper = styled.div`
     margin-left: 0.3rem;
   }
   select {
-    width: 20%;
     margin-bottom: 0.3rem;
   }
   label {
@@ -95,8 +98,8 @@ export const InputWrapper = styled.div`
 export const GlobalStyledLabel = styled.label`
   display: flex;
   align-items: center;
-  width: 60%;
   justify-content: space-between;
+  width: 70%;
   @media screen and (max-width: 600px) {
     width: 90%;
   }
@@ -107,6 +110,7 @@ export const GlobalStyledLabel = styled.label`
     font-weight: lighter;
     cursor: pointer;
     padding: 0.4rem;
+    white-space: nowrap;
   }
 `;
 

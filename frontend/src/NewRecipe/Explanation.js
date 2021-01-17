@@ -10,7 +10,6 @@ const Explanation = ({ message }) => {
 };
 
 const StyledExplanation = styled.div`
-  width: 60%;
   @media screen and (max-width: 600px) {
     width: 80%;
   }

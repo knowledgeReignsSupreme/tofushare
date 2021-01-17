@@ -42,7 +42,7 @@ const ListPreview = ({ list, setList, setNumb }) => {
 
 const StyledPreview = styled.div`
   div {
-    width: 60%;
+    width: 80%;
     border-radius: 15px;
 
     h4 {

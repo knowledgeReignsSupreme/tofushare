@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
-import { GlobalStyledLabel, secColorButton } from '../GlobalStyles';
-import { cssVariables } from '../GlobalStyles';
+import {
+  GlobalStyledLabel,
+  secColorButton,
+  InputWrapper,
+} from '../GlobalStyles';
 import ListPreview from './ListPreview';
 import Explanation from './Explanation';
 
@@ -129,31 +132,7 @@ const Ingredients = ({
   );
 };
 
-const SingleInput = styled.div`
-  width: 100%;
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-  span {
-    color: ${cssVariables.secColorDark};
-    font-weight: bold;
-    font-size: 1.3rem;
-    vertical-align: middle;
-    margin-left: 0.3rem;
-  }
-  select {
-    width: 20%;
-    margin-bottom: 0.3rem;
-  }
-  label {
-    margin-bottom: 0.5rem;
-  }
-  h5 {
-    font-size: 1rem;
-    color: ${cssVariables.mainColorDark};
-    margin: 0.5rem 0;
-  }
-`;
+const SingleInput = styled(InputWrapper)``;
 
 const IngredientButtons = styled.div`
   display: flex;

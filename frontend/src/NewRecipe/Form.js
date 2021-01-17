@@ -39,7 +39,7 @@ const Form = () => {
   const [ingredientError, setIngredientError] = useState(false);
   const [instructions, setInstructions] = useState([]);
   const [instructionError, setInstructionError] = useState(false);
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState({});
   const [imagesError, setImagesError] = useState(false);
   const [prepTime, setPrepTime] = useState();
   const [prepTimeError, setPrepTimeError] = useState(false);
@@ -94,12 +94,12 @@ const Form = () => {
       setDescriptionError(false);
       setIsValid(true);
     }
-    if (images.image) {
-      setImagesError(false);
-      setIsValid(true);
-    } else {
+    if (images.length !== 2) {
       setImagesError(true);
       setIsValid(false);
+    } else {
+      setImagesError(false);
+      setIsValid(true);
     }
     if (prepTime <= 0 || !prepTime) {
       setPrepTimeError(true);
@@ -176,7 +176,7 @@ const Form = () => {
   const postHandler = (e) => {
     e.preventDefault();
     setCheck(true);
-    if (formValidator() && !isImageUploading) {
+    if (formValidator() && !isImageUploading && images?.image?.length > 3) {
       dispatch(postRecipe(newRecipe, loggedUser.token));
     }
   };
@@ -272,6 +272,16 @@ const Form = () => {
               <p>נא לוודא שהטופס תקין או לנסות שוב</p>
             </span>
           )}
+          {check && !isValid && (
+            <span>
+              <p>הטופס לא מולא כראוי. נא לשים לב לשדות נדרשים</p>
+            </span>
+          )}
+          {check && images.length !== 2 && (
+            <span>
+              <p>יש להעלות תמונה</p>
+            </span>
+          )}
           {isPreviewOn && newRecipe.dishesAmmount >= 1 && (
             <StyledPreview>
               <PreviewRecipe currentRecipe={newRecipe} preview={true} />
@@ -292,7 +302,7 @@ const StyledForm = styled.form`
   margin: auto;
 
   input[type='text'] {
-    width: 60%;
+    width: 80%;
     align-self: flex-start;
     border-radius: 15px;
     border: 1px solid ${cssVariables.mainColorDark};
@@ -304,16 +314,14 @@ const StyledForm = styled.form`
   }
 
   input[type='number'] {
-    width: 25%;
+    width: 80%;
+
     align-self: flex-start;
     border-radius: 15px;
     border: 1px solid ${cssVariables.mainColorDark};
     padding-right: 0.6rem;
     margin-bottom: 0.3rem;
     height: 2rem;
-    @media screen and (max-width: 600px) {
-      width: 40%;
-    }
   }
 
   span p {
@@ -322,7 +330,6 @@ const StyledForm = styled.form`
     margin-right: 0.3rem;
     margin-top: 0.5rem;
     font-weight: bold;
-    width: 90%;
   }
   h6 {
     font-size: 0.7rem;
