@@ -17,7 +17,9 @@ const Instructions = ({
 }) => {
   const instructionInput = useRef();
 
-  const [instNumb, setInstNumb] = useState(1);
+  const [instNumb, setInstNumb] = useState(
+    instructions.length >= 1 ? instructions.length + 1 : 1
+  );
   const [instPreview, setInstPreview] = useState(false);
   const [newInstruction, setNewInstruction] = useState('');
   const [addedFeedback, setAddedFeedback] = useState(false);

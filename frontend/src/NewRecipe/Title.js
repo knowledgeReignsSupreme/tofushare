@@ -28,6 +28,7 @@ const Title = ({ setTitle, title, titleError, check }) => {
         placeholder='שדה חובה'
         type='text'
         name='title'
+        value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
       {titleError && check ? (

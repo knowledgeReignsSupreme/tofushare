@@ -16,7 +16,7 @@ const DishesAmmount = ({
       <StyledLabel htmlFor='title'>
         <p>
           <span>*</span>
-          כמות המנות במתכון (1-8)
+          כמות המנות במתכון (1-10)
         </p>
 
         <h6 onClick={() => setIsExplaining(!isExplaining)}>
@@ -37,12 +37,13 @@ const DishesAmmount = ({
         type='number'
         name='dishes'
         min='1'
-        max='8'
+        max='10'
+        defaultValue={dishesAmmount}
         onChange={(e) => setDishesAmmount(e.target.value)}
       />
       {dishesAmmountError && check && (
         <span>
-          <p>מספר המנות חייב להיות בין 1 ל 8</p>
+          <p>מספר המנות חייב להיות בין 1 ל 10</p>
         </span>
       )}
     </SingleInput>

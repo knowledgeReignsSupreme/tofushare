@@ -3,7 +3,7 @@ import { GlobalStyledLabel, InputWrapper } from '../GlobalStyles';
 import styled from 'styled-components';
 import Explanation from './Explanation';
 
-const Remarks = ({ setRemarks }) => {
+const Remarks = ({ setRemarks, remarks }) => {
   const [isExplaining, setIsExplaining] = useState(false);
 
   return (
@@ -26,6 +26,7 @@ const Remarks = ({ setRemarks }) => {
       <input
         type='text'
         name='title'
+        value={remarks}
         onChange={(e) => setRemarks(e.target.value)}
       />
     </SingleInput>

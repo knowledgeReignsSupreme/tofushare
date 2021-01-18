@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { GlobalStyledLabel, InputWrapper } from '../GlobalStyles';
 import Explanation from './Explanation';
 
-const Website = ({ setWebsite }) => {
+const Website = ({ setWebsite, website }) => {
   const [isExplaining, setIsExplaining] = useState(false);
 
   return (
@@ -26,6 +26,7 @@ const Website = ({ setWebsite }) => {
       <input
         type='text'
         name='website'
+        value={website}
         placeholder='דוגמא: www.example.com'
         onChange={(e) => {
           setWebsite(e.target.value);

@@ -35,6 +35,7 @@ const CookingTime = ({
       <input
         placeholder='זמן מוערך'
         type='number'
+        defaultValue={cookingTime}
         name='cookingtime'
         min='1'
         onChange={(e) => setCookingTime(e.target.value)}

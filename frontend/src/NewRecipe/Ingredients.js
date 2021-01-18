@@ -20,7 +20,9 @@ const Ingredients = ({
 }) => {
   const ammount = useRef();
 
-  const [ingNumb, setIngNumb] = useState(1);
+  const [ingNumb, setIngNumb] = useState(
+    ingredients.length >= 1 ? ingredients.length + 1 : 1
+  );
   const [ingPreview, setIngPreview] = useState(false);
   const [addedFeedback, setAddedFeedback] = useState(false);
   const [isExplaining, setIsExplaining] = useState(false);

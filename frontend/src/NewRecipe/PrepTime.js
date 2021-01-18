@@ -30,6 +30,7 @@ const PrepTime = ({ setPrepTime, prepTime, prepTimeError, check }) => {
         placeholder='זמן מוערך'
         type='number'
         name='preptime'
+        defaultValue={prepTime}
         min='1'
         onChange={(e) => setPrepTime(e.target.value)}
       />

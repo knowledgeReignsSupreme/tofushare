@@ -37,6 +37,7 @@ const Category = ({
         <select
           type='select'
           name='category'
+          defaultValue={category}
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value='מאכלים'>מאכלים</option>

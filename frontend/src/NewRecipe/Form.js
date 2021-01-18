@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postRecipe } from '../actions/RecipesActions';
 import styled from 'styled-components';
@@ -29,55 +29,97 @@ const Form = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { loggedUser } = userLogin;
 
-  const [title, setTitle] = useState('');
+  let savedNewRecipe = localStorage.getItem('newRecipe')
+    ? JSON.parse(localStorage.getItem('newRecipe'))
+    : '';
+
+  const [title, setTitle] = useState(savedNewRecipe?.title || '');
   const [titleError, setTitleError] = useState(false);
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(
+    savedNewRecipe?.description || ''
+  );
   const [descriptionError, setDescriptionError] = useState(false);
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState(
+    savedNewRecipe?.ingredients || []
+  );
   const [ingredientName, setIngredientName] = useState('');
   const [ingredientAmmount, setIngredientAmmount] = useState(Number || 0);
   const [ingredientError, setIngredientError] = useState(false);
-  const [instructions, setInstructions] = useState([]);
+  const [instructions, setInstructions] = useState(
+    savedNewRecipe?.instructions || []
+  );
   const [instructionError, setInstructionError] = useState(false);
-  const [images, setImages] = useState({});
+  const [images, setImages] = useState(savedNewRecipe?.images || {});
   const [imagesError, setImagesError] = useState(false);
-  const [prepTime, setPrepTime] = useState();
+  const [prepTime, setPrepTime] = useState(savedNewRecipe?.prepTime || NaN);
   const [prepTimeError, setPrepTimeError] = useState(false);
-  const [cookingTime, setCookingTime] = useState();
+  const [cookingTime, setCookingTime] = useState(
+    savedNewRecipe?.cookingTime || NaN
+  );
   const [cookingTimeError, setCookingTimeError] = useState(false);
-  const [dishesAmmount, setDishesAmmount] = useState(null);
+  const [dishesAmmount, setDishesAmmount] = useState(
+    savedNewRecipe?.dishesAmmount || null
+  );
   const [dishesAmmountError, setDishesAmmountError] = useState(false);
-  const [category, setCategory] = useState('מאכלים');
+  const [category, setCategory] = useState(
+    savedNewRecipe?.category || 'מאכלים'
+  );
   const [categoryError, setCategoryError] = useState(false);
-  const [website, setWebsite] = useState('');
-  const [difficulty, setDifficulty] = useState('קל');
+  const [website, setWebsite] = useState(savedNewRecipe?.website || '');
+  const [difficulty, setDifficulty] = useState(
+    savedNewRecipe?.difficulty || 'קל'
+  );
   const [tags, setTags] = useState([]);
-  const [remarks, setRemarks] = useState('');
+  const [remarks, setRemarks] = useState(savedNewRecipe?.remarks || '');
   const [isValid, setIsValid] = useState(null);
   const [isPreviewOn, setIsPreviewOn] = useState(false);
   const [isImageUploading, setIsImageUploading] = useState(false);
   const [check, setCheck] = useState(false);
-  const newRecipe = {
-    title,
-    description,
-    author: loggedUser.name,
-    website,
-    category,
-    ingredients,
-    instructions,
-    images,
-    prepTime: +prepTime,
-    cookingTime: +cookingTime,
-    difficulty,
-    tags,
-    remarks,
-    dishesAmmount: +dishesAmmount,
-    createdBy: loggedUser._id,
-  };
+
+  let newRecipe = useMemo(
+    () => ({
+      title,
+      description,
+      author: loggedUser.name,
+      website,
+      category,
+      ingredients,
+      instructions,
+      images,
+      prepTime: +prepTime,
+      cookingTime: +cookingTime,
+      difficulty,
+      tags,
+      remarks,
+      dishesAmmount: +dishesAmmount,
+      createdBy: loggedUser._id,
+    }),
+    [
+      title,
+      description,
+      website,
+      category,
+      ingredients,
+      instructions,
+      images,
+      prepTime,
+      cookingTime,
+      difficulty,
+      tags,
+      remarks,
+      dishesAmmount,
+      loggedUser._id,
+      loggedUser.name,
+    ]
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('newRecipe', JSON.stringify(newRecipe));
+  }, [newRecipe]);
 
   const formValidator = useCallback(() => {
     if (title.length <= 3) {
@@ -122,7 +164,7 @@ const Form = () => {
       setCategoryError(false);
       setIsValid(true);
     }
-    if (dishesAmmount <= 0) {
+    if (dishesAmmount <= 0 || dishesAmmount > 10) {
       setDishesAmmountError(true);
       setIsValid(false);
     } else {
@@ -173,10 +215,15 @@ const Form = () => {
     formValidator,
   ]);
 
+  const removeItem = () => {
+    localStorage.removeItem('newRecipe');
+  };
+
   const postHandler = (e) => {
     e.preventDefault();
     setCheck(true);
     if (formValidator() && !isImageUploading && images?.image?.length > 3) {
+      removeItem();
       dispatch(postRecipe(newRecipe, loggedUser.token));
     }
   };
@@ -187,7 +234,12 @@ const Form = () => {
         <Success />
       ) : (
         <StyledForm>
-          <Title setTitle={setTitle} title={title} titleError={titleError} />
+          <Title
+            setTitle={setTitle}
+            title={title}
+            titleError={titleError}
+            check={check}
+          />
           <Description
             setDescription={setDescription}
             description={description}
@@ -206,7 +258,7 @@ const Form = () => {
             dishesAmmountError={dishesAmmountError}
             check={check}
           />
-          <Website setWebsite={setWebsite} />
+          <Website setWebsite={setWebsite} website={website} />
           <Ingredients
             setIngredients={setIngredients}
             ingredients={ingredients}
@@ -243,9 +295,9 @@ const Form = () => {
             cookingTimeError={cookingTimeError}
             check={check}
           />
-          <Difficulty setDifficulty={setDifficulty} />
+          <Difficulty setDifficulty={setDifficulty} difficulty={difficulty} />
           <Tags tags={tags} setTags={setTags} />
-          <Remarks setRemarks={setRemarks} />
+          <Remarks setRemarks={setRemarks} remarks={remarks} />
           <StyledPostButton>
             {isLoading ? (
               <>

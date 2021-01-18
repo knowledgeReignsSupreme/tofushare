@@ -78,7 +78,7 @@ export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   @media screen and (max-width: 600px) {
-    width: 80%;
+    width: 90%;
   }
   span {
     color: red;

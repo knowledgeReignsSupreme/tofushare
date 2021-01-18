@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { GlobalStyledLabel, InputWrapper } from '../GlobalStyles';
 import Explanation from './Explanation';
 
-const Difficulty = ({ setDifficulty }) => {
+const Difficulty = ({ setDifficulty, difficulty }) => {
   const [isExplaining, setIsExplaining] = useState(false);
 
   return (
@@ -31,6 +31,7 @@ const Difficulty = ({ setDifficulty }) => {
         <select
           type='select'
           name='difficulty'
+          defaultValue={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
         >
           <option value='קל'>קל</option>

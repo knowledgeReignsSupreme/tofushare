@@ -35,6 +35,7 @@ const Description = ({
         placeholder='שדה חובה'
         type='text'
         name='description'
+        value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
       {descriptionError && check ? (
