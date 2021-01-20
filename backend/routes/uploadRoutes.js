@@ -10,6 +10,7 @@ const url = require('url');
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  // Bucket: 'tofushare',
   Bucket: 'tofushare',
   region: process.env.AWS_REGION,
 });
@@ -26,8 +27,8 @@ const storage = s3Storage({
         path.extname(file.originalname)
     );
   },
-  ACL: 'public-read',
-
+  // ACL: 'public-read',
+  ACL: process.env.AWS_ACL,
   resize: {
     width: 600,
     height: 384,
@@ -85,7 +86,8 @@ const profileStorage = s3Storage({
         path.extname(file.originalname)
     );
   },
-  ACL: 'public-read',
+  // ACL: 'public-read',
+  ACL: process.env.AWS_ACL,
 
   resize: {
     width: 318,
