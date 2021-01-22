@@ -14,7 +14,8 @@ const ErrorMessage = ({ message, explaination }) => {
 const StyledError = styled.div`
   background: ${cssVariables.secColorLight};
   padding: 5rem 0;
-  max-width: 90%;
+  width: 90%;
+  max-width: 40rem;
   margin: 0 auto;
   h2 {
     margin: 0.5rem;
