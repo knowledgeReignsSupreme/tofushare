@@ -1,10 +1,6 @@
 const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
-const mongoSanitize = require('express-mongo-sanitize');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-const hpp = require('hpp');
 const connectDB = require('./config/db');
 const recipeRoutes = require('./routes/recipeRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
@@ -14,16 +10,7 @@ const morgan = require('morgan');
 dotenv.config();
 connectDB();
 
-const limiter = rateLimit({
-  windowMs: 10 * 60 * 10000,
-  max: 100,
-  message: 'Too many requests to the server, please try again later',
-});
 const app = express();
-app.use(mongoSanitize());
-app.use(helmet());
-app.use(limiter);
-app.use(hpp());
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
