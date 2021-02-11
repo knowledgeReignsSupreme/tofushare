@@ -21,7 +21,6 @@ const Suggestions = () => {
   const [formFail, setFormFail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(process.env.REACT_APP_EMAILJS_USER);
   let isEmailValid = () => {
     if (email.length === 0) {
       return false;

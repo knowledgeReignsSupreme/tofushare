@@ -10,7 +10,6 @@ import Login from './Login';
 import Register from './Register';
 import Profile from './LoggedUserProfile';
 import User from './UserProfile';
-import WhatsNew from './WhatsNew';
 import Suggestions from './Suggestions';
 import UserList from './Admin/UserList';
 import EditRecipes from './Admin/EditRecipes';
@@ -101,7 +100,6 @@ function App() {
           />
           <Route path='/recipes/:id' component={SingleRecipe} />
           <Route path='/new-recipe' exact component={NewRecipe} />
-          <Route path='/whatsnew' exact component={WhatsNew} />
           <Route path='/suggestions' exact component={Suggestions} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
