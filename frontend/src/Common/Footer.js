@@ -8,25 +8,32 @@ import logo from '../Images/logo.svg';
 const Footer = () => {
   return (
     <StyledFooter>
-      <StyledLogo>
-        <Link to='/'>
-          <img src={logo} alt='logo' />
-          <p>Tofu Share</p>
-          <h5>V1 Beta</h5>
-        </Link>
-        <h4>לבשל עם אהבה לטבע</h4>
-        <h4>
-          <a href='https://www.github.com/knowledgereignssupreme'>
-            Github
-            <FaGithub />
-          </a>
-        </h4>
-      </StyledLogo>
+      <InnerFooter>
+        <StyledLogo>
+          <Link to='/'>
+            <img src={logo} alt='logo' />
+            <p>Tofu Share</p>
+            <h5>V1 Beta</h5>
+          </Link>
+          <h4>לבשל עם אהבה לטבע</h4>
+          <h4>
+            <a href='https://www.github.com/knowledgereignssupreme'>
+              Github
+              <FaGithub />
+            </a>
+          </h4>
+        </StyledLogo>
+      </InnerFooter>
     </StyledFooter>
   );
 };
 
 const StyledFooter = styled.footer`
+  width: 100%;
+  background: ${cssVariables.mainColorLight};
+`;
+
+const InnerFooter = styled.div`
   max-width: 1050px;
   padding-bottom: 0.3rem;
   background: ${cssVariables.mainColorLight};

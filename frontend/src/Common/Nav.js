@@ -24,34 +24,36 @@ const Nav = () => {
         />
       ) : (
         <StyledNav>
-          <NavButton>
-            <button onClick={() => setIsNavOpen(!isNavOpen)}>
-              <FaBars />
-            </button>
-          </NavButton>
-          <StyledLogo>
-            <Link to='/'>
-              <img src={logo} alt='logo' />
-              <p>Tofu Share</p>
-            </Link>
-          </StyledLogo>
-          <ProfileButton>
-            {loggedUser ? (
-              <Link to='/profile'>
-                <StyledButton>
-                  <FaUser />
-                  פרופיל
-                </StyledButton>
+          <InerNav>
+            <NavButton>
+              <button onClick={() => setIsNavOpen(!isNavOpen)}>
+                <FaBars />
+              </button>
+            </NavButton>
+            <StyledLogo>
+              <Link to='/'>
+                <img src={logo} alt='logo' />
+                <p>Tofu Share</p>
               </Link>
-            ) : (
-              <Link to='/login'>
-                <StyledButton>
-                  <FaUser />
-                  התחברות
-                </StyledButton>
-              </Link>
-            )}
-          </ProfileButton>
+            </StyledLogo>
+            <ProfileButton>
+              {loggedUser ? (
+                <Link to='/profile'>
+                  <StyledButton>
+                    <FaUser />
+                    פרופיל
+                  </StyledButton>
+                </Link>
+              ) : (
+                <Link to='/login'>
+                  <StyledButton>
+                    <FaUser />
+                    התחברות
+                  </StyledButton>
+                </Link>
+              )}
+            </ProfileButton>
+          </InerNav>
         </StyledNav>
       )}
     </>
@@ -70,7 +72,12 @@ const revealNav = keyframes`
 `;
 
 const StyledNav = styled.nav`
-  max-width: 1050px;
+  width: 100%;
+  background: ${cssVariables.mainColorLight};
+`;
+
+const InerNav = styled.div`
+  max-width: 1500px;
   background: ${cssVariables.mainColorLight};
   margin: 0 auto;
   display: flex;
